@@ -11,10 +11,7 @@ public class Clock implements Serializable {
     @Id
     @Column(name = "user_id")
     private Integer userId;
-
-    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp time;
-
     private Boolean status;
 
     public Clock() {

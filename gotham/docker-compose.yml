@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+
+  timemanager-postgresql:
+    image: postgres
+    restart: always
+    container_name: timemanager-postgresql
+    environment:
+      - POSTGRES_DB=${DATABASE_NAME}
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_ROOT_PASSWORD}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+    ports:
+      - ${DATABASE_PORT}:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+
+  timemanager-back:
+    image: openjdk:11
+    container_name: timemanager-back
+    depends_on:
+      - timemanager-postgresql
+    ports:
+      - 4000:${APP_PORT}
+    volumes:
+      - ./gotham/target/gotham-0.0.1-SNAPSHOT.jar:/gotham/gotham-0.0.1-SNAPSHOT.jar
+    command: ["java", "-Xmx8g", "-jar", "/gotham/gotham-0.0.1-SNAPSHOT.jar", "--spring.datasource.url=jdbc:postgresql://${DATABASE_HOST}/${DATABASE_NAME}?useSSL=false&allowPublicKeyRetrieval=true", "--spring.datasource.username=${DATABASE_USER}", "--spring.datasource.password=${DATABASE_PASSWORD}"]
+    env_file:
+      - .env
+    environment:
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_PORT=${DATABASE_PORT}

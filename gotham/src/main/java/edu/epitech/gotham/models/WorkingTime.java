@@ -10,11 +10,7 @@ public class WorkingTime {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp start;
-
-    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp end;
 
     @Column(name = "user_id")

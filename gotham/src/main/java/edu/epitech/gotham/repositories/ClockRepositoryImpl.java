@@ -21,13 +21,13 @@ public class ClockRepositoryImpl implements ClockRepository {
 
     @Override
     public Optional<Clock> getUserClock(int userId) {
-        final String GET_USER_CLOCK_QUERY = "SELECT * FROM clocks WHERE id = :id";
+        final String GET_USER_CLOCK_QUERY = "SELECT * FROM clocks WHERE user_id = :userId";
         return Optional.ofNullable(
                 jdbcTemplate.queryForObject(
                         GET_USER_CLOCK_QUERY,
                         new ClockRowMapper(),
                         new MapSqlParameterSource()
-                                .addValue("user_id", userId)
+                                .addValue("userId", userId)
                 )
         );
     }
