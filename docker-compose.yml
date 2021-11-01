@@ -13,13 +13,6 @@ services:
     ports:
       - ${DATABASE_PORT}:5432
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-
-
   timemanager-back:
     image: openjdk:11
     container_name: timemanager-back
