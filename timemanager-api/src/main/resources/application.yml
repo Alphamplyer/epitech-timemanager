@@ -1,0 +1,15 @@
+server:
+  port: 4000
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/timemanager"
+    username: postgres
+    password: postgres
+
+jwt:
+  secret: "c2VjcmV0X3Bhc3N3b3Jk"
