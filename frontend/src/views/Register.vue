@@ -30,15 +30,15 @@ export default {
             } catch (error) {
                 console.log('Error', error)
             }
-        }
+        },
     },
     data() {
         return {
             username: '',
             password: '',
-            error: ''
+            error: '',
         }
-    }
+    },
 }
 </script>
 

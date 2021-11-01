@@ -1,7 +1,7 @@
 async function getUser() {
     return {
         username: 'gabriel',
-        password: 'riboldi'
+        password: 'riboldi',
     }
 }
 

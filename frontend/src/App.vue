@@ -1,19 +1,25 @@
 <template>
     <router-view />
+    <Navbar />
 </template>
+
+<script>
+import Navbar from './components/Navbar.vue'
+
+export default {
+    name: 'App',
+    components: {
+        Navbar,
+    },
+}
+</script>
 
 <style>
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    overflow: auto;
-    background: #dddde6;
-    color: #103c63;
+    text-align: center;
+    color: #2c3e50;
 }
 </style>
