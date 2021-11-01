@@ -23,8 +23,23 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
+      - name: Checkout
+        uses: actions/checkout@v2
+        
       - name: Build
         run: |
-          ./run_server.sh
+          cd timemanager_api
+          mvn clean package -DskipTests
+          cd ..
+        
+      - name: Push and Release a Docker container to Heroku. # Your custom step name
+        uses: nithyanantham/docker-compose-multiple-apps-heroku-deploy@v1.0
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          api_key: ${{ secrets.HEROKU_API_KEY }}
+          app_name: ${{ secrets.HEROKU_APP_NAME }}
+          docker_compose_file: docker-compose.yml
+          heroku_apps: |
+            timemanager-postgresql
+            adminer
+            timemanager-back
