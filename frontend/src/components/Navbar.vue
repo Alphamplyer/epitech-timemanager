@@ -2,13 +2,17 @@
     <div id="navbar">
         <ul>
             <li>
-                <router-link class="button" to="/"> Home </router-link>
+                <router-link class="button" to="/dashboard">
+                    Dashboard
+                </router-link>
             </li>
             <li>
-                <router-link class="button" to="/"> 1 </router-link>
+                <router-link class="button" to="/login"> login </router-link>
             </li>
             <li>
-                <router-link class="button" to="/"> 2 </router-link>
+                <router-link class="button" to="/register">
+                    register
+                </router-link>
             </li>
             <li>
                 <router-link class="button" to="/"> 3 </router-link>
