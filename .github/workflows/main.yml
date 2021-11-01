@@ -28,7 +28,7 @@ jobs:
         
       - name: Build
         run: |
-          cd timemanager_api
+          cd timemanager-api
           mvn clean package -DskipTests
           cd ..
         
