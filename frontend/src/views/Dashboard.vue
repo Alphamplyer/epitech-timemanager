@@ -24,8 +24,8 @@ export default {
     name: 'Dashboard',
     components: {
         UserBar,
-        Cell
-    }
+        Cell,
+    },
 }
 </script>
 

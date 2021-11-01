@@ -7,8 +7,7 @@
 
             <span
                 style="font-weight: bold; color: orangered; cursor: pointer"
-                v-on:click="logOut()"
-            >
+                v-on:click="logOut()">
                 Log Out
             </span>
         </div>
@@ -21,8 +20,8 @@ export default {
     methods: {
         logOut() {
             this.$router.push('/')
-        }
-    }
+        },
+    },
 }
 </script>
 
