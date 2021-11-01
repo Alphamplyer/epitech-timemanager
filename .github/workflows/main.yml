@@ -40,5 +40,5 @@ jobs:
           api_key: ${{ secrets.HEROKU_API_KEY }}
           app_name: ${{ secrets.HEROKU_APP_NAME }}
           docker_compose_file: './docker-compose.yml'
-          heroku_apps: '[{"imagename":"postgres","appname":"timemanager-gtne","apptype":"web"},{"imagename":"openjdk:11","appname":"timemanager-gtne-api","apptype":"web"}]'
+          heroku_apps: '[{"imagename":"timemanager-postgresql","appname":"timemanager-gtne","apptype":"web"},{"imagename":"timemanager-back","appname":"timemanager-gtne-api","apptype":"web"}]'
 
