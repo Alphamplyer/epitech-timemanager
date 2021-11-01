@@ -25,7 +25,7 @@ export default {
                 if (!res) {
                     this.error = 'Username already used.'
                 }
-                console.log('check')
+
                 this.$router.push('/')
             } catch (error) {
                 console.log('Error', error)
