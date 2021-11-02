@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 public class AddUserToTeamCommandHandler implements CommandHandler<AddUserToTeamCommand> {
 
-    private static Logger logger = LoggerFactory.getLogger(AddUserToTeamCommandHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(AddUserToTeamCommandHandler.class);
 
     private final TeamRepository teamRepository;
     private final UserRepository userRepository;

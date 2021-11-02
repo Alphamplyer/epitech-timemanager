@@ -30,6 +30,8 @@ public class GetUserJwtQueryHandler implements QueryHandler<GetUserJwtQuery, Get
         if (!GetUserJwtQueryValidator.isValid(query, errors))
             throw new ApiErrorException("Unprocessable Entity", HttpStatus.UNPROCESSABLE_ENTITY, errors);
 
+
+
         String token = jwtService.generateToken(query.getUser(), query.getRememberMe());
 
         return new GetUserJwtQueryResult(token);

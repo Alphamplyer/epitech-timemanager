@@ -7,9 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface TeamRepository extends JpaRepository<Team, Integer> {
-    @Query("SELECT t.id, t.name, t.description FROM teams t, team_members tm WHERE tm.user_id = :userId AND t.id = tm.team_id")
-    List<Team> findUserTeams(int userId);
+    List<Team> findTeamsByMembers_Id(int userId);
 
-    @Query("DELETE FROM team_members tm WHERE tm.user_id = :userId")
+    @Query(nativeQuery = true, value = "DELETE FROM team_members tm WHERE tm.user_id = ?1")
     void deleteTeamMember(int userId);
 }

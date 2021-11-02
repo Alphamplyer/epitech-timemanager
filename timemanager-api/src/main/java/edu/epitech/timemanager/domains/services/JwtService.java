@@ -1,7 +1,7 @@
 package edu.epitech.timemanager.domains.services;
 
+import edu.epitech.timemanager.configurations.security.CustomUserDetails;
 import edu.epitech.timemanager.configurations.security.RoleGrantedPermissions;
-import edu.epitech.timemanager.domains.models.User;
 import edu.epitech.timemanager.domains.models.enumerations.Role;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -30,15 +30,15 @@ public class JwtService {
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final int TOKEN_PREFIX_LENGTH = TOKEN_PREFIX.length();
 
-    public String generateToken(User user, boolean generateRememberMeToken) {
+    public String generateToken(CustomUserDetails user, boolean generateRememberMeToken) {
         long expirationTime = generateRememberMeToken ? REMEMBER_ME_TOKEN_EXPIRATION_TIME : TOKEN_EXPIRATION_TIME;
         long currentTime = System.currentTimeMillis();
 
         return Jwts.builder()
             .setExpiration(new Date(currentTime + expirationTime * 1000L))
             .setIssuedAt(new Date(currentTime))
-            .setSubject(user.getEmail())
-            .claim("role", user.getRole().toString())
+            .setSubject(user.getUsername())
+            .claim("role",  user.getRole().toString())
             .signWith(SignatureAlgorithm.HS512, secret_key)
             .compact();
     }

@@ -36,7 +36,7 @@ public class GetUserTeamsQueryHandler implements QueryHandler<GetUserTeamsQuery,
         GetUserTeamsQueryResult result = new GetUserTeamsQueryResult();
 
         try {
-            teams = teamRepository.findUserTeams(query.getUserId());
+            teams = teamRepository.findTeamsByMembers_Id(query.getUserId());
         } catch (HibernateException e) {
             logger.error("Failed to call database.", e);
             throw new ApiErrorException("Internal Error! Please retry or contact the support", HttpStatus.INTERNAL_SERVER_ERROR, null);
