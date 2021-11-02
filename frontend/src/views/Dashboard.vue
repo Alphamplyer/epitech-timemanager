@@ -4,7 +4,7 @@
 
         <div id="cells">
             <div id="row">
-                <Cell title="test" />
+                <Cell title="Working ?" />
                 <Cell title="test2" />
                 <Cell title="test3" />
             </div>

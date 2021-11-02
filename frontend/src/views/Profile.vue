@@ -1,5 +1,5 @@
 <template>
-    <div id="content">Settings</div>
+    <div id="content">Profile</div>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -22,9 +22,19 @@ const routes = [
         component: () => import('../views/Dashboard.vue'),
     },
     {
-        path: '/user/settings',
-        name: 'Settings',
-        component: () => import('../views/Settings.vue'),
+        path: '/user/profile',
+        name: 'Profile',
+        component: () => import('../views/Profile.vue'),
+    },
+    {
+        path: '/user/teams',
+        name: 'Teams',
+        component: () => import('../views/Teams.vue'),
+    },
+    {
+        path: '/user/users',
+        name: 'Users',
+        component: () => import('../views/Users.vue'),
     },
 ]
 

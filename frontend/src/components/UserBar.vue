@@ -1,14 +1,22 @@
 <template>
     <div id="barDesign">
-        <div id="left">👤 User</div>
+        <div id="left">
+            <span style="cursor: pointer" v-on:click="dashboard()">
+                TIME MANAGER
+            </span>
+
+            <span style="cursor: pointer" v-on:click="teams()">Teams</span>
+
+            <span style="cursor: pointer" v-on:click="users()">Users</span>
+        </div>
 
         <div id="right">
-            <span style="cursor: pointer" v-on:click="settings()">
-                Settings
+            <span style="cursor: pointer" v-on:click="profile()">
+                👤 Gabriel
             </span>
 
             <span
-                style="font-weight: bold; color: orangered; cursor: pointer"
+                style="color: orangered; cursor: pointer"
                 v-on:click="logOut()">
                 Log Out
             </span>
@@ -20,8 +28,17 @@
 export default {
     name: 'UserBar',
     methods: {
-        settings() {
-            this.$router.push('/user/settings')
+        dashboard() {
+            this.$router.push('/user/dashboard')
+        },
+        teams() {
+            this.$router.push('/user/teams')
+        },
+        users() {
+            this.$router.push('/user/users')
+        },
+        profile() {
+            this.$router.push('/user/profile')
         },
         logOut() {
             this.$router.push('/')
@@ -41,6 +58,7 @@ export default {
     padding: 12px;
     border-radius: 24px;
     background-color: #2c3e50;
+    font-weight: bold;
 }
 
 #barDesign span + span {
