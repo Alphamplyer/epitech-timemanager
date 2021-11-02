@@ -1,6 +1,16 @@
 version: '3'
 
 services:
+  timemanager-front:
+    build: "./frontend"
+    container_name: timemanager-front
+    ports:
+      - "8080:8080"
+    environment: 
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - timemanager-postgresql
+      - timemanager-back
 
   timemanager-postgresql:
     image: postgres
