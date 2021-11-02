@@ -33,6 +33,7 @@ export default {
 #content {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
 }
 
 #cells {

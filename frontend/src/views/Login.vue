@@ -25,7 +25,7 @@ export default {
                 if (!res) {
                     this.error = 'Invalid username or password.'
                 }
-                this.$router.push('/dashboard')
+                this.$router.push('/user/dashboard')
             } catch (error) {
                 console.log('Error', error)
             }

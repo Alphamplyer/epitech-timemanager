@@ -3,7 +3,9 @@
         <div id="left">👤 User</div>
 
         <div id="right">
-            <span style="cursor: pointer">Settings</span>
+            <span style="cursor: pointer" v-on:click="settings()">
+                Settings
+            </span>
 
             <span
                 style="font-weight: bold; color: orangered; cursor: pointer"
@@ -18,6 +20,9 @@
 export default {
     name: 'UserBar',
     methods: {
+        settings() {
+            this.$router.push('/user/settings')
+        },
         logOut() {
             this.$router.push('/')
         },
@@ -28,6 +33,7 @@ export default {
 <style>
 #barDesign {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     color: #dddde6;

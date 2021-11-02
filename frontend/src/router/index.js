@@ -17,9 +17,14 @@ const routes = [
         component: () => import('../views/Register.vue'),
     },
     {
-        path: '/dashboard',
+        path: '/user/dashboard',
         name: 'Dashboard',
         component: () => import('../views/Dashboard.vue'),
+    },
+    {
+        path: '/user/settings',
+        name: 'Settings',
+        component: () => import('../views/Settings.vue'),
     },
 ]
 
