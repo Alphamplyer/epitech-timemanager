@@ -20,6 +20,7 @@ import java.util.Set;
 public class Team implements Serializable {
 
     @Id
+    @GeneratedValue
     private Integer id;
 
     @Column(nullable = false)
@@ -52,5 +53,14 @@ public class Team implements Serializable {
         this.name = name;
         this.description = description;
         this.members = members;
+    }
+
+    public void addUser(User user) {
+        if (members.stream().noneMatch(user1 -> user1.getId().equals(user.getId())))
+            members.add(user);
+    }
+
+    public void removeUser(User user) {
+        members.removeIf(user1 -> user1.getId().equals(user.getId()));
     }
 }

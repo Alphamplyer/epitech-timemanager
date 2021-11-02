@@ -1,7 +1,8 @@
 package edu.epitech.timemanager.presentation.api.controllers;
 
-import edu.epitech.timemanager.domains.usescases.users.commands.create_user.CreateUserCommand;
-import edu.epitech.timemanager.domains.usescases.users.commands.create_user.CreateUserCommandHandler;
+import edu.epitech.timemanager.domains.usescases.teams.queries.get_user_teams.GetUserTeamsQuery;
+import edu.epitech.timemanager.domains.usescases.teams.queries.get_user_teams.GetUserTeamsQueryHandler;
+import edu.epitech.timemanager.domains.usescases.teams.queries.get_user_teams.GetUserTeamsQueryResult;
 import edu.epitech.timemanager.domains.usescases.users.commands.delete_user.DeleteUserCommand;
 import edu.epitech.timemanager.domains.usescases.users.commands.delete_user.DeleteUserCommandHandler;
 import edu.epitech.timemanager.domains.usescases.users.commands.update_user.UpdateUserCommand;
@@ -12,7 +13,6 @@ import edu.epitech.timemanager.domains.usescases.users.queries.get_all_users.Get
 import edu.epitech.timemanager.domains.usescases.users.queries.get_user.GetUserQuery;
 import edu.epitech.timemanager.domains.usescases.users.queries.get_user.GetUserQueryHandler;
 import edu.epitech.timemanager.domains.usescases.users.queries.get_user.GetUserQueryResult;
-import edu.epitech.timemanager.presentation.api.dto.users.CreateUserRequest;
 import edu.epitech.timemanager.presentation.api.dto.users.UpdateUserRequest;
 import edu.epitech.timemanager.presentation.api.dto.users.UserView;
 import edu.epitech.timemanager.presentation.api.mappers.users.UserMapper;
@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4000")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -33,22 +32,22 @@ public class UserController {
 
     private final GetAllUsersQueryHandler getAllUsersQuery;
     private final GetUserQueryHandler getUserQuery;
+    private final GetUserTeamsQueryHandler getUserTeamsQuery;
 
-    private final CreateUserCommandHandler createUserCommand;
     private final UpdateUserCommandHandler updateUserCommand;
     private final DeleteUserCommandHandler deleteUserCommand;
 
     @Autowired
     public UserController(
-        GetAllUsersQueryHandler getAllUsersQuery,
-        GetUserQueryHandler getUserQuery,
-        CreateUserCommandHandler createUserCommand,
-        UpdateUserCommandHandler updateUserCommand,
-        DeleteUserCommandHandler deleteUserCommand
+            GetAllUsersQueryHandler getAllUsersQuery,
+            GetUserQueryHandler getUserQuery,
+            GetUserTeamsQueryHandler getUserTeamsQuery,
+            UpdateUserCommandHandler updateUserCommand,
+            DeleteUserCommandHandler deleteUserCommand
     ) {
         this.getAllUsersQuery = getAllUsersQuery;
         this.getUserQuery = getUserQuery;
-        this.createUserCommand = createUserCommand;
+        this.getUserTeamsQuery = getUserTeamsQuery;
         this.updateUserCommand = updateUserCommand;
         this.deleteUserCommand = deleteUserCommand;
     }
@@ -67,16 +66,12 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("")
-    public ResponseEntity<?> createUser(@RequestBody CreateUserRequest request) {
-        createUserCommand.execute(
-            new CreateUserCommand(
-                request.getUsername(),
-                request.getEmail(),
-                request.getPassword()
-            )
+    @GetMapping("/{userId}/teams")
+    public ResponseEntity<?> getUserTeams(@PathVariable("userId") int userId) {
+        GetUserTeamsQueryResult result = getUserTeamsQuery.execute(
+                new GetUserTeamsQuery(userId)
         );
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(result.getTeams(), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
