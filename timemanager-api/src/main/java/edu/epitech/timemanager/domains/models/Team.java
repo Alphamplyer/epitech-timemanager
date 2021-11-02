@@ -20,6 +20,7 @@ import java.util.Set;
 public class Team implements Serializable {
 
     @Id
+    @GeneratedValue
     private Integer id;
 
     @Column(nullable = false)

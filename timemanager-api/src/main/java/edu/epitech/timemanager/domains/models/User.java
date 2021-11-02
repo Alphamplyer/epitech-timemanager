@@ -21,6 +21,7 @@ import java.util.Set;
 public class User implements Serializable {
 
     @Id
+    @GeneratedValue
     private Integer id;
 
     @Column(unique = true, nullable = false)
