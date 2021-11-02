@@ -18,6 +18,7 @@ import edu.epitech.timemanager.domains.usescases.teams.queries.get_teams.GetTeam
 import edu.epitech.timemanager.domains.usescases.teams.queries.get_teams.GetTeamsQueryResult;
 import edu.epitech.timemanager.presentation.api.dto.teams.CreateTeamRequest;
 import edu.epitech.timemanager.presentation.api.dto.teams.UpdateTeamRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class TeamController {
     private final GetTeamQueryHandler getTeamQuery;
     private final GetTeamsQueryHandler getTeamsQuery;
 
-
+    @Autowired
     public TeamController(
             AddUserToTeamCommandHandler addUserToTeamCommand,
             CreateTeamCommandHandler createTeamCommand,
