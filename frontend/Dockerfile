@@ -1,0 +1,6 @@
+FROM node:lts-alpine
+
+COPY . .
+RUN npm i
+
+CMD [ "npm", "run", "serve" ]
