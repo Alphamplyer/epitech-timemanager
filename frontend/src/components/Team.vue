@@ -5,6 +5,8 @@
         <div>
             {{ this.team.title }}
         </div>
+
+        <h3>Delete</h3>
     </div>
 </template>
 
@@ -24,6 +26,7 @@ export default {
     width: 200px;
     height: 200px;
     border-radius: 32px;
+    margin: 4px;
     background-color: #dddde6;
 }
 

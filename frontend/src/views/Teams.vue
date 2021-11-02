@@ -14,20 +14,14 @@ export default {
     name: 'Teams',
     methods: {
         getTeams() {
-            try {
-                console.log('getTeams')
-
-                return [
-                    {
-                        title: 'team1',
-                    },
-                    {
-                        title: 'team2',
-                    },
-                ]
-            } catch (error) {
-                console.log(error)
-            }
+            return [
+                {
+                    title: 'team1',
+                },
+                {
+                    title: 'team2',
+                },
+            ]
         },
     },
     components: {

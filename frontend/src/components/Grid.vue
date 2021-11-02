@@ -14,20 +14,7 @@ export default {
     components: {
         Team,
     },
-    data() {
-        return {
-            teams: [
-                {
-                    title: 'team1',
-                    id: '1',
-                },
-                {
-                    title: 'team2',
-                    id: '2',
-                },
-            ],
-        }
-    },
+    props: ['teams']
 }
 </script>
 
@@ -42,9 +29,5 @@ export default {
     min-height: 85vh;
     border-radius: 48px;
     margin-inline: 12px;
-}
-
-#grid div + div {
-    margin-left: 12px;
 }
 </style>
