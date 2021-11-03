@@ -1,12 +1,12 @@
 <template>
     <div id="content">
-        <UserBar />
+        <Navbar />
         <Grid v-bind:teams="this.teams" />
     </div>
 </template>
 
 <script>
-import UserBar from '../components/UserBar.vue'
+import Navbar from '../components/Navbar.vue'
 import Grid from '../components/Grid.vue'
 
 export default {
@@ -26,7 +26,7 @@ export default {
         },
     },
     components: {
-        UserBar,
+        Navbar,
         Grid,
     },
     data() {

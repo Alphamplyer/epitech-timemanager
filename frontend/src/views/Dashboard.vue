@@ -1,6 +1,6 @@
 <template>
     <div id="content">
-        <UserBar />
+        <Navbar />
 
         <div id="cells">
             <div id="row">
@@ -18,12 +18,12 @@
 
 <script>
 import Cell from '../components/Cell.vue'
-import UserBar from '../components/UserBar.vue'
+import Navbar from '../components/Navbar.vue'
 
 export default {
     name: 'Dashboard',
     components: {
-        UserBar,
+        Navbar,
         Cell,
     },
 }
