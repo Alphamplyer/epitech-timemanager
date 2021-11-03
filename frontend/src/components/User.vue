@@ -1,29 +1,28 @@
 <template>
-    <div id="team">
-        <img id="teamPic" alt="Team" src="../assets/team.svg" />
+    <div id="user">
+        <img alt="user_icon" src="../assets/user.svg" />
         <h1 class="title">{{ title }}</h1>
-        <h3 class="button" v-on:click="getUsers">Users</h3>
-        <h3 class="button delete" v-on:click="deleteTeam">Delete</h3>
+        <h3 class="button delete" v-on:click="deleteUser">Delete</h3>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Team',
+    name: 'User',
     methods: {
         getUsers() {
             console.log('getUsers()')
         },
-        deleteTeam() {
-            console.log('deleteTeam()')
+        deleteUser() {
+            console.log('deleteUser()')
         },
     },
-    props: ['title', 'team'],
+    props: ['title', 'user'],
 }
 </script>
 
 <style>
-#team {
+#user {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,7 +34,7 @@ export default {
     background-color: #dddde6;
 }
 
-#teamPic {
+img {
     width: 90px;
 }
 

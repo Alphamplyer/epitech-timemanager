@@ -1,13 +1,12 @@
 <template>
     <div id="content">
-        <UserBar />
-
-        <Grid teams="{{ this.teams }}" />
+        <Navbar />
+        <Grid v-bind:objects="this.teams" v-bind:type="type" />
     </div>
 </template>
 
 <script>
-import UserBar from '../components/UserBar.vue'
+import Navbar from '../components/Navbar.vue'
 import Grid from '../components/Grid.vue'
 
 export default {
@@ -16,21 +15,24 @@ export default {
         getTeams() {
             return [
                 {
+                    id: 1,
                     title: 'team1',
                 },
                 {
+                    id: 2,
                     title: 'team2',
                 },
             ]
         },
     },
     components: {
-        UserBar,
+        Navbar,
         Grid,
     },
     data() {
         return {
             teams: this.getTeams(),
+            type: 'teamType',
         }
     },
 }

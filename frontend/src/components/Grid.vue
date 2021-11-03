@@ -1,20 +1,27 @@
 <template>
     <div id="grid">
-        <div id="teams" v-for="team in teams" :key="team">
-            <Team team="{{ team }}" />
+        <div id="gridItem" v-for="object in objects" :key="object.id">
+            <div v-if="type == 'teamType'">
+                <Team v-bind:title="object.title" />
+            </div>
+            <div v-if="type == 'userType'">
+                <User v-bind:title="object.title" />
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import Team from './Team.vue'
+import User from './User.vue'
 
 export default {
     name: 'Grid',
     components: {
         Team,
+        User,
     },
-    props: ['teams'],
+    props: ['objects', 'type'],
 }
 </script>
 

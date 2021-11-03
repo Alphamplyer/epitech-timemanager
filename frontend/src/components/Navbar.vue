@@ -26,7 +26,7 @@
 
 <script>
 export default {
-    name: 'UserBar',
+    name: 'Navbar',
     methods: {
         dashboard() {
             this.$router.push('/user/dashboard')
