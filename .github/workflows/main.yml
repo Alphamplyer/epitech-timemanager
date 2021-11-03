@@ -43,11 +43,11 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
       
-      - name: Run Server
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} 'rm -rf ./*'
+      - name: Remove old files
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} rm -rf ./home/${{ secrets.SSH_USER }}/*
       
       - name: Deploy with rsync
-        run: rsync -avz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}
+        run: rsync -avz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}/project
 
       - name: Run Server
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} './run_server.sh'
