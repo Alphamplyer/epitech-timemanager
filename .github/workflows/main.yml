@@ -26,11 +26,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
-      - name: Build
-        run: |
-          cd timemanager-api
-          mvn clean package -DskipTests
-          cd ..
+      #- name: Build
+      #  run: |
+      #    cd timemanager-api
+      #    mvn clean package -DskipTests
+      #    cd ..
+          
+      #- name: Copy files into folder to deploy
+      #  run: |
+      #    cp 
           
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
@@ -42,7 +46,7 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         
       - name: Deploy with rsync
-        run: rsync -avz "ssh -i ~/.ssh/github_actions" ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}
+        run: rsync -avz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}
 
       - name: Run Server
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} './run_server.sh'
