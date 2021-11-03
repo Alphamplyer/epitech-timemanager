@@ -1,5 +1,5 @@
 <template>
-    <div id="cell">
+    <div id="cell" v-bind:style="this.style">
         <h1 id="title">
             {{ title }}
         </h1>
@@ -8,7 +8,7 @@
 
 <script>
 export default {
-    props: ['title'],
+    props: ['title', 'style'],
 }
 </script>
 
@@ -16,9 +16,9 @@ export default {
 #cell {
     display: flex;
     flex-direction: column;
+    flex-flow: column;
     width: 100%;
-    height: 100%;
-    min-height: 260px;
+    height: 40vh;
     justify-content: center;
     align-items: center;
     margin: 6px;

@@ -4,12 +4,12 @@
 
         <div id="cells">
             <div id="row">
-                <Cell title="Working ?" />
-                <Cell title="test2" />
-                <Cell title="test3" />
+                <Cell title="test" />
+                <Switcher title="Working ?" />
             </div>
 
             <div id="row">
+                <Cell title="test2" />
                 <Cell title="test4" />
             </div>
         </div>
@@ -18,6 +18,7 @@
 
 <script>
 import Cell from '../components/Cell.vue'
+import Switcher from '../components/Switcher.vue'
 import UserBar from '../components/UserBar.vue'
 
 export default {
@@ -25,6 +26,7 @@ export default {
     components: {
         UserBar,
         Cell,
+        Switcher,
     },
 }
 </script>
@@ -32,11 +34,13 @@ export default {
 <style>
 #content {
     display: flex;
+    height: 100%;
     flex-direction: column;
     flex-wrap: wrap;
 }
 
 #cells {
+    display: table;
     justify-content: center;
 }
 
