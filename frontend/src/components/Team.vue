@@ -1,7 +1,7 @@
 <template>
     <div id="team">
-        <img id="teamPic" alt="Team" src="../assets/team.svg" />
-        <h1 class="title">{{ title }}</h1>
+        <img alt="Team" src="../assets/team.svg" />
+        <h1 class="title">{{ object.title }}</h1>
         <h3 class="button" v-on:click="getUsers">Users</h3>
         <h3 class="button delete" v-on:click="deleteTeam">Delete</h3>
     </div>
@@ -18,7 +18,7 @@ export default {
             console.log('deleteTeam()')
         },
     },
-    props: ['title', 'team'],
+    props: ['object', 'team'],
 }
 </script>
 
@@ -35,7 +35,11 @@ export default {
     background-color: #dddde6;
 }
 
-#teamPic {
+#team:hover {
+    filter: brightness(110%);
+}
+
+img {
     width: 90px;
 }
 

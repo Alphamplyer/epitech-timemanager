@@ -74,4 +74,8 @@ export default {
     margin-right: 4px;
     right: 0;
 }
+
+span:hover {
+    filter: brightness(150%);
+}
 </style>

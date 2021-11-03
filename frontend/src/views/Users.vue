@@ -16,11 +16,12 @@ export default {
             return [
                 {
                     id: 1,
-                    title: 'user1',
+                    firstname: 'Théo',
+                    lastname: 'Ackermann',
                 },
                 {
                     id: 2,
-                    title: 'user2',
+                    firstname: 'user2',
                 },
             ]
         },

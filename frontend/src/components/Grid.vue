@@ -2,10 +2,10 @@
     <div id="grid">
         <div id="gridItem" v-for="object in objects" :key="object.id">
             <div v-if="type == 'teamType'">
-                <Team v-bind:title="object.title" />
+                <Team v-bind:object="object" />
             </div>
             <div v-if="type == 'userType'">
-                <User v-bind:title="object.title" />
+                <User v-bind:object="object" />
             </div>
         </div>
     </div>
