@@ -1,7 +1,7 @@
 <template>
     <div id="grid">
-        <div id="teams" v-for="team in teams" :key="team">
-            <Team team="{{ team }}" />
+        <div id="teams" v-for="team in teams" :key="team.id">
+            <Team v-bind:title="team.title" />
         </div>
     </div>
 </template>

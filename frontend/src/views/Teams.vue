@@ -1,8 +1,7 @@
 <template>
     <div id="content">
         <UserBar />
-
-        <Grid teams="{{ this.teams }}" />
+        <Grid v-bind:teams="this.teams" />
     </div>
 </template>
 
@@ -16,9 +15,11 @@ export default {
         getTeams() {
             return [
                 {
+                    id: 1,
                     title: 'team1',
                 },
                 {
+                    id: 2,
                     title: 'team2',
                 },
             ]
