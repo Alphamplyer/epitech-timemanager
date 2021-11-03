@@ -1,7 +1,7 @@
 <template>
     <div id="content">
         <Navbar />
-        <Grid v-bind:objects="this.users" v-bind:type="type"/>
+        <Grid v-bind:objects="this.users" v-bind:type="type" />
     </div>
 </template>
 
