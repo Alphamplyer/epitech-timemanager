@@ -18,6 +18,7 @@ import java.util.Date;
 public class WorkingTime implements Serializable {
 
     @Id
+    @GeneratedValue
     private Integer id;
 
     @Temporal(TemporalType.TIMESTAMP)

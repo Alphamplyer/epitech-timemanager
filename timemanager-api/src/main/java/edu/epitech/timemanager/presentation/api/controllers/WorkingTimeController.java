@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
-@CrossOrigin(origins = "http://localhost:4000")
+
 @RestController
 @RequestMapping("/api/workingtimes")
 public class WorkingTimeController {
