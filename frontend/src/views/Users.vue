@@ -1,7 +1,7 @@
 <template>
     <div id="content">
         <Navbar />
-        <Grid v-bind:teams="this.users" />
+        <Grid v-bind:objects="this.users" v-bind:type="type"/>
     </div>
 </template>
 
@@ -32,6 +32,7 @@ export default {
     data() {
         return {
             users: this.getUsers(),
+            type: 'userType',
         }
     },
 }
