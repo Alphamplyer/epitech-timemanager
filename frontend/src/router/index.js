@@ -34,6 +34,12 @@ const routes = [
     name: 'Profile',
     component: () => import('../views/Profile.vue')
   },
+  {
+    // will match everything (404)
+    path: '*',
+    name: '404',
+    component: () => import('../views/404.vue')
+  }
 ]
 
 const router = new VueRouter({
