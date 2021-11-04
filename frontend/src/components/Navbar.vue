@@ -38,16 +38,16 @@
             <p>DASHBOARD</p>
           </v-list-item>
           <v-list-item>
-            <p>PROFILE</p>
+            <p v-on:click="toProfile()">PROFILE</p>
           </v-list-item>
           <v-list-item>
-            <p>ALL TEAMS</p>
+            <p v-on:click="toTeams()">ALL TEAMS</p>
           </v-list-item>
           <v-list-item>
-            <p>ALL USERS</p>
+            <p v-on:click="toUsers()">ALL USERS</p>
           </v-list-item>
           <v-list-item style="color: #FF4500;">
-            <p>LOG OUT</p>
+            <p v-on:click="logOut()">LOG OUT</p>
           </v-list-item>
         </v-list-item-content>
     </v-list-item>
@@ -65,6 +65,18 @@ export default {
             this.isWorking = !this.isWorking
             console.log('isWorking:', this.isWorking)
         },
+        toProfile() {
+            this.$router.push('/user/profile')
+        },
+        toTeams() {
+            this.$router.push('/user/teams')
+        },
+        toUsers() {
+            this.$router.push('/user/users')
+        },
+        logOut() {
+            this.$router.push('/')
+        }
     },
     created() {
         setInterval(() => {
