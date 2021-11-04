@@ -1,4 +1,4 @@
-# tmfrontend
+# time_manager
 
 ## Project setup
 ```
