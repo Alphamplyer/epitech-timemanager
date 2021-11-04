@@ -2,21 +2,20 @@
 <div>
     <Navbar/>
     <div id="users">
-        <div id="firstrow" class="row">
+        <div id="titleRow" class="row">
             <h1 class="usersTitle">All Users</h1>
         </div>
         <div id="secondrow" class="row">
-            <div class="user" v-for="user in users" :key="user">
+            <div class="user" v-for="user in users" :key="user.id">
                 <v-card
                     elevation="2"
                     outlined>
-                    <span v-on:click="goToUserProfile()">{{ user.firstname }} {{ user.lastname }}</span>
+                    <span class="cursor-pointer" v-on:click="goToUserProfile(user.id)">{{ user.firstname }} {{ user.lastname }}</span>
 
                 </v-card>
             </div>
         </div>
         <div id="thirdrow" class="row">
-            thirdrow
         </div>
     </div>
 </div>
@@ -41,8 +40,8 @@ export default {
                 },
             ];
         },
-        goToUserProfile() {
-            this.$router.push("/user/profile");
+        goToUserProfile(id) {
+            this.$router.push(`/user/${id}`);
         }
     },
     data() {
@@ -75,7 +74,7 @@ export default {
     margin-left: 2%;
 }
 
-#firstrow {
+#titleRow {
     grid-column: 1 / 3;
     grid-row: 1;
     background-color: #FFFFFF;
