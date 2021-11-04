@@ -1,15 +1,10 @@
 server:
   port: 4000
 
-springdoc:
-  swagger-ui:
-    disable-swagger-default-url: true
-    configUrl: "/v3/api-docs/swagger-config"
-    
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     url: "jdbc:postgresql://localhost:5432/timemanager"

@@ -1,8 +1,7 @@
 package edu.epitech.timemanager.domains.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,11 +9,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "teams")
 public class Team implements Serializable {
@@ -29,6 +31,7 @@ public class Team implements Serializable {
     private String description = "";
 
     @ManyToMany(mappedBy = "joinedTeams")
+    @ToString.Exclude
     private Set<User> members = new HashSet<>();
 
 
@@ -62,5 +65,18 @@ public class Team implements Serializable {
 
     public void removeUser(User user) {
         members.removeIf(user1 -> user1.getId().equals(user.getId()));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Team team = (Team) o;
+        return id != null && Objects.equals(id, team.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
