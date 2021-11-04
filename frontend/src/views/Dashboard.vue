@@ -6,7 +6,7 @@
                 workingTime
             </div>
             <div id="dailyWorkingTime">
-                <DailyChartVue :chartdata="chartData" :options="chartOptions"/>
+                dailyWorkingTime
             </div>
             <div id="weeklyWorkingTime">
                 weeklyWorkingTime
@@ -17,26 +17,9 @@
 
 <script>
 import NavbarVue from "../components/Navbar.vue";
-import DailyChartVue from "../components/DailyChart.vue";
     export default {
     name: "Dashboard",
-    components: { NavbarVue, DailyChartVue },
-    data: () => ({
-    chartdata: {
-      labels: ['January', 'February'],
-      datasets: [
-        {
-          label: 'Data One',
-          backgroundColor: '#f87979',
-          data: [40, 20]
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false
-    }
-  }),   
+    components: { NavbarVue },
 }
 </script>
 
