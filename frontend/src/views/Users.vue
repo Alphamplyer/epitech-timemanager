@@ -1,16 +1,57 @@
 <template>
+<div>
+    <Navbar/>
     <div id="users">
         <div id="firstrow" class="row">
             <h1 class="usersTitle">All Users</h1>
         </div>
         <div id="secondrow" class="row">
-            secondrow
+            <div class="user" v-for="user in users" :key="user">
+                <v-card
+                    elevation="2"
+                    outlined>
+                    <span v-on:click="goToUserProfile()">{{ user.firstname }} {{ user.lastname }}</span>
+
+                </v-card>
+            </div>
         </div>
         <div id="thirdrow" class="row">
             thirdrow
         </div>
     </div>
+</div>
 </template>
+
+<script>
+import Navbar from "../components/Navbar.vue"
+export default {
+    name: "Users",
+    methods: {
+        getUsers() {
+            return [
+                {
+                    id: 1,
+                    firstname: "Théo",
+                    lastname: "Ackermann",
+                },
+                {
+                    id: 2,
+                    firstname: "user2",
+                    lastname: "user2",
+                },
+            ];
+        },
+        goToUserProfile() {
+            this.$router.push("/user/profile");
+        }
+    },
+    data() {
+        return {
+            users: this.getUsers(),
+        };
+    },
+    components: { Navbar }
+}</script>
 
 <style>
 
