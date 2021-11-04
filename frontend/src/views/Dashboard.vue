@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="d-flex flex-row justify-start" style="background-color: #DDDDE6">
         <NavbarVue/>
-        <div id="dashboard">
+        <!-- <div id="dashboard">
             <div id="workingTime">
                 workingTime
             </div>
@@ -11,16 +11,16 @@
             <div id="weeklyWorkingTime">
                 weeklyWorkingTime
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script>
 import NavbarVue from "../components/Navbar.vue";
-import DailyChartVue from "../components/DailyChart.vue";
+// import DailyChartVue from "../components/DailyChart.vue";
     export default {
     name: "Dashboard",
-    components: { NavbarVue, DailyChartVue },
+    components: { NavbarVue },
     data: () => ({
     chartdata: {
       labels: ['January', 'February'],

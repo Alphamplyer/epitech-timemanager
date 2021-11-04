@@ -1,64 +1,84 @@
 <template>
   <v-card
-    height="100%"
+    height="100vh"
     width="256"
-    class="mx-auto"
     style="float: left;"
   >
-    <v-navigation-drawer permanent>
-      <v-list-item>
+    <v-container class="font-weight-bold" permanent>
+      <v-list-item class="d-flex justify-center align-center text-center my-4">
         <v-list-item-content>
-          <v-list-item-title class="text-h6" style="color: #2196F3;">
+          <v-container style="color: #2196F3; font-size: 32px; overflow-wrap: break-word; word-wrap: break-word; hyphens: auto;">
             TIME MANAGER
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            username
+          </v-container>
+          <v-list-item-subtitle class="text-capitalize black--text">
+            <v-icon color="black">mdi-account</v-icon>username
           </v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
 
-      <v-divider/>
+      <v-divider class="black"/>
 
-    <v-list-item>
-        <v-list-item-content>
-          <v-list-item>
-            {{ this.workingDate }}
-          </v-list-item>
-          <v-list-item>
-            is working
-          </v-list-item>
-        </v-list-item-content>
-    </v-list-item>
+      <v-list-item>
+          <v-container
+            class="text-center"
+          >
+            <v-container>
+              {{ this.workingDate }}
+            </v-container>
+            <v-container
+              style="font-size: 24px"
+              class="green--text"
+            >
+              Is Working !
+            </v-container>
+          </v-container>
+      </v-list-item>
 
-    <v-divider/>
+      <v-divider class="black"/>
 
-    <v-list-item>
-        <v-list-item-content>
-          <v-list-item>
-            <p>DASHBOARD</p>
-          </v-list-item>
-          <v-list-item>
-            <p v-on:click="toProfile()">PROFILE</p>
-          </v-list-item>
-          <v-list-item>
-            <p v-on:click="toTeams()">ALL TEAMS</p>
-          </v-list-item>
-          <v-list-item>
-            <p v-on:click="toUsers()">ALL USERS</p>
-          </v-list-item>
-          <v-list-item style="color: #FF4500;">
-            <p v-on:click="logOut()">LOG OUT</p>
-          </v-list-item>
-        </v-list-item-content>
-    </v-list-item>
+      <v-container class="d-flex flex-column" style="font-size: 24px;">
+        <v-container
+          class="cursor-pointer"
+        >
+          <v-icon>mdi-view-dashboard</v-icon> Dashboard
+        </v-container>
 
-    </v-navigation-drawer>
+        <v-container
+          class="cursor-pointer"
+          v-on:click="toProfile()"
+        >
+          <v-icon>mdi-account</v-icon> Profile
+        </v-container>
+
+        <v-container
+          class="cursor-pointer"
+          v-on:click="toTeams()"
+        >
+          <v-icon>mdi-tie</v-icon> All Teams
+        </v-container>
+
+        <v-container
+          class="cursor-pointer"
+          v-on:click="toUsers()"
+        >
+          <v-icon>mdi-account-group</v-icon> All Users
+        </v-container>
+
+        <v-container
+          class="red--text text-center"
+          v-on:click="logOut()"
+        >
+          Log Out
+        </v-container>
+      </v-container>
+    </v-container>
   </v-card>
 </template>
 
 <script>
-import { ref } from 'vue'
+import ref from 'vue'
 import moment from 'moment'
+
 export default {
     methods: {
         setWorking() {
@@ -105,7 +125,7 @@ export default {
   justify-content: center;
 }
 
-.v-list-item > p{
+.cursor-pointer {
   cursor: pointer;
 }
 

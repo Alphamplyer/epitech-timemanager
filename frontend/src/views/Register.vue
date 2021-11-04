@@ -14,6 +14,7 @@
                 <v-text-field 
                     solo
                     label="Email"
+                    autofocus
                 />
 
                 <v-text-field 
@@ -23,7 +24,8 @@
 
                 <v-text-field 
                     solo 
-                    label="Password" 
+                    label="Password"
+                    type="password"
                 />
             </v-container>
 
@@ -53,15 +55,30 @@
 </template>
 
 <script>
+import { createUser } from '../../lib/user.js'
+import ref from 'vue'
 
 export default {
-    methods: {
-        logIn() {
-            this.$router.push('/')
+    setup() {
+        const { email, username, password } = ref('')
+
+        return {
+            email,
+            username,
+            password
         }
     },
-    setup() {
-        
+    methods: {
+        async logIn() {
+            const res = await createUser({
+                email: 'mail',
+                username: 'username',
+                password: 'password'
+            })
+
+            console.log('res:', res)
+            // this.$router.push('/')
+        }
     },
 }
 </script>
