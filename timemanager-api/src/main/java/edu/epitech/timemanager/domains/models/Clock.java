@@ -1,18 +1,20 @@
 package edu.epitech.timemanager.domains.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "clocks")
 public class Clock implements Serializable {
@@ -48,10 +50,29 @@ public class Clock implements Serializable {
         this.id = id;
     }
 
+    public Clock(Date enabledAt, boolean enable, User user) {
+        this.enabledAt = enabledAt;
+        this.enable = enable;
+        this.user = user;
+    }
+
     public Clock(Integer id, Date enabledAt, boolean enable, User user) {
         this.id = id;
         this.enabledAt = enabledAt;
         this.enable = enable;
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Clock clock = (Clock) o;
+        return id != null && Objects.equals(id, clock.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

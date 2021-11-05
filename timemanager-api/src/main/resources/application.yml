@@ -9,7 +9,7 @@ springdoc:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     url: "jdbc:postgresql://localhost:5432/timemanager"
