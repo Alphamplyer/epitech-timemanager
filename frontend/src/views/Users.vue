@@ -5,7 +5,7 @@
       <div id="titleRow" class="customRow">
         <h1 class="usersTitle">All Users</h1>
       </div>
-        <Grid v-bind:objects="this.users" v-bind:type="type"/>
+      <Grid v-bind:objects="this.users" v-bind:type="type" />
       <div id="thirdrow" class="customRow"></div>
     </div>
   </div>
@@ -16,35 +16,95 @@ import Navbar from "../components/Navbar.vue";
 import Grid from "../components/Grid.vue";
 
 export default {
-    name: "Users",
-    methods: {
-        getUsers() {
-            return [
-                {
-                    id: 1,
-                    firstname: "Théo",
-                    lastname: "Ackermann",
-                },
-                {
-                    id: 2,
-                    firstname: "user2",
-                    lastname: "user2",
-                },
-            ];
+  name: "Users",
+  methods: {
+    getUsers() {
+      return [
+        {
+          id: 1,
+          firstname: "Théo",
+          lastname: "Ackermann",
         },
-        goToUserProfile(id) {
-            this.$router.push(`/user/${id}`);
-        }
+        {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+                {
+          id: 2,
+          firstname: "user2",
+          lastname: "user2",
+        },
+      ];
     },
-    data() {
-        return {
-            users: this.getUsers(),
-            type: 'userType',
-        };
+    goToUserProfile(id) {
+      this.$router.push(`/user/${id}`);
     },
-    props: ['object'],
-    components: { Navbar, Grid },
-}
+  },
+  data() {
+    return {
+      users: this.getUsers(),
+      type: "userType",
+    };
+  },
+  props: ["object"],
+  components: { Navbar, Grid },
+};
 </script>
 
 <style scoped>
@@ -80,6 +140,7 @@ export default {
   grid-row: 2;
   background-color: #ffffff;
   display: inline-flex;
+  flex-wrap: wrap;
 }
 
 #thirdrow {
