@@ -2,13 +2,13 @@ package edu.epitech.timemanager.configurations.filters;
 
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.epitech.timemanager.domains.models.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -48,12 +48,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             .withExpiresAt(new java.util.Date(System.currentTimeMillis() + 1000 * 60 * 60 * 5))
             .withIssuer(request.getRequestURL().toString())
             .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+            .withClaim("id", user.getId())
             .sign(algorithm);
         String refreshToken = com.auth0.jwt.JWT.create()
             .withSubject(user.getUsername())
             .withExpiresAt(new java.util.Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
             .withIssuer(request.getRequestURL().toString())
             .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+            .withClaim("id", user.getId())
             .sign(algorithm);
 //        response.setHeader("token", token);
 //        response.setHeader("refreshToken", refreshToken);

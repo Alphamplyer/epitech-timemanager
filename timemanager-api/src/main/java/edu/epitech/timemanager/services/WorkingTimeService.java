@@ -12,5 +12,5 @@ public interface WorkingTimeService {
 
     WorkingTime createWorkingTime(WorkingTime workingTime);
     WorkingTime updateWorkingTime(int id, WorkingTime workingTime);
-    void deleteWorkingTime(int id);
+    void deleteWorkingTime(int id, int deleterId);
 }

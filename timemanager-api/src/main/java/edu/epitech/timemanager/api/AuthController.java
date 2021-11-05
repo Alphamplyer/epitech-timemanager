@@ -48,6 +48,7 @@ public class AuthController {
                     .withExpiresAt(new java.util.Date(System.currentTimeMillis() + 1000 * 60 * 60 * 5))
                     .withIssuer(request.getRequestURL().toString())
                     .withClaim("roles", user.getPermissions().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                    .withClaim("id", user.getId())
                     .sign(algorithm);
                 Map<String, String> tokens = Map.of("access_token", token, "refresh_token", refreshToken);
                 response.setContentType(APPLICATION_JSON_VALUE);

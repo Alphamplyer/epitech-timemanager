@@ -2,11 +2,14 @@ package edu.epitech.timemanager.api;
 
 import edu.epitech.timemanager.domains.mappers.ClockMappers;
 import edu.epitech.timemanager.domains.models.Clock;
+import edu.epitech.timemanager.domains.models.User;
 import edu.epitech.timemanager.services.ClockService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,8 +19,12 @@ public class ClockController {
     private final ClockMappers clockMappers = Mappers.getMapper(ClockMappers.class);
     private final ClockService clockService;
 
+    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getUserClock(@PathVariable("userId") int userId) {
+    public ResponseEntity<?> getUserClock(@AuthenticationPrincipal User user, @PathVariable("userId") int userId) {
+        if (user.getId() != userId)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
         Clock clock = clockService.getUserClock(userId);
 
         if (clock == null) {
@@ -27,8 +34,12 @@ public class ClockController {
         return ResponseEntity.ok(clockMappers.clockToClockDto(clock));
     }
 
+    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @PostMapping("/{userId}")
-    public ResponseEntity<?> toggleUserClock(@PathVariable("userId") int userId) {
+    public ResponseEntity<?> toggleUserClock(@AuthenticationPrincipal User user, @PathVariable("userId") int userId) {
+        if (user.getId() != userId)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
         Clock clock = clockService.toggleUserClock(userId);
 
         if (clock == null)

@@ -5,7 +5,6 @@ import edu.epitech.timemanager.persistence.UserRepository;
 import edu.epitech.timemanager.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -84,7 +82,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             log.info("User found with username or email: {}", login);
         }
 
-        Collection<GrantedAuthority> authorities = user.getPermissions();
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getHashedPassword(), authorities);
+        return user;
     }
 }
