@@ -70,7 +70,7 @@
         </v-container>
 
         <v-container
-          class="red--text text-center"
+          class="red--text text-center cursor-pointer"
           v-on:click="logOut()"
         >
           Log Out
