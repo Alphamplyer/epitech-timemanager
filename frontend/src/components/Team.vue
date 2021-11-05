@@ -41,36 +41,24 @@
         </div>
       </v-card-actions>
       <v-card-actions>
-        <div class="text-center">
-          <v-dialog v-model="dialogDelete" width="30%">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn elevation="2" x-small color="error" v-bind="attrs" v-on="on">Delete</v-btn>
-            </template>
-            <v-card>
-              <v-card-title class="text-h6 lighten-2">Are you sure you want to delete {{object.title}} ?</v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" text @click="dialogDelete = false">YES</v-btn>
-                <v-btn color="error" text @click="dialogDelete = false">NO</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </div>
+        <Delete v-bind:object="object" v-bind:type="type"/>
       </v-card-actions>
     </v-row>
   </v-card>
 </template>
 
 <script>
+import Delete from "./Dialogs/Delete.vue";
 export default {
-  name: "Team",
-  props: ["object"],
-  data() {
-    return {
-      dialogUsers: false,
-      dialogDelete: false
-    }
-  }
+    name: "Team",
+    props: ["object", "type"],
+    data() {
+        return {
+            dialogUsers: false,
+            dialogDelete: false
+        };
+    },
+    components: { Delete }
 };
 </script>
 
