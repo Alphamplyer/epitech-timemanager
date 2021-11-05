@@ -18,6 +18,7 @@
             <v-container class="py-4">
                 <v-text-field 
                     solo
+                    autofocus
                     label="Username"
                     class="text-center"
                 />

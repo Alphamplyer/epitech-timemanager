@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { createUser } from '../../lib/user.js'
+// import { createUser } from '../../lib/user.js'
 import ref from 'vue'
 
 export default {
@@ -70,14 +70,14 @@ export default {
     },
     methods: {
         async logIn() {
-            const res = await createUser({
-                email: 'mail',
-                username: 'username',
-                password: 'password'
-            })
+            // const res = await createUser({
+            //     email: 'mail',
+            //     username: 'username',
+            //     password: 'password'
+            // })
 
-            console.log('res:', res)
-            // this.$router.push('/')
+            // console.log('res:', res)
+            this.$router.push('/')
         }
     },
 }
