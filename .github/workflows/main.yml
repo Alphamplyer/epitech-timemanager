@@ -47,7 +47,7 @@ jobs:
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} rm -rf ~/*
       
       - name: Deploy with rsync
-        run: rsync -avz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }}
+        run: rsync -avz ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USER }} --delete
 
       - name: Run Server
         run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} './run_server.sh'
