@@ -135,14 +135,6 @@ export default {
   background-color: #ffffff;
 }
 
-#secondrow {
-  grid-column: 1 / 3;
-  grid-row: 2;
-  background-color: #ffffff;
-  display: inline-flex;
-  flex-wrap: wrap;
-}
-
 #thirdrow {
   grid-column: 1 / 3;
   grid-row: 3;

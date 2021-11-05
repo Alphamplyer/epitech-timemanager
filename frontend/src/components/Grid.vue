@@ -28,6 +28,7 @@ export default {
   grid-row: 2;
   background-color: #ffffff;
   display: inline-flex;
+  flex-wrap: wrap;
 }
 
 .customRow {
