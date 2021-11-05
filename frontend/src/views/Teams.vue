@@ -6,32 +6,7 @@
             <h1 class="teamsTitle">All Teams</h1>
         </div>
         <div id="secondrow" class="customRow">
-            <div class="team" v-for="team in teams" :key="team.id">
-                <v-card
-                    elevation="2"
-                    outlined
-                    style="width: 200px; height: 33%;">
-                    <v-card-title style="justify-content: center;">{{ team.title }}</v-card-title>
-                    <v-row
-                    style="justify-content: center;">
-                        <v-card-actions>
-                            <v-btn
-                            elevation="2"
-                            x-small>
-                                Users
-                            </v-btn>
-                        </v-card-actions>
-                        <v-card-actions>
-                            <v-btn
-                            elevation="2"
-                            x-small
-                            color="error">
-                                Delete
-                            </v-btn>
-                        </v-card-actions>
-                    </v-row>
-                </v-card>
-            </div>
+            <Grid v-bind:objects="this.teams" v-bind:type="type"/>
         </div>
         <div id="thirdrow" class="customRow">
         </div>
@@ -41,6 +16,7 @@
 
 <script>
 import Navbar from "../components/Navbar.vue"
+import Grid from "../components/Grid.vue"
 export default {
     name: "Teams",
     methods: {
@@ -60,10 +36,13 @@ export default {
     data() {
         return {
             teams: this.getTeams(),
+            type: 'teamType',
         };
     },
-    components: { Navbar }
-}</script>
+    props: ['object'],
+    components: { Navbar, Grid }
+}
+</script>
 
 <style scoped>
 
