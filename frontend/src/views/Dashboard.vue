@@ -4,7 +4,7 @@
 
         <v-container class="d-flex flex-column justify-start">
             <v-container class="d-flex flex-row">
-                <Switcher @isWorking="updateIsWorking" @ :isWorking="this.isWorking" />
+                <Switcher @isWorking="updateIsWorking" @workingTime="updateWorkingTime" :isWorking="this.isWorking" />
 
                 <v-container
                     style="height: 45vh; width: 61%; background-color: white"
@@ -41,12 +41,12 @@ import Switcher from "../components/Switcher.vue"
             this.isWorking = working
         },
         updateWorkingTime(workTime) {
-            this.workingTime = workTime
+            this.workingTime += workTime
         }
     },
     data() {
         return {
-            workingTime: '0S',
+            workingTime: 0,
             isWorking: false,
         }
     },

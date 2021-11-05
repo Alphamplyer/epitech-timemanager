@@ -1,30 +1,30 @@
 <template>
     <v-container 
         style="height: 45vh; width: 300px; background-color: white"
-        class="d-flex flex-column shadow rounded-lg text-center justify-space-between align-center"
+        class="d-flex flex-column shadow py-8 rounded-lg text-center justify-space-between align-center"
     >
         <p 
             class="font-weight-bold"
-            style="font-size: 28px;"
+            style="font-size: 34px;"
         >
             Working Time
         </p>
 
-        <v-container>
-            {{ this.isWorking ? `Working since ${this.startDate}` : `Last working session ended ${this.endDate}` }}
-            <br/>
-            {{ this.difference }}
+        <v-container 
+            class="font-weight-bold font-italic"
+            style="font-size: 48px"
+        >
+            {{ `${this.secToDuration(this.difference)}` }}
         </v-container>
 
         <v-btn 
-            fab
             large
-            :style="{'background-color': this.isWorking ? 'green' : 'red'}"
+            style="font-size: 32px"
+            class="shadow white--text text-capitalize font-weight-bold"
+            :style="{'background-color': this.isWorking ? '#FF4500' : '#4CAF50'}"
             v-on:click="setWorking()"
         >
-            <v-icon>
-                mdi-briefcase
-            </v-icon>
+            {{ this.isWorking ? 'Stop' : 'Start' }}
         </v-btn>
     </v-container>
 </template>
@@ -32,6 +32,7 @@
 <script>
 import moment from 'moment'
 import ref from 'vue'
+import { secToDuration } from '../../lib/date'
 
 export default {
     methods: {
@@ -40,17 +41,18 @@ export default {
                 this.startDate = moment().format('DD-MM-YYYY HH:mm:ss')
             } else {
                 this.endDate = moment().format('DD-MM-YYYY HH:mm:ss')
+                this.difference = 0
             }
             this.$emit('isWorking', !this.isWorking)
         },
+        secToDuration,
     },
     props: ['isWorking'],
     created() {
         setInterval(() => {
             if (this.isWorking) {
-                console.log('startDate:', this.startDate)
-                this.difference = moment.duration(moment(this.startDate).diff(moment().format('DD-MM-YYYY HH:mm:ss')))
-                console.log('diff:', this.difference)
+                this.difference = moment(this.startDate).diff(moment().format('DD-MM-YYYY HH:mm:ss')) / -1000 // ms to s
+                this.$emit('workingTime', 1)
             }
         }, 1000)
     },
@@ -64,8 +66,8 @@ export default {
     data() {
         return {
             startDate: moment(),
-            endDate: 'none',
-            difference: '0S'
+            endDate: this.startDate,
+            difference: 0
         }
     }
 }

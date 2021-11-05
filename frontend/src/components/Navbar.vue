@@ -26,8 +26,9 @@
       <v-list-item>
           <v-container class="text-center">
             <v-container style="font-size: 22px;">
-              Working Time 
-              {{ this.workingTime }}
+              {{
+                `Working Time ${this.secToDuration(this.workingTime)}`
+              }}
             </v-container>
 
             <v-container
@@ -44,6 +45,7 @@
       <v-container class="d-flex flex-column" style="font-size: 24px;">
         <v-container
           class="cursor-pointer"
+          v-on:click="toDashboard()"
         >
           <v-icon>mdi-view-dashboard</v-icon> Dashboard
         </v-container>
@@ -83,21 +85,26 @@
 <script>
 import ref from 'vue'
 import moment from 'moment'
+import { secToDuration } from '../../lib/date'
 
 export default {
     methods: {
-        toProfile() {
-            this.$router.push('/user/profile')
-        },
-        toTeams() {
-            this.$router.push('/user/teams')
-        },
-        toUsers() {
-            this.$router.push('/user/users')
-        },
-        logOut() {
-            this.$router.push('/')
-        }
+      toDashboard() {
+          this.$router.push('/user/dashboard')
+      },
+      toProfile() {
+          this.$router.push('/user/profile')
+      },
+      toTeams() {
+          this.$router.push('/user/teams')
+      },
+      toUsers() {
+          this.$router.push('/user/users')
+      },
+      logOut() {
+          this.$router.push('/')
+      },
+      secToDuration,
     },
     created() {
         setInterval(() => {
