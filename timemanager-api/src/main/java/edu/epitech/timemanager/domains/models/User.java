@@ -1,21 +1,22 @@
 package edu.epitech.timemanager.domains.models;
 
 import edu.epitech.timemanager.domains.models.enumerations.Role;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -54,6 +55,7 @@ public class User implements Serializable {
     private Clock clock;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @ToString.Exclude
     private Set<WorkingTime> workingTimes;
 
     @ManyToMany
@@ -62,11 +64,25 @@ public class User implements Serializable {
         joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id")
     )
+    @ToString.Exclude
     private Set<Team> joinedTeams = new HashSet<>();
 
 
     public User(Integer id) {
         this.id = id;
+    }
+
+    public User(String username, String email, String hashedPassword) {
+        this.username = username;
+        this.email = email;
+        this.hashedPassword = hashedPassword;
+        this.role = Role.EMPLOYEE;
+    }
+
+    public User(Integer id, String username, String email) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
     }
 
     public User(Integer id, String username, String email, String hashedPassword) {
@@ -83,5 +99,33 @@ public class User implements Serializable {
         this.email = email;
         this.hashedPassword = hashedPassword;
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        User user = (User) o;
+        return id != null && Objects.equals(id, user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    public Collection<GrantedAuthority> getPermissions() {
+        switch (role) {
+            case EMPLOYEE:
+                return Collections.singleton(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
+            case MANAGER:
+                return Collections.singleton(new SimpleGrantedAuthority("ROLE_MANAGER"));
+            case GLOBAL_MANAGER:
+                return Collections.singleton(new SimpleGrantedAuthority("ROLE_GLOBAL_MANAGER"));
+            case NONE:
+                return Collections.singleton(new SimpleGrantedAuthority("ROLE_ANONYMOUS"));
+            default:
+                return Collections.emptyList();
+        }
     }
 }
