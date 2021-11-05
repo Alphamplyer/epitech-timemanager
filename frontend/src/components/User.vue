@@ -8,21 +8,7 @@
     >
     <v-row style="justify-content: center">
       <v-card-actions>
-        <div class="text-center">
-          <v-dialog v-model="dialogPromote" width="30%">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn elevation="2" x-small color="primary" v-bind="attrs" v-on="on">PROMOTE</v-btn>
-            </template>
-            <v-card>
-              <v-card-title class="text-h6 lighten-2">Are you sure you want to promote {{object.firstname}} {{object.lastname}}?</v-card-title>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" text @click="dialogPromote = false">YES</v-btn>
-                <v-btn color="error" text @click="dialogPromote = false">NO</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </div>
+        <Promote v-bind:object="object"/>
       </v-card-actions>
       <v-card-actions>
         <Delete v-bind:object="object" v-bind:type="type"/>
@@ -33,6 +19,7 @@
 
 <script>
 import Delete from "./Dialogs/Delete.vue";
+import Promote from "./Dialogs/Promote.vue";
 export default {
     name: "User",
     methods: {
@@ -47,7 +34,7 @@ export default {
             dialogPromote: false
         };
     },
-    components: { Delete }
+    components: { Delete, Promote }
 };
 </script>
 
