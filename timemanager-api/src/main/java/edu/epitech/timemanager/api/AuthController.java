@@ -34,7 +34,7 @@ public class AuthController {
     @GetMapping("/refresh_token")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
-        if (authorizationHeader != null || authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 String refreshToken = authorizationHeader.substring(7);
                 Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());

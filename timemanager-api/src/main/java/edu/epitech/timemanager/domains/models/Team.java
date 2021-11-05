@@ -51,6 +51,11 @@ public class Team implements Serializable {
         this.id = id;
     }
 
+    public Team(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public Team(Integer id, String name, String description, Set<User> members) {
         this.id = id;
         this.name = name;

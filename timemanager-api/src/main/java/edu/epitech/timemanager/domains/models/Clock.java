@@ -50,6 +50,12 @@ public class Clock implements Serializable {
         this.id = id;
     }
 
+    public Clock(Date enabledAt, boolean enable, User user) {
+        this.enabledAt = enabledAt;
+        this.enable = enable;
+        this.user = user;
+    }
+
     public Clock(Integer id, Date enabledAt, boolean enable, User user) {
         this.id = id;
         this.enabledAt = enabledAt;

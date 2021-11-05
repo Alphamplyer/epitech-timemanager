@@ -1,4 +1,4 @@
-package edu.epitech.timemanager.domains.dto;
+package edu.epitech.timemanager.domains.dto.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

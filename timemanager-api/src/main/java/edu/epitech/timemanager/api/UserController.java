@@ -1,7 +1,7 @@
 package edu.epitech.timemanager.api;
 
-import edu.epitech.timemanager.domains.dto.CreateUserDto;
-import edu.epitech.timemanager.domains.dto.UpdateUserDto;
+import edu.epitech.timemanager.domains.dto.users.CreateUserDto;
+import edu.epitech.timemanager.domains.dto.users.UpdateUserDto;
 import edu.epitech.timemanager.domains.mappers.UserMappers;
 import edu.epitech.timemanager.domains.models.User;
 import edu.epitech.timemanager.services.UserService;
@@ -21,11 +21,6 @@ public class UserController {
     private final UserService userService;
     private final UserMappers userMappers = Mappers.getMapper(UserMappers.class);
 
-    @GetMapping("")
-    public ResponseEntity<?> getUsers() {
-        return ResponseEntity.ok(userMappers.usersToUserDtos(userService.getUsers()));
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") int id) {
         User user = userService.getUser(id);
@@ -37,9 +32,23 @@ public class UserController {
         return ResponseEntity.ok(userMappers.userToUserDto(user));
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<?> getUser(@RequestParam("username") String username, @RequestParam("email") String email) {
-        return ResponseEntity.ok(userMappers.userToUserDto(userService.getUserByUsernameOrEmail(username, email)));
+    @GetMapping("")
+    public ResponseEntity<?> getUser(
+        @RequestParam(value = "username", required = false) String username,
+        @RequestParam(value = "email", required = false) String email
+    ) {
+        if (username == null && email == null) {
+            return ResponseEntity.ok(userMappers.usersToUserDtos(userService.getUsers()));
+        } else if (username != null && email != null) {
+            User foundUser = userService.getUserByUsernameOrEmail(username, email);
+
+            if (foundUser == null)
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+            return ResponseEntity.ok(userMappers.userToUserDto(foundUser));
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("")

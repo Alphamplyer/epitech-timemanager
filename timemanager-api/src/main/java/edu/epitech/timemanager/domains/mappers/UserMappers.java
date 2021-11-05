@@ -1,6 +1,6 @@
 package edu.epitech.timemanager.domains.mappers;
 
-import edu.epitech.timemanager.domains.dto.UserDto;
+import edu.epitech.timemanager.domains.dto.users.UserDto;
 import edu.epitech.timemanager.domains.models.User;
 import org.mapstruct.Mapper;
 

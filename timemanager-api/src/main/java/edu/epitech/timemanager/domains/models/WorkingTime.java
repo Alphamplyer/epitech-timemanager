@@ -52,6 +52,17 @@ public class WorkingTime implements Serializable {
         this.id = id;
     }
 
+    public WorkingTime(Date startedAt, Date endedAt) {
+        this.startedAt = startedAt;
+        this.endedAt = endedAt;
+    }
+
+    public WorkingTime(Date startedAt, Date endedAt, User user) {
+        this.startedAt = startedAt;
+        this.endedAt = endedAt;
+        this.user = user;
+    }
+
     public WorkingTime(Integer id, Date startedAt, Date endedAt, User user) {
         this.id = id;
         this.startedAt = startedAt;
