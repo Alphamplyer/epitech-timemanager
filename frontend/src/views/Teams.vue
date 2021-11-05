@@ -58,6 +58,11 @@ export default {
     0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
 
+.teamsTitle {
+  font-size: xxx-large;
+  margin-left: 2%;
+}
+
 #titleRow {
   grid-column: 1 / 3;
   grid-row: 1;
