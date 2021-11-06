@@ -6,14 +6,21 @@
                 <h1 class="userName">Gabriel.R’s Profile</h1>
             </div>
             <div id="secondRow" class="customRow">
-                <div>
-                    <v-icon>mdi-account-circle</v-icon>
+                <div class="secondRowLeft">
+                    <v-icon class="userIcon">mdi-account-circle</v-icon>
+                    <div class="changeUser">
+                        <h3><v-icon>mdi-pencil-outline</v-icon><span>Edit User</span></h3>
+                        <h3><v-icon>mdi-account</v-icon><span>Promote User</span></h3>
+                        <h3><v-icon>mdi-delete</v-icon><span>Delete User</span></h3>
+                    </div>
+                </div>
+                <div class="secondRowRight">
                     <div class="userInfo">
-                        <p>Username: Gabriel.R</p>
-                        <p>Password: ########</p>
-                        <p>Email: gabriel.riboldi@epitech.eu</p>
-                        <p>Role: User</p>
-                        <p>ID: 1234567890</p>
+                        <p><span>Username:</span> Gabriel.R</p>
+                        <p><span>Password:</span> ########</p>
+                        <p><span>Email:</span> gabriel.riboldi@epitech.eu</p>
+                        <p><span>Role:</span> User</p>
+                        <p><span>ID:</span> 1234567890</p>
                     </div>
                     <div class="workingTimes">
                         <h3>--- Daily Working Time ---</h3>
@@ -21,14 +28,6 @@
                         <h3>--- Weekly Working Time ---</h3>
                         <p>28Hours 54Mins 09Secs</p>
                     </div>
-                </div>
-                <div class="changeUser">
-                    <v-icon>mdi-pencil-outline</v-icon>
-                    <h3>Edit User</h3>
-                    <v-icon>mdi-account</v-icon>
-                    <h3>Promote User</h3>
-                    <v-icon>mdi-delete</v-icon>
-                    <h3>Delete User</h3>
                 </div>
             </div>
         </div>
@@ -72,8 +71,41 @@ export default {
     grid-row: 2;
     background: #ffffff;
     border-radius: 20px;
+    display: flex;
+}
+.secondRowLeft {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1em;
+}
+.secondRowRight {
+    width: 100%;
+    margin: 2em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
 }
 h1.userName{
     padding: 0.5em;
+}
+.userIcon{
+    font-size: 20em;
+}
+.userInfo,.workingTimes {
+    padding: 10px;
+    font-size: 24px;
+}
+.changeUser {
+    padding: 2em;
+}
+.changeUser h3 {
+    margin-top: 1em;
+}
+.changeUser span {
+    padding-left: 0.5em;
+}
+.userInfo span {
+    font-weight: bold;
 }
 </style>
