@@ -1,36 +1,52 @@
 <template>
-    <div id="team">
-        <img id="teamPic" alt="Team" src="../assets/team.svg" />
-
-        <div>
-            {{ this.team.title }}
-        </div>
-
-        <h3>Delete</h3>
-    </div>
+  <v-card elevation="2" outlined style="width: 200px; height: 33%">
+    <v-card-title style="justify-content: center">
+      {{
+        object.title
+      }}
+    </v-card-title>
+    <v-row style="justify-content: center">
+      <v-card-actions>
+        <Users v-bind:object="object" />
+      </v-card-actions>
+      <v-card-actions>
+        <Delete v-bind:object="object" v-bind:type="type"/>
+      </v-card-actions>
+    </v-row>
+  </v-card>
 </template>
 
 <script>
+import Delete from "./Dialogs/Delete.vue";
+import Users from "./Dialogs/Users.vue";
 export default {
-    name: 'Team',
-    props: ['team'],
-}
+    name: "Team",
+    props: ["object", "type"],
+    data() {
+        return {
+            dialogUsers: false,
+            dialogDelete: false
+        };
+    },
+    components: { Delete, Users }
+};
 </script>
 
-<style>
-#team {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: #2c3e50;
-    width: 200px;
-    height: 200px;
-    border-radius: 32px;
-    margin: 4px;
-    background-color: #dddde6;
+<style scoped>
+.v-card {
+  margin: 5px;
 }
 
-#teamPic {
-    width: 90px;
+>>> .v-dialog {
+  overflow-y: visible;
+}
+
+.v-card__title {
+  padding: 10px;
+}
+
+.teamsTitle {
+  font-size: xxx-large;
+  margin-left: 2%;
 }
 </style>

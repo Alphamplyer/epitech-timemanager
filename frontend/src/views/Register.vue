@@ -1,61 +1,85 @@
 <template>
-    <div id="register">
-        <img id="chrono" alt="Vue logo" src="../assets/chrono.svg" />
-        <h1>Register</h1>
+    <v-container fill-height class="d-flex flex-row mr-12 align-center justify-center">
+        <v-responsive 
+            style="border: 1px solid; border-color: #A7A7A7; background-color: white; font-size: 48px"
+            class="rounded-lg pa-8 blue--text text-center"
+            max-width="350px" 
+            min-width="250px"
+        >
+            <h3 class="mb-8">Register</h3>
 
-        <input id="mb" v-model="username" placeholder="Choose a username" />
-        <input id="mb" v-model="password" placeholder="Choose a password" />
+            <v-divider style="background-color: #becdda" />
 
-        <button v-on:click="checkRegister()">Register</button>
-        <h3 style="color: red">{{ error && error }}</h3>
-    </div>
+            <v-container class="py-4">
+                <v-text-field 
+                    solo
+                    label="Email"
+                    autofocus
+                />
+
+                <v-text-field 
+                    solo
+                    label="Username"
+                />
+
+                <v-text-field 
+                    solo 
+                    label="Password"
+                    type="password"
+                />
+            </v-container>
+
+            <v-divider style="background-color: #becdda" />
+
+            <v-container class="d-flex flex-column justify-space-between">
+                <v-btn 
+                    block
+                    color="primary"
+                    style="font-size: 18px; border: 2px solid black !important"
+                    class="font-weight-bold rounded-0 text-capitalize"
+                    v-on:click="logIn()"
+                >
+                    Register
+                </v-btn>
+            </v-container>
+        </v-responsive>
+
+        <v-responsive>
+            <v-img
+                src="@/assets/register.svg"
+                max-height="700px"
+                lazy
+            />
+        </v-responsive>
+    </v-container>
 </template>
 
 <script>
-import { getUser } from '../lib/user'
-// TODO: Ajouter le addUser to DB
+// import { createUser } from '../../lib/user.js'
+import ref from 'vue'
 
 export default {
-    name: 'Register',
-    methods: {
-        async checkRegister() {
-            try {
-                const res = await getUser()
+    setup() {
+        const { email, username, password } = ref('')
 
-                if (!res) {
-                    this.error = 'Username already used.'
-                }
-
-                this.$router.push('/')
-            } catch (error) {
-                console.log('Error', error)
-            }
-        },
-    },
-    data() {
         return {
-            username: '',
-            password: '',
-            error: '',
+            email,
+            username,
+            password
+        }
+    },
+    methods: {
+        async logIn() {
+            // const res = await createUser({
+            //     email: 'mail',
+            //     username: 'username',
+            //     password: 'password'
+            // })
+
+            // console.log('res:', res)
+            this.$router.push('/')
         }
     },
 }
 </script>
 
-<style>
-#register {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    top: 10%;
-}
-
-#chrono {
-    width: 30vh;
-}
-
-#mb {
-    margin-bottom: 10px;
-}
-</style>

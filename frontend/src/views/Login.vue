@@ -1,60 +1,88 @@
 <template>
-    <div id="login">
-        <img id="chrono" alt="Vue logo" src="../assets/chrono.svg" />
-        <h1>Time Manager</h1>
+    <v-container fill-height class="d-flex flex-row mr-12 align-center justify-center">
+        <v-responsive 
+            style="border: 1px solid; border-color: #A7A7A7; background-color: white; font-size: 42px"
+            class="rounded-lg pa-8 blue--text text-center"
+            max-width="350px" 
+            min-width="250px"
+        >
+            <h3 
+                style="line-height: 1"
+                class="mb-8"
+            >
+                Time Manager
+            </h3>
 
-        <input id="mb" v-model.lazy="username" placeholder="Username" />
-        <input id="mb" v-model.lazy="password" placeholder="Password" />
+            <v-divider style="background-color: #becdda" />
 
-        <button id="mb" v-on:click="checkLogin()">Log In</button>
-        <h3 style="color: red">{{ error && error }}</h3>
-        <router-link to="/register">Register here</router-link>
-    </div>
+            <v-container class="py-4">
+                <v-text-field 
+                    solo
+                    autofocus
+                    label="Username"
+                    class="text-center"
+                />
+
+                <v-text-field 
+                    solo 
+                    label="Password" 
+                />
+            </v-container>
+
+            <v-divider style="background-color: #becdda" />
+
+            <v-container class="d-flex flex-column justify-space-between">
+                <v-btn 
+                    block
+                    color="primary"
+                    style="font-size: 18px; border: 2px solid black !important"
+                    class="font-weight-bold rounded-0 text-capitalize"
+                    v-on:click="logIn()"
+                >
+                    Log In
+                </v-btn>
+
+                <h5 
+                    style="font-size: 14px"
+                    class="my-8 grey--text"
+                >
+                    Or
+                </h5>
+
+                <v-btn 
+                    style="font-size: 18px; border: 2px solid black"
+                    class="rounded-0 text-capitalize font-weight-bold"
+                    v-on:click="register()"
+                >
+                    Register
+                </v-btn>
+            </v-container>
+        </v-responsive>
+
+        <v-responsive>
+            <v-img
+                src="@/assets/welcome.svg"
+                max-height="700px"
+                lazy
+            />
+        </v-responsive>
+    </v-container>
 </template>
 
 <script>
-import { getUser } from '../lib/user'
 
 export default {
-    name: 'Login',
     methods: {
-        async checkLogin() {
-            try {
-                const res = await getUser()
-
-                if (!res) {
-                    this.error = 'Invalid username or password.'
-                }
-                this.$router.push('/user/dashboard')
-            } catch (error) {
-                console.log('Error', error)
-            }
+        register() {
+            this.$router.push('/register')
         },
-    },
-    data() {
-        return {
-            username: '',
-            password: '',
-            error: '',
+        logIn() {
+            this.$router.push('/user/dashboard')
         }
+    },
+    setup() {
+        
     },
 }
 </script>
 
-<style>
-#login {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
-    top: 10%;
-}
-
-#chrono {
-    width: 30vh;
-}
-
-#mb {
-    margin-bottom: 10px;
-}
-</style>

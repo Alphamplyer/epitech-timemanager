@@ -13,7 +13,6 @@ services:
       - /app/node_modules
     depends_on:
       - timemanager-postgresql
-      - timemanager-back
 
   timemanager-postgresql:
     image: postgres
