@@ -1,11 +1,15 @@
 <template>
-    <div id="content">Profile</div>
+    <div class="d-flex flex-row" style="background-color: #DDDDE6">
+        <NavbarVue/>
+    </div>
 </template>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-#content {
-    display: flex;
-    flex-direction: column;
+<script>
+import NavbarVue from '@/components/Navbar.vue'
+
+export default {
+    components: {
+        NavbarVue
+    }
 }
-</style>
+</script>

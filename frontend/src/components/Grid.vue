@@ -1,33 +1,39 @@
 <template>
-    <div id="grid">
-        <div id="teams" v-for="team in teams" :key="team">
-            <Team team="{{ team }}" />
-        </div>
+  <div id="secondrow" class="customRow">
+    <div class="item" v-for="object in objects" :key="object.id">
+      <div v-if="type == 'teamType'">
+        <Team v-bind:object="object" v-bind:type="type"/>
+      </div>
+      <div v-if="type == 'userType'">
+        <User v-bind:object="object" v-bind:type="type"/>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-import Team from './Team.vue'
+import User from "./User.vue";
+import Team from "./Team.vue";
 
 export default {
-    name: 'Grid',
-    components: {
-        Team,
-    },
-    props: ['teams'],
-}
+  name: "Grid",
+  components: { User, Team },
+  props: ["objects", "type"],
+};
 </script>
 
 <style>
-#grid {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    background-color: #2c3e50;
-    padding: 12px;
-    min-height: 85vh;
-    border-radius: 48px;
-    margin-inline: 12px;
+#secondrow {
+  grid-column: 1 / 3;
+  grid-row: 2;
+  background-color: #ffffff;
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.customRow {
+  margin: 20px;
+  box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
 }
 </style>

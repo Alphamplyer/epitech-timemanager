@@ -1,48 +1,88 @@
 <template>
-    <div id="content">
-        <UserBar />
+    <div class="d-flex flex-row" style="background-color: #DDDDE6">
+        <NavbarVue :isWorking="this.isWorking" :workingTime="this.workingTime" />
 
-        <div id="cells">
-            <div id="row">
-                <Cell title="Working ?" />
-                <Cell title="test2" />
-                <Cell title="test3" />
-            </div>
+        <v-container class="d-flex flex-column justify-start">
+            <v-container class="d-flex flex-row">
+                <Switcher @isWorking="updateIsWorking" @workingTime="updateWorkingTime" :isWorking="this.isWorking" />
 
-            <div id="row">
-                <Cell title="test4" />
-            </div>
-        </div>
+                <v-container
+                    style="height: 45vh; width: 61%; background-color: white"
+                    class="shadow rounded-lg"
+                >
+
+                </v-container>
+            </v-container>
+
+            <v-container class="d-flex flex-row">
+                <v-container
+                    style="height: 45vh; width: 100%; background-color: white"
+                    class="shadow rounded-lg"
+                >
+
+                </v-container>
+            </v-container>
+        </v-container>
     </div>
 </template>
 
 <script>
-import Cell from '../components/Cell.vue'
-import UserBar from '../components/UserBar.vue'
+import NavbarVue from "../components/Navbar.vue"
+import Switcher from "../components/Switcher.vue"
 
-export default {
-    name: 'Dashboard',
+    export default {
+    name: "Dashboard",
     components: {
-        UserBar,
-        Cell,
+        NavbarVue,
+        Switcher,
+    },
+    methods: {
+        updateIsWorking(working) {
+            this.isWorking = working
+        },
+        updateWorkingTime(workTime) {
+            this.workingTime += workTime
+        }
+    },
+    data() {
+        return {
+            workingTime: 0,
+            isWorking: false,
+        }
     },
 }
 </script>
 
-<style>
-#content {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
+<style scoped>
+
+#dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    height: 100%;
 }
 
-#cells {
-    justify-content: center;
+#workingTime {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    background-color: red;
+    border-radius: 12px;
 }
 
-#row {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
+#dailyWorkingTime {
+    grid-column: 2 / 4;
+    grid-row: 1;
+    background-color: blue;
+    border-radius: 12px;
 }
+
+#weeklyWorkingTime {
+    grid-column: 1 / 4;
+    grid-row: 2;
+    background-color: green;
+    border-radius: 12px;
+}
+
 </style>
