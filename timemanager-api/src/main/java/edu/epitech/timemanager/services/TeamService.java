@@ -11,8 +11,12 @@ public interface TeamService {
     List<Team> getUserTeams(int userId);
 
     List<User> getTeamMembers(int teamId);
+
     boolean addUserToTeam(int userId, int teamId);
     boolean removeUserFromTeam(int userId, int teamId);
+
+    boolean isInTeam(int userId, int teamId);
+    boolean isInTheSameTeam(int targetUser, int currentUser);
 
     Team createTeam(int userId, Team team);
     Team updateTeam(int id, Team team);

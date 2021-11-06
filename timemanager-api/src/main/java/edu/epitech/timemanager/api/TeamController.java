@@ -6,14 +6,18 @@ import edu.epitech.timemanager.domains.mappers.TeamMappers;
 import edu.epitech.timemanager.domains.mappers.UserMappers;
 import edu.epitech.timemanager.domains.models.Team;
 import edu.epitech.timemanager.domains.models.User;
+import edu.epitech.timemanager.domains.models.enumerations.Role;
 import edu.epitech.timemanager.services.TeamService;
 import edu.epitech.timemanager.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = {"http://104.155.68.60:8080", "http://localhost:8080"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/teams")
@@ -25,11 +29,13 @@ public class TeamController {
     private final TeamService teamService;
     private final UserService userService;
 
+    @PreAuthorize("hasRole('ROLE_GLOBAL_MANAGER')")
     @GetMapping("")
     public ResponseEntity<?> getTeams() {
         return ResponseEntity.ok(teamService.getTeams());
     }
 
+    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @GetMapping("/{userId}")
     public ResponseEntity<?> getUserTeams(@PathVariable("userId") int userId) {
         User user = userService.getUser(userId);
@@ -54,11 +60,16 @@ public class TeamController {
         }
     }
 
+    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @GetMapping("/{teamId}/members")
-    public ResponseEntity<?> getTeamMembers(@PathVariable("teamId") int teamId) {
-        return ResponseEntity.ok(userMappers.usersToUserDtos(teamService.getTeamMembers(teamId)));
+    public ResponseEntity<?> getTeamMembers(@AuthenticationPrincipal User user, @PathVariable("teamId") int teamId) {
+        if (user.getRole() == Role.GLOBAL_MANAGER || teamService.isInTeam(user.getId(), teamId))
+            return ResponseEntity.ok(userMappers.usersToUserDtos(teamService.getTeamMembers(teamId)));
+        else
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/{teamId}/add/{userId}")
     public ResponseEntity<?> addUserToTeam(@PathVariable("teamId") int teamId, @PathVariable("userId") int userId) {
         boolean success = teamService.addUserToTeam(teamId, userId);
@@ -69,6 +80,7 @@ public class TeamController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/{teamId}/remove/{userId}")
     public ResponseEntity<?> removeUserFromTeam(@PathVariable("teamId") int teamId, @PathVariable("userId") int userId) {
         boolean success = teamService.removeUserFromTeam(teamId, userId);
@@ -79,10 +91,10 @@ public class TeamController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("")
-    public ResponseEntity<?> createTeam(@RequestBody CreateTeamDto team) {
-        // TODO: initialize authenticate userId with the right id
-        int authenticateUserId = 1;
+    public ResponseEntity<?> createTeam(@AuthenticationPrincipal User user, @RequestBody CreateTeamDto team) {
+        int authenticateUserId = user.getId();
 
         return ResponseEntity.ok(teamMappers.teamToTeamDTO(
             teamService.createTeam(authenticateUserId, new Team(
@@ -92,6 +104,7 @@ public class TeamController {
         ));
     }
 
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PutMapping("/{teamId}")
     public ResponseEntity<?> updateTeam(@PathVariable("teamId") int teamId, @RequestBody UpdateTeamDto team) {
         return ResponseEntity.ok(teamMappers.teamToTeamDTO(
@@ -102,6 +115,7 @@ public class TeamController {
         ));
     }
 
+    @PreAuthorize("hasRole('ROLE_GLOBAL_MANAGER')")
     @DeleteMapping("/{teamId}")
     public ResponseEntity<?> deleteTeam(@PathVariable("teamId") int teamId) {
         teamService.deleteTeam(teamId);
