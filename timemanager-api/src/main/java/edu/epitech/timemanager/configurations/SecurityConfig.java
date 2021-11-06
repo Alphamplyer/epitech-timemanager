@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/timemanager-openapi/**");
+        web.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**");
     }
 
     @Override
@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/api/login/**", "/api/refresh_token/**").permitAll();
         http.authorizeRequests().antMatchers(POST,"/api/users/**").permitAll();
-        http.authorizeRequests().antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/timemanager-openapi/**").permitAll();
+        http.authorizeRequests().antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
 
         http.addFilter(customAuthenticationFilter);

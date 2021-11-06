@@ -4,6 +4,7 @@ import edu.epitech.timemanager.domains.dto.users.CreateUserDto;
 import edu.epitech.timemanager.domains.dto.users.UpdateUserDto;
 import edu.epitech.timemanager.domains.mappers.UserMappers;
 import edu.epitech.timemanager.domains.models.User;
+import edu.epitech.timemanager.domains.models.enumerations.Role;
 import edu.epitech.timemanager.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -99,7 +100,7 @@ public class UserController {
         @AuthenticationPrincipal User authenticateUser,
         @PathVariable("id") int id
     ) {
-        if (authenticateUser.getId() != id) {
+        if (authenticateUser.getId() != id || authenticateUser.getRole() != Role.GLOBAL_MANAGER) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
