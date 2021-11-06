@@ -93,6 +93,10 @@ export default {
 
             if (!res.ok) {
                 console.log(res)
+
+                if (res.status === 500) {
+                    this.error = ""
+                }
                 //TODO: Toaster de non-register
             } else {
                 await this.$router.push('/').then(() => {

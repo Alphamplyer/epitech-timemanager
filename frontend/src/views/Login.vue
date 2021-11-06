@@ -23,8 +23,7 @@
                     min="8"
                     label="Username"
                     placeholder="Username"
-                    hint="At least 8 characters"
-                    v-model="username"
+                    v-model="identifier"
                 />
 
                 <v-text-field 
@@ -37,6 +36,13 @@
                     hint="At least 8 characters"
                     v-model="password"
                 />
+
+                <p
+                    style="font-size: 16px"
+                    class="red--text font-weight-bold"
+                >
+                    {{ this.error }}
+                </p>
             </v-container>
 
             <v-divider style="background-color: #becdda" />
@@ -85,23 +91,39 @@ import ref from 'vue'
 export default {
     methods: {
         async logIn() {
-            const contentType = 'application/json'
+            const contentType = 'application/x-www-form-urlencoded'
+
+            var urlencoded = new URLSearchParams()
+            urlencoded.append("identifier", this.identifier)
+            urlencoded.append("password", this.password)
 
             const res = await fetch('http://localhost:4000/api/login', {
                 method: 'POST',
                 headers: {
-                    Accept: contentType,
                     'Content-Type': contentType
                 },
-                body: JSON.stringify({
-                    identifier: this.username,
-                    password: this.password                
-                })
+                body: urlencoded
             })
 
             if (!res.ok) {
                 console.log('res:', res)
+                
+                switch (res.status) {
+                    case 403:
+                        this.error = "L'utilisateur n'existe pas."
+                        break;
+                
+                    default:
+                        this.error = "Erreur lors de l'identification."
+                        break;
+                }
             } else {
+                const result = await res.json()
+
+                console.log('result:', result)
+                localStorage.user = JSON.stringify(result)
+
+                console.log('localStorage:', localStorage.user)
                 this.$router.push('/user/dashboard')
             }
         },
@@ -110,16 +132,17 @@ export default {
         }
     },
     setup() {
-        const { email, username } = ref('')
+        const { email, identifier } = ref('')
 
         return {
             email,
-            username
+            identifier
         }
     },
     data() {
         return {
-            username: this.username,
+            error: '',
+            identifier: this.identifier,
             password: this.password
         }
     }
