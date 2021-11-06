@@ -11,15 +11,18 @@
             <v-divider style="background-color: #becdda" />
 
             <v-container class="py-4">
-                <v-text-field 
+                <v-text-field
+                    required 
                     outlined
                     autofocus
                     placeholder="example@gmail.com"
                     label="Email"
                     v-model="email"
+                    hint="Please, enter a valid email address"
                 />
 
                 <v-text-field 
+                    required
                     outlined
                     placeholder="Gabriel"
                     label="Username"
@@ -27,11 +30,14 @@
                 />
 
                 <v-text-field 
+                    required
                     outlined 
+                    min="8"
                     placeholder="Secret"
                     label="Password"
                     type="password"
                     v-model="password"
+                    hint="At least 8 characters with 1 number and 1 capital letter"
                 />
             </v-container>
 
@@ -43,7 +49,10 @@
                     color="primary"
                     style="font-size: 18px; border: 2px solid black !important"
                     class="font-weight-bold rounded-0 text-capitalize"
-                    v-on:click="logIn()"
+                    v-on:click="() => {
+
+                        register()
+                    }"
                 >
                     Register
                 </v-btn>
@@ -75,15 +84,22 @@ export default {
         }
     },
     methods: {
-        async logIn() {
+        async register() {
             const res = await createUser({
                 email: this.email,
                 username: this.username,
                 password: this.password
             })
 
+            if (!res.ok) {
+                console.log(res)
+                //TODO: Toaster de non-register
+            } else {
+                await this.$router.push('/').then(() => {
+                    //TODO: Toaster de register
+                })
+            }
             console.log('res:', res)
-            this.$router.push('/')
         }
     },
     data() {

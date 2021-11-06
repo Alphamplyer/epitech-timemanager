@@ -16,11 +16,15 @@ export async function createUser(props) {
             })
         })
 
+        console.log("res apres:", res)
+
         if (!res.ok)
             throw new Error("Error when creating the user")
-
+        
+        return res
     } catch (error) {
-        console.log(error)        
+        console.log('erreur du catch:',error)
+        return error        
     }
 }
 
