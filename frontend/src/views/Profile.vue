@@ -6,7 +6,30 @@
                 <h1 class="userName">Gabriel.R’s Profile</h1>
             </div>
             <div id="secondRow" class="customRow">
-                <h1>User</h1>
+                <div>
+                    <v-icon>mdi-account-circle</v-icon>
+                    <div class="userInfo">
+                        <p>Username: Gabriel.R</p>
+                        <p>Password: ########</p>
+                        <p>Email: gabriel.riboldi@epitech.eu</p>
+                        <p>Role: User</p>
+                        <p>ID: 1234567890</p>
+                    </div>
+                    <div class="workingTimes">
+                        <h3>--- Daily Working Time ---</h3>
+                        <p>3Hours 32Mins 23Secs</p>
+                        <h3>--- Weekly Working Time ---</h3>
+                        <p>28Hours 54Mins 09Secs</p>
+                    </div>
+                </div>
+                <div class="changeUser">
+                    <v-icon>mdi-pencil-outline</v-icon>
+                    <h3>Edit User</h3>
+                    <v-icon>mdi-account</v-icon>
+                    <h3>Promote User</h3>
+                    <v-icon>mdi-delete</v-icon>
+                    <h3>Delete User</h3>
+                </div>
             </div>
         </div>
     </div>
