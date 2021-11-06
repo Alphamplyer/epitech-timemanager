@@ -24,6 +24,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@CrossOrigin(origins = {"http://104.155.68.60:8080", "http://localhost:8080"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/")
@@ -48,6 +49,7 @@ public class AuthController {
                     .withExpiresAt(new java.util.Date(System.currentTimeMillis() + 1000 * 60 * 60 * 5))
                     .withIssuer(request.getRequestURL().toString())
                     .withClaim("roles", user.getPermissions().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                    .withClaim("id", user.getId())
                     .sign(algorithm);
                 Map<String, String> tokens = Map.of("access_token", token, "refresh_token", refreshToken);
                 response.setContentType(APPLICATION_JSON_VALUE);
