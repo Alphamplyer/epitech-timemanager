@@ -17,15 +17,16 @@
 
             <v-container class="py-4">
                 <v-text-field 
-                    solo
+                    outlined
                     autofocus
                     label="Username"
-                    class="text-center"
+                    placeholder="Username"
                 />
 
                 <v-text-field 
-                    solo 
-                    label="Password" 
+                    outlined 
+                    label="Password"
+                    placeholder="Password"
                 />
             </v-container>
 

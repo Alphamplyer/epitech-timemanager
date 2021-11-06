@@ -1,12 +1,12 @@
 export async function createUser(props) {
-    // const contentType = 'application/json'
+    const contentType = 'application/json'
 
     try {
         console.log('props:', props)
-        const res = await fetch('/auth/register', {
+        const res = await fetch('http://localhost:4000/api/users', {
             method: 'POST',
             headers: {
-                Accept: '*/*',
+                Accept: contentType,
                 'Content-Type': contentType
             },
             body: JSON.stringify({
@@ -16,8 +16,8 @@ export async function createUser(props) {
             })
         })
 
-        // if (!res.ok)
-        //     throw new Error("Error when creating the user")
+        if (!res.ok)
+            throw new Error("Error when creating the user")
 
     } catch (error) {
         console.log(error)        

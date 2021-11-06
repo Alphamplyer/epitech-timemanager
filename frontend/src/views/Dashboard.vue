@@ -19,7 +19,7 @@
                     style="height: 45vh; width: 100%; background-color: white"
                     class="shadow rounded-lg"
                 >
-
+                    <LineChart />
                 </v-container>
             </v-container>
         </v-container>
@@ -29,12 +29,14 @@
 <script>
 import NavbarVue from "../components/Navbar.vue"
 import Switcher from "../components/Switcher.vue"
+import LineChart from "../components/LineChart.vue"
 
     export default {
     name: "Dashboard",
     components: {
         NavbarVue,
         Switcher,
+        LineChart,
     },
     methods: {
         updateIsWorking(working) {
@@ -48,6 +50,11 @@ import Switcher from "../components/Switcher.vue"
         return {
             workingTime: 0,
             isWorking: false,
+            chartData: {
+                Books: 24,
+                Magazine: 30,
+                Newspapers: 10
+            }
         }
     },
 }

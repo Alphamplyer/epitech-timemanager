@@ -51,7 +51,7 @@ export default {
     created() {
         setInterval(() => {
             if (this.isWorking) {
-                this.difference = moment(this.startDate).diff(moment().format('DD-MM-YYYY HH:mm:ss')) / -1000 // ms to s
+                this.difference = moment(this.startDate).diff(moment().format('DD-MM-YYYY HH:mm:ss')) / - 1000 // ms to s
                 this.$emit('workingTime', 1)
             }
         }, 1000)

@@ -12,20 +12,26 @@
 
             <v-container class="py-4">
                 <v-text-field 
-                    solo
-                    label="Email"
+                    outlined
                     autofocus
+                    placeholder="example@gmail.com"
+                    label="Email"
+                    v-model="email"
                 />
 
                 <v-text-field 
-                    solo
+                    outlined
+                    placeholder="Gabriel"
                     label="Username"
+                    v-model="username"
                 />
 
                 <v-text-field 
-                    solo 
+                    outlined 
+                    placeholder="Secret"
                     label="Password"
                     type="password"
+                    v-model="password"
                 />
             </v-container>
 
@@ -55,7 +61,7 @@
 </template>
 
 <script>
-// import { createUser } from '../../lib/user.js'
+import { createUser } from '../../lib/user.js'
 import ref from 'vue'
 
 export default {
@@ -70,16 +76,23 @@ export default {
     },
     methods: {
         async logIn() {
-            // const res = await createUser({
-            //     email: 'mail',
-            //     username: 'username',
-            //     password: 'password'
-            // })
+            const res = await createUser({
+                email: this.email,
+                username: this.username,
+                password: this.password
+            })
 
-            // console.log('res:', res)
+            console.log('res:', res)
             this.$router.push('/')
         }
     },
+    data() {
+        return {
+            email: this.email,
+            username: this.username,
+            password: this.password
+        }
+    }
 }
 </script>
 
