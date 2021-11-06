@@ -23,11 +23,6 @@ public class UserController {
     private final UserService userService;
     private final UserMappers userMappers = Mappers.getMapper(UserMappers.class);
 
-    @GetMapping("")
-    public ResponseEntity<?> getUsers() {
-        return ResponseEntity.ok(userService.getUsers());
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") int id) {
         User user = userService.getUser(id);
