@@ -61,7 +61,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         persistedUser.setUsername(user.getUsername());
         persistedUser.setEmail(user.getEmail());
-        persistedUser.setHashedPassword(passwordEncoder.encode(user.getHashedPassword()));
 
         return userRepository.save(persistedUser);
     }
