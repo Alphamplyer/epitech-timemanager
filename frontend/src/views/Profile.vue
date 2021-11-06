@@ -1,15 +1,111 @@
 <template>
-    <div class="d-flex flex-row" style="background-color: #DDDDE6">
-        <NavbarVue/>
+    <div>
+        <Navbar/>
+        <div id="profile">
+            <div id="titleRow" class="customRow">
+                <h1 class="userName">Gabriel.R’s Profile</h1>
+            </div>
+            <div id="secondRow" class="customRow">
+                <div class="secondRowLeft">
+                    <v-icon class="userIcon">mdi-account-circle</v-icon>
+                    <div class="changeUser">
+                        <h3><v-icon>mdi-pencil-outline</v-icon><span>Edit User</span></h3>
+                        <h3><v-icon>mdi-account</v-icon><span>Promote User</span></h3>
+                        <h3><v-icon>mdi-delete</v-icon><span>Delete User</span></h3>
+                    </div>
+                </div>
+                <div class="secondRowRight">
+                    <div class="userInfo">
+                        <p><span>Username:</span> Gabriel.R</p>
+                        <p><span>Password:</span> ########</p>
+                        <p><span>Email:</span> gabriel.riboldi@epitech.eu</p>
+                        <p><span>Role:</span> User</p>
+                        <p><span>ID:</span> 1234567890</p>
+                    </div>
+                    <div class="workingTimes">
+                        <h3>--- Daily Working Time ---</h3>
+                        <p>3Hours 32Mins 23Secs</p>
+                        <h3>--- Weekly Working Time ---</h3>
+                        <p>28Hours 54Mins 09Secs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import NavbarVue from '@/components/Navbar.vue'
+import Navbar from '../components/Navbar.vue'
 
 export default {
     components: {
-        NavbarVue
+        Navbar
     }
 }
 </script>
+
+<style scoped>
+#profile {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 6fr;
+    column-gap: 10px;
+    row-gap: 10px;
+    height: 100%;
+    background-color: #dddde6;
+}
+.customRow {
+    margin: 20px;
+    box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+}
+#titleRow {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+}
+#secondRow {
+    grid-column: 1 / 2;
+    grid-row: 2;
+    background: #ffffff;
+    border-radius: 20px;
+    display: flex;
+}
+.secondRowLeft {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 1em;
+}
+.secondRowRight {
+    width: 100%;
+    margin: 2em;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+h1.userName{
+    padding: 0.5em;
+}
+.userIcon{
+    font-size: 20em;
+}
+.userInfo,.workingTimes {
+    padding: 10px;
+    font-size: 24px;
+}
+.changeUser {
+    padding: 2em;
+}
+.changeUser h3 {
+    margin-top: 1em;
+}
+.changeUser span {
+    padding-left: 0.5em;
+}
+.userInfo span {
+    font-weight: bold;
+}
+</style>
