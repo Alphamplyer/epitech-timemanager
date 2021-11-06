@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +20,7 @@ import java.util.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue
@@ -114,18 +115,75 @@ public class User implements Serializable {
         return getClass().hashCode();
     }
 
-    public Collection<GrantedAuthority> getPermissions() {
+    public Collection<? extends GrantedAuthority> getPermissions() {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+
         switch (role) {
             case EMPLOYEE:
-                return Collections.singleton(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
+                authorities.add(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
+                break;
             case MANAGER:
-                return Collections.singleton(new SimpleGrantedAuthority("ROLE_MANAGER"));
+                authorities.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
+                authorities.add(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
+                break;
             case GLOBAL_MANAGER:
-                return Collections.singleton(new SimpleGrantedAuthority("ROLE_GLOBAL_MANAGER"));
+                authorities.add(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
+                authorities.add(new SimpleGrantedAuthority("ROLE_MANAGER"));
+                authorities.add(new SimpleGrantedAuthority("ROLE_GLOBAL_MANAGER"));
+                break;
             case NONE:
-                return Collections.singleton(new SimpleGrantedAuthority("ROLE_ANONYMOUS"));
-            default:
-                return Collections.emptyList();
+                authorities.add(new SimpleGrantedAuthority("ROLE_ANONYMOUS"));
+                break;
         }
+
+        return authorities;
+    }
+
+    public void setRole(List<String> roles) {
+        if (roles.contains("ROLE_GLOBAL_MANAGER")) {
+            this.role = Role.GLOBAL_MANAGER;
+        } else if (roles.contains("ROLE_MANAGER")) {
+            this.role = Role.MANAGER;
+        } else if (roles.contains("ROLE_EMPLOYEE"))  {
+            this.role = Role.EMPLOYEE;
+        } else {
+            this.role = Role.NONE;
+        }
+    }
+
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getPermissions();
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public String getPassword() {
+        return hashedPassword;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

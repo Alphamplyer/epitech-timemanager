@@ -4,15 +4,17 @@ import edu.epitech.timemanager.domains.dto.users.CreateUserDto;
 import edu.epitech.timemanager.domains.dto.users.UpdateUserDto;
 import edu.epitech.timemanager.domains.mappers.UserMappers;
 import edu.epitech.timemanager.domains.models.User;
+import edu.epitech.timemanager.domains.models.enumerations.Role;
 import edu.epitech.timemanager.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin(origins = {"http://104.155.68.60:8080", "http://localhost:8080"})
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -20,6 +22,11 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
     private final UserMappers userMappers = Mappers.getMapper(UserMappers.class);
+
+    @GetMapping("")
+    public ResponseEntity<?> getUsers() {
+        return ResponseEntity.ok(userService.getUsers());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") int id) {
@@ -66,7 +73,15 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable("id") int id, @RequestBody UpdateUserDto userDto) {
+    public ResponseEntity<?> updateUser(
+        @AuthenticationPrincipal User authenticateUser,
+        @PathVariable("id") int id,
+        @RequestBody UpdateUserDto userDto
+    ) {
+        if (authenticateUser.getId() != id) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         User user = userService.updateUser(id, new User(
             id,
             userDto.getUsername(),
@@ -81,7 +96,14 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable("id") int id) {
+    public ResponseEntity<?> deleteUser(
+        @AuthenticationPrincipal User authenticateUser,
+        @PathVariable("id") int id
+    ) {
+        if (authenticateUser.getId() != id || authenticateUser.getRole() != Role.GLOBAL_MANAGER) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

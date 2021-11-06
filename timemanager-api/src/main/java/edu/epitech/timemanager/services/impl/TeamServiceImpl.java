@@ -71,6 +71,19 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public boolean isInTeam(int userId, int teamId) {
+        return teamRepository.findUserInTeam(userId, teamId).isPresent();
+    }
+
+    @Override
+    public boolean isInTheSameTeam(int targetUserId, int currentUserId) {
+        if (targetUserId == currentUserId)
+            return true;
+
+        return teamRepository.isInTheSameTeam(targetUserId, currentUserId).isPresent();
+    }
+
+    @Override
     public Team createTeam(int userId, Team team) {
         boolean isUserExist = userRepository.existsById(userId);
 

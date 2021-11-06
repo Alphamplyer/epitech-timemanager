@@ -2,7 +2,6 @@ package edu.epitech.timemanager.services.impl;
 
 import edu.epitech.timemanager.domains.models.User;
 import edu.epitech.timemanager.domains.models.WorkingTime;
-import edu.epitech.timemanager.persistence.UserRepository;
 import edu.epitech.timemanager.persistence.WorkingTimeRepository;
 import edu.epitech.timemanager.services.WorkingTimeService;
 import lombok.RequiredArgsConstructor;
@@ -45,12 +44,15 @@ public class WorkingTimeServiceImpl implements WorkingTimeService {
     }
 
     @Override
-    public WorkingTime updateWorkingTime(int id, WorkingTime workingTime) {
-        WorkingTime persistedWorkingTime = workingTimeRepository.findById(id).orElse(null);
+    public WorkingTime updateWorkingTime(int modifierId, WorkingTime workingTime) {
+        WorkingTime persistedWorkingTime = workingTimeRepository.findById(workingTime.getId()).orElse(null);
 
         if (persistedWorkingTime == null) {
             return null;
         }
+
+        if (persistedWorkingTime.getUser().getId() != modifierId)
+            throw new RuntimeException("UNAUTHORIZED");
 
         persistedWorkingTime.setCreatedAt(workingTime.getCreatedAt());
         persistedWorkingTime.setEndedAt(workingTime.getEndedAt());
@@ -59,7 +61,13 @@ public class WorkingTimeServiceImpl implements WorkingTimeService {
     }
 
     @Override
-    public void deleteWorkingTime(int id) {
+    public void deleteWorkingTime(int id, int deleterId) {
+        WorkingTime workingTime = workingTimeRepository.findById(id).orElse(null);
+
+        if (workingTime != null && workingTime.getUser().getId() != deleterId) {
+            throw new RuntimeException("UNAUTHORIZED");
+        }
+
         workingTimeRepository.deleteById(id);
     }
 }
