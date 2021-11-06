@@ -24,6 +24,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+@CrossOrigin(origins = {"http://104.155.68.60:8080", "http://localhost:8080"})
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/")

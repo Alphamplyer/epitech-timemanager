@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-
+@CrossOrigin(origins = {"http://104.155.68.60:8080", "http://localhost:8080"})
 @Slf4j
 @RequiredArgsConstructor
 @RestController

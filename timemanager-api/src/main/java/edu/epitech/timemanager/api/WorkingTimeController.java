@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.Objects;
 
+@CrossOrigin(origins = {"http://104.155.68.60:8080", "http://localhost:8080"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/workingtimes")
