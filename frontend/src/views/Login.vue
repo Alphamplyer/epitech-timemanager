@@ -17,16 +17,25 @@
 
             <v-container class="py-4">
                 <v-text-field 
+                    required
                     outlined
                     autofocus
+                    min="8"
                     label="Username"
                     placeholder="Username"
+                    hint="At least 8 characters"
+                    v-model="username"
                 />
 
                 <v-text-field 
+                    required
                     outlined 
+                    min="8"
+                    type="password"
                     label="Password"
                     placeholder="Password"
+                    hint="At least 8 characters"
+                    v-model="password"
                 />
             </v-container>
 
@@ -71,19 +80,49 @@
 </template>
 
 <script>
+import ref from 'vue'
 
 export default {
     methods: {
+        async logIn() {
+            const contentType = 'application/json'
+
+            const res = await fetch('http://localhost:4000/api/login', {
+                method: 'POST',
+                headers: {
+                    Accept: contentType,
+                    'Content-Type': contentType
+                },
+                body: JSON.stringify({
+                    identifier: this.username,
+                    password: this.password                
+                })
+            })
+
+            if (!res.ok) {
+                console.log('res:', res)
+            } else {
+                this.$router.push('/user/dashboard')
+            }
+        },
         register() {
             this.$router.push('/register')
-        },
-        logIn() {
-            this.$router.push('/user/dashboard')
         }
     },
     setup() {
-        
+        const { email, username } = ref('')
+
+        return {
+            email,
+            username
+        }
     },
+    data() {
+        return {
+            username: this.username,
+            password: this.password
+        }
+    }
 }
 </script>
 
