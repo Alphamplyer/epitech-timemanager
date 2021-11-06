@@ -5,7 +5,7 @@
       <div id="titleRow" class="customRow">
         <h1 class="teamsTitle">All Teams</h1>
       </div>
-      <Grid v-bind:objects="this.teams" v-bind:type="type" />
+      <Grid v-bind:objects="teams" v-bind:type="type" />
       <div id="thirdrow" class="customRow"></div>
     </div>
   </div>
