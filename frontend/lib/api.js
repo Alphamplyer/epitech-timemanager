@@ -3,7 +3,7 @@ async function apiCall(
     method, 
     headers = { 
         Accept: 'application/json',
-        Authorization: JSON.parse(localStorage.user).access_token,
+        Authorization: JSON.parse(localStorage.token).access_token,
         'Content-Type': 'application/json'
     },
     body)

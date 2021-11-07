@@ -121,9 +121,8 @@ export default {
                 const result = await res.json()
 
                 console.log('result:', result)
-                localStorage.user = JSON.stringify(result)
+                localStorage.token = JSON.stringify(result)
 
-                console.log('localStorage:', localStorage.user)
                 this.$router.push('/user/dashboard')
             }
         },

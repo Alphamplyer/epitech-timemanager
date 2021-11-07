@@ -102,7 +102,7 @@ export default {
           this.$router.push('/user/users')
       },
       logOut() {
-          localStorage.removeItem('user')
+          localStorage.removeItem('token')
           this.$router.push('/')
       },
       secToDuration,
