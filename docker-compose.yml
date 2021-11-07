@@ -19,10 +19,10 @@ services:
     depends_on:
       - timemanager-postgresql
     ports:
-      - 4000:${APP_PORT}
+      - 4000:${BACKEND_APP_PORT}
     volumes:
       - ./timemanager-api/target/timemanager-api-0.0.1-SNAPSHOT.jar:/timemanager-api/timemanager-api-0.0.1-SNAPSHOT.jar
-    command: ["java", "-Xmx8g", "-jar", "/timemanager-api/timemanager-api-0.0.1-SNAPSHOT.jar", "--spring.datasource.url=jdbc:postgresql://${DATABASE_HOST}/${DATABASE_NAME}?useSSL=false&allowPublicKeyRetrieval=true", "--spring.datasource.username=${DATABASE_USER}", "--spring.datasource.password=${DATABASE_PASSWORD}"]
+    command: ["java", "-Xmx8g", "-jar", "/timemanager-api/timemanager-api-0.0.1-SNAPSHOT.jar", "--server.port=${BACKEND_APP_PORT}", "--spring.datasource.url=jdbc:postgresql://${DATABASE_HOST}/${DATABASE_NAME}?useSSL=false&allowPublicKeyRetrieval=true", "--spring.datasource.username=${DATABASE_USER}", "--spring.datasource.password=${DATABASE_PASSWORD}", "--timemanager.global-manager.username=${GLOBAL_MANAGER_USERNAME}", "--timemanager.global-manager.email=${GLOBAL_MANAGER_EMAIL}", "--timemanager.global-manager.password=${GLOBAL_MANAGER_PASSWORD}"]
     env_file:
       - .env
     environment:
@@ -31,3 +31,6 @@ services:
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_NAME=${DATABASE_NAME}
       - DATABASE_PORT=${DATABASE_PORT}
+      - GLOBAL_MANAGER_USERNAME=${GLOBAL_MANAGER_USERNAME}
+      - GLOBAL_MANAGER_EMAIL=${GLOBAL_MANAGER_EMAIL}
+      - GLOBAL_MANAGER_PASSWORD=${GLOBAL_MANAGER_PASSWORD}
