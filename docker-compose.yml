@@ -38,6 +38,7 @@ services:
     env_file:
       - .env
     environment:
+      - BACKEND_APP_PORT=${BACKEND_APP_PORT}
       - DATABASE_HOST=${DATABASE_HOST}
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
