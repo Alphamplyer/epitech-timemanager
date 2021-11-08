@@ -58,12 +58,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
             .withClaim("id", user.getId())
             .sign(algorithm);
-//        response.setHeader("token", token);
-//        response.setHeader("refreshToken", refreshToken);
-        Map<String, String> tokens = Map.of("access_token", token, "refresh_token", refreshToken);
+        Map<String, Object> tokens = Map.of("access_token", token, "refresh_token", refreshToken, "user", userMappers.userToUserDto(user));
         response.setContentType(APPLICATION_JSON_VALUE);
-
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
-        new ObjectMapper().writeValue(response.getOutputStream(), userMappers.userToUserDto(user));
     }
 }
