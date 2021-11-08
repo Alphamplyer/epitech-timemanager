@@ -90,16 +90,16 @@ import { secToDuration } from '../../lib/date'
 export default {
     methods: {
       toDashboard() {
-          this.$router.push('/user/dashboard')
+          this.$router.push('/user/dashboard').catch(()=>{})
       },
       toProfile() {
-          this.$router.push('/user/profile')
+          this.$router.push('/user/profile').catch(()=>{})
       },
       toTeams() {
-          this.$router.push('/user/teams')
+          this.$router.push('/user/teams').catch(()=>{})
       },
       toUsers() {
-          this.$router.push('/user/users')
+          this.$router.push('/user/users').catch(()=>{})
       },
       logOut() {
           localStorage.removeItem('token')
