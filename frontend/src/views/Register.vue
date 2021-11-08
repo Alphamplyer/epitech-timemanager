@@ -37,7 +37,7 @@
                     label="Password"
                     type="password"
                     v-model="password"
-                    hint="At least 8 characters with 1 number and 1 capital letter"
+                    hint="At least 8 characters"
                 />
             </v-container>
 
@@ -49,8 +49,9 @@
                     color="primary"
                     style="font-size: 18px; border: 2px solid black !important"
                     class="font-weight-bold rounded-0 text-capitalize"
+                    :disabled="this.loading"
                     v-on:click="() => {
-
+                        this.loading = true
                         register()
                     }"
                 >
@@ -101,13 +102,16 @@ export default {
                     //TODO: Toaster de register
                 })
             }
+
+            this.loading = false
         }
     },
     data() {
         return {
             email: this.email,
             username: this.username,
-            password: this.password
+            password: this.password,
+            loading: false
         }
     }
 }

@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="secondRowRight">
-                    <div class="userInfo">
+                    <div class="userInfo text-capitalize">
                         <p><span>Username:</span> {{ this.username }}</p>
                         <p><span>Password:</span> ########</p>
                         <p><span>Email:</span> gabriel.riboldi@epitech.eu</p>

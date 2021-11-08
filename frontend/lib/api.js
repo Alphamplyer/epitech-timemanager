@@ -1,19 +1,21 @@
-async function apiCall(
+export async function apiCall(
     route,
-    method, 
+    method = 'GET', 
     headers = { 
         Accept: 'application/json',
-        Authorization: JSON.parse(localStorage.token).access_token,
+        Authorization: `Bearer ${JSON.parse(localStorage.token).access_token}`,
         'Content-Type': 'application/json'
     },
     body)
 {
     try {
-        const res = await fetch(`http://localhost:4000${route}`, {
+        const res = body ? await fetch(`http://localhost:4000${route}`, {
             method: method,
             headers: headers,
-            body: method === 'GET' ? '' : body
-        })
+            body: body
+        }) : await fetch(`http://localhost:4000${route}`, {
+            method: method,
+            headers: headers })
 
         if (!res.ok)
             throw new Error(res.status)
@@ -24,5 +26,3 @@ async function apiCall(
         return error
     }
 }
-
-export default { apiCall }

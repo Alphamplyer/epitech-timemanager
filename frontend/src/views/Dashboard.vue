@@ -31,6 +31,7 @@ import NavbarVue from "../components/Navbar.vue"
 import Switcher from "../components/Switcher.vue"
 import WTWeekChart from "../components/WTWeekChart.vue"
 import WTMonthChart from "../components/WTMonthChart.vue"
+import { apiCall } from '../../lib/api.js'
 
     export default {
     name: "Dashboard",
@@ -39,6 +40,17 @@ import WTMonthChart from "../components/WTMonthChart.vue"
         Switcher,
         WTWeekChart,
         WTMonthChart,
+    },
+    async mounted() {
+        const res = await apiCall(`/api/users?username=${localStorage.getItem('username')}`)
+
+        if (!res.ok) {
+            console.log('Erreur lors du GET du user')
+        } else {
+            const result = await res.json()
+
+            console.log(result)
+        }
     },
     methods: {
         updateIsWorking(working) {
@@ -52,11 +64,6 @@ import WTMonthChart from "../components/WTMonthChart.vue"
         return {
             workingTime: 0,
             isWorking: false,
-            chartData: {
-                Books: 24,
-                Magazine: 30,
-                Newspapers: 10
-            }
         }
     },
 }
