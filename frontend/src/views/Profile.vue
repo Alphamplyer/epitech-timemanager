@@ -9,7 +9,7 @@
                 <div class="secondRowLeft">
                     <v-icon class="userIcon">mdi-account-circle</v-icon>
                     <div class="changeUser">
-                        <h3><v-icon>mdi-pencil-outline</v-icon><span>Edit User</span></h3>
+                        <h3><span><Edit /></span></h3>
                         <h3><v-icon>mdi-account</v-icon><span>Promote User</span></h3>
                         <h3><v-icon>mdi-delete</v-icon><span>Delete User</span></h3>
                     </div>
@@ -35,11 +35,13 @@
 </template>
 
 <script>
+import Edit from '../components/Dialogs/Edit.vue'
 import Navbar from '../components/Navbar.vue'
 
 export default {
     components: {
-        Navbar
+        Navbar,
+        Edit
     },
     data() {
         return {
