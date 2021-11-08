@@ -1,0 +1,53 @@
+<template>
+  <v-card elevation="2" outlined style="width: 200px;">
+    <v-card-title
+      style="justify-content: center"
+      class="cursor-pointer"
+      v-on:click="goToUserProfile(object.id)"
+      >{{ object.firstname }} {{ object.lastname }}</v-card-title
+    >
+    <v-row style="justify-content: center">
+      <v-card-actions>
+        <Promote v-bind:object="object"/>
+      </v-card-actions>
+      <v-card-actions>
+        <Delete v-bind:object="object" v-bind:type="type"/>
+      </v-card-actions>
+    </v-row>
+  </v-card>
+</template>
+
+<script>
+import Delete from "./Dialogs/Delete.vue";
+import Promote from "./Dialogs/Promote.vue";
+export default {
+    name: "User",
+    methods: {
+        goToUserProfile(id) {
+            this.$router.push(`/user/${id}`);
+        },
+    },
+    props: ["object", "type"],
+    data() {
+        return {
+            dialogDelete: false,
+            dialogPromote: false
+        };
+    },
+    components: { Delete, Promote }
+};
+</script>
+
+<style scoped>
+.v-card {
+  margin: 5px;
+}
+
+>>> .v-dialog {
+  overflow-y: visible;
+}
+
+.v-card__title {
+  padding: 10px;
+}
+</style>
