@@ -39,6 +39,17 @@
                     v-model="password"
                     hint="At least 8 characters with 1 number and 1 capital letter"
                 />
+                <v-text-field 
+                    required
+                    outlined 
+                    min="8"
+                    placeholder="Secret again"
+                    label="Password again"
+                    type="password"
+                    :rules="[passwordConfirmationRule]"
+                    v-model="rePassword"
+                    hint="At least 8 characters with 1 number and 1 capital letter"
+                />
             </v-container>
 
             <v-divider style="background-color: #becdda" />
@@ -83,6 +94,11 @@ export default {
             password
         }
     },
+    computed: {
+        passwordConfirmationRule() {
+        return () => (this.password === this.rePassword) || 'Password must match'
+        }
+    },
     methods: {
         async register() {
             const res = await createUser({
@@ -107,7 +123,8 @@ export default {
         return {
             email: this.email,
             username: this.username,
-            password: this.password
+            password: this.password,
+            rePassword: undefined
         }
     }
 }
