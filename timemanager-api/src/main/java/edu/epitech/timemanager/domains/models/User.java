@@ -51,7 +51,7 @@ public class User implements UserDetails, Serializable {
 
 
 
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "clock_id", referencedColumnName = "id")
     private Clock clock;
 
@@ -139,7 +139,7 @@ public class User implements UserDetails, Serializable {
         return authorities;
     }
 
-    public void setRole(List<String> roles) {
+    public void setRoles(List<String> roles) {
         if (roles.contains("ROLE_GLOBAL_MANAGER")) {
             this.role = Role.GLOBAL_MANAGER;
         } else if (roles.contains("ROLE_MANAGER")) {
