@@ -44,7 +44,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     Collection<GrantedAuthority> authorities = new ArrayList<>();
                     Arrays.stream(roles).forEach(role -> authorities.add(new SimpleGrantedAuthority(role)));
                     User user = new User(id, username, "", "");
-                    user.setRole(Arrays.asList(roles));
+                    user.setRoles(Arrays.asList(roles));
                     UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(user, null, authorities);
 
