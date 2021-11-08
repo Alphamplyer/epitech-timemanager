@@ -3,7 +3,7 @@
         <Navbar/>
         <div id="profile">
             <div id="titleRow" class="customRow rounded-lg">
-                <h1 class="userName">{{ this.username }}’s Profile</h1>
+                <h1 class="userName">{{ token.user.username }}’s Profile</h1>
             </div>
             <v-container id="secondRow" class="customRow">
                 <div class="secondRowLeft">
@@ -16,11 +16,11 @@
                 </div>
                 <div class="secondRowRight">
                     <div class="userInfo text-capitalize">
-                        <p><span>Username:</span> {{ this.username }}</p>
+                        <p><span>Username:</span> {{ token.user.username }}</p>
                         <p><span>Password:</span> ########</p>
-                        <p><span>Email:</span> gabriel.riboldi@epitech.eu</p>
-                        <p><span>Role:</span> User</p>
-                        <p><span>ID:</span> 1234567890</p>
+                        <p><span>Email:</span> {{ token.user.email }}</p>
+                        <p><span>Role:</span> {{ token.user.role }} </p>
+                        <p><span>ID:</span> {{ token.user.id }} </p>
                     </div>
                     <div class="workingTimes">
                         <h3>--- Daily Working Time ---</h3>
@@ -45,9 +45,9 @@ export default {
     },
     data() {
         return {
-            username: localStorage.getItem('username')
+            token: JSON.parse(localStorage.getItem('token')), 
         }
-    }
+    },
 }
 </script>
 
