@@ -75,10 +75,11 @@
             </v-container>
         </v-responsive>
 
-        <v-responsive>
+        <v-responsive class="d-flex justify-center">
             <v-img
                 src="@/assets/welcome.svg"
                 max-height="700px"
+                max-width="800px"
                 lazy
             />
         </v-responsive>
@@ -105,9 +106,7 @@ export default {
                 body: urlencoded
             })
 
-            if (!res.ok) {
-                console.log('res:', res)
-                
+            if (!res.ok) {                
                 switch (res.status) {
                     case 403:
                         this.error = "L'utilisateur n'existe pas."
@@ -120,7 +119,7 @@ export default {
             } else {
                 const result = await res.json()
 
-                console.log('result:', result)
+                localStorage.username = this.identifier
                 localStorage.token = JSON.stringify(result)
 
                 this.$router.push('/user/dashboard')

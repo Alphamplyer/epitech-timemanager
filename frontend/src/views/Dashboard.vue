@@ -2,24 +2,24 @@
     <div class="d-flex flex-row" style="background-color: #DDDDE6">
         <NavbarVue :isWorking="this.isWorking" :workingTime="this.workingTime" />
 
-        <v-container class="d-flex flex-column justify-start">
-            <v-container class="d-flex flex-row">
+        <v-container class="d-flex flex-column">
+            <v-container class="d-flex flex-row p-4">
                 <Switcher @isWorking="updateIsWorking" @workingTime="updateWorkingTime" :isWorking="this.isWorking" />
 
                 <v-container
                     style="height: 45vh; width: 61%; background-color: white"
-                    class="shadow rounded-lg"
+                    class="d-flex justify-center shadow rounded-lg"
                 >
-
+                    <WTMonthChart />
                 </v-container>
             </v-container>
 
             <v-container class="d-flex flex-row">
                 <v-container
-                    style="height: 45vh; width: 100%; background-color: white"
-                    class="shadow rounded-lg"
+                    style="height: 45vh; background-color: white"
+                    class="d-flex justify-center shadow rounded-lg"
                 >
-                    <LineChart />
+                    <WTWeekChart />
                 </v-container>
             </v-container>
         </v-container>
@@ -29,14 +29,16 @@
 <script>
 import NavbarVue from "../components/Navbar.vue"
 import Switcher from "../components/Switcher.vue"
-import LineChart from "../components/LineChart.vue"
+import WTWeekChart from "../components/WTWeekChart.vue"
+import WTMonthChart from "../components/WTMonthChart.vue"
 
     export default {
     name: "Dashboard",
     components: {
         NavbarVue,
         Switcher,
-        LineChart,
+        WTWeekChart,
+        WTMonthChart,
     },
     methods: {
         updateIsWorking(working) {

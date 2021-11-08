@@ -12,7 +12,7 @@
           </v-container>
 
           <v-list-item-subtitle class="text-capitalize black--text">
-            <v-icon color="black">mdi-account</v-icon>username
+            <v-icon color="black">mdi-account</v-icon>{{ this.username }}
           </v-list-item-subtitle>
 
           <v-container>
@@ -122,7 +122,8 @@ export default {
     props: ['isWorking', 'workingTime'],
     data: function() {
       return {
-        now: moment().format('HH:mm:ss')
+        now: moment().format('HH:mm:ss'),
+        username: localStorage.getItem('username')
       }
   },
 }

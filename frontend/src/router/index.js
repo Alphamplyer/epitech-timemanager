@@ -64,10 +64,10 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log('to:', to, 'from:', from)
   if (to.meta?.hasToken) {
     if (localStorage.token !== undefined) { //TODO: Verifier que le token est pas expiré
-      next()
+    //TODO: Vérifier si l'user navigue sur la route '/' ou '/register'. Dans ce cas là, le redirect sur son dashboard
+    next()
     } else {
       router.push('/')
     }

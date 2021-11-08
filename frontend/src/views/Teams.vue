@@ -2,11 +2,11 @@
   <div>
     <Navbar />
     <div id="teams">
-      <div id="titleRow" class="customRow">
-        <h1 class="teamsTitle">All Teams</h1>
+      <div id="titleRow" class="customRow rounded-lg">
+        <h1 class="teamsTitle rounded-lg">All Teams</h1>
       </div>
       <Grid v-bind:objects="teams" v-bind:type="type" />
-      <div id="thirdrow" class="customRow"></div>
+      <div id="thirdrow" class="customRow rounded-lg"></div>
     </div>
   </div>
 </template>

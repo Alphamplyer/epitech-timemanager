@@ -92,8 +92,6 @@ export default {
             })
 
             if (!res.ok) {
-                console.log(res)
-
                 if (res.status === 500) {
                     this.error = ""
                 }
@@ -103,7 +101,6 @@ export default {
                     //TODO: Toaster de register
                 })
             }
-            console.log('res:', res)
         }
     },
     data() {

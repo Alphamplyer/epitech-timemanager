@@ -2,8 +2,8 @@
     <div>
         <Navbar/>
         <div id="profile">
-            <div id="titleRow" class="customRow">
-                <h1 class="userName">Gabriel.R’s Profile</h1>
+            <div id="titleRow" class="customRow rounded-lg">
+                <h1 class="userName">{{ this.username }}’s Profile</h1>
             </div>
             <v-container id="secondRow" class="customRow">
                 <div class="secondRowLeft">
@@ -16,7 +16,7 @@
                 </div>
                 <div class="secondRowRight">
                     <div class="userInfo">
-                        <p><span>Username:</span> Gabriel.R</p>
+                        <p><span>Username:</span> {{ this.username }}</p>
                         <p><span>Password:</span> ########</p>
                         <p><span>Email:</span> gabriel.riboldi@epitech.eu</p>
                         <p><span>Role:</span> User</p>
@@ -40,6 +40,11 @@ import Navbar from '../components/Navbar.vue'
 export default {
     components: {
         Navbar
+    },
+    data() {
+        return {
+            username: localStorage.getItem('username')
+        }
     }
 }
 </script>
