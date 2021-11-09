@@ -28,7 +28,6 @@ export default {
   data() {
     return {
       dialogDelete: false,
-      snackbarDelete: false,
       account: this.$store.state.user
     };
   },
