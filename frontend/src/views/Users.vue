@@ -78,9 +78,6 @@ export default {
         },
       ];
     },
-    goToUserProfile(id) {
-      this.$router.push(`/user/${id}`);
-    },
   },
   data() {
     return {

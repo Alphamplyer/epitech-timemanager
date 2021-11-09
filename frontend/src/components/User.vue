@@ -1,20 +1,17 @@
 <template>
-  <v-card elevation="2" outlined style="width: 200px;">
-    <v-card-title
-      style="justify-content: center"
-      class="cursor-pointer"
-      v-on:click="goToUserProfile(object.id)"
-      >{{ object.username }}</v-card-title
-    >
+  <v-card elevation="2" outlined style="width: 200px">
+    <v-card-title style="justify-content: center">{{
+      object.username
+    }}</v-card-title>
     <v-row style="justify-content: center">
       <v-card-actions>
         <v-btn elevation="2" x-small color="primary">
-          <Promote v-bind:object="object"/>
+          <Promote v-bind:object="object" />
         </v-btn>
       </v-card-actions>
-      <v-card-actions >
+      <v-card-actions>
         <v-btn elevation="2" x-small color="error">
-          <Delete v-bind:object="object" v-bind:type="type"/>
+          <Delete v-bind:object="object" v-bind:type="type" />
         </v-btn>
       </v-card-actions>
     </v-row>
@@ -25,20 +22,15 @@
 import Delete from "./Dialogs/Delete.vue";
 import Promote from "./Dialogs/Promote.vue";
 export default {
-    name: "User",
-    methods: {
-        goToUserProfile(id) {
-            this.$router.push(`/user/${id}`);
-        },
-    },
-    props: ["object", "type"],
-    data() {
-        return {
-            dialogDelete: false,
-            dialogPromote: false
-        };
-    },
-    components: { Delete, Promote }
+  name: "User",
+  props: ["object", "type"],
+  data() {
+    return {
+      dialogDelete: false,
+      dialogPromote: false,
+    };
+  },
+  components: { Delete, Promote },
 };
 </script>
 
