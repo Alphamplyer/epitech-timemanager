@@ -7,7 +7,7 @@
             <v-card>
                 <v-card-title v-if="type == 'userType'"
                     class="text-h6 lighten-2"
-                >Are you sure you want to delete {{ object.firstname }} {{ object.lastname }} ?
+                >Are you sure you want to delete {{ object.username }} ?
                 </v-card-title>
                 <v-card-title v-if="type == 'teamType'"
                     class="text-h6 lighten-2"

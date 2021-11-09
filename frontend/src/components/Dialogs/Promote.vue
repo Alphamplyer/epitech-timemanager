@@ -7,7 +7,7 @@
             <v-card>
                 <v-card-title
                     class="text-h6 lighten-2"
-                >Are you sure you want to promote {{ object.firstname }} {{ object.lastname }}?</v-card-title>
+                >Are you sure you want to promote {{ object.username }} ?</v-card-title>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="primary" text @click="dialogPromote = false">YES</v-btn>

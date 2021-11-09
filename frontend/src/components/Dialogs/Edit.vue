@@ -7,9 +7,10 @@
     </template>
     <v-card>
       <v-text-field
-        v-model="firstname"
-        label="First name"
+        v-model="username"
+        label="Username"
         required
+        :placeholder="object.username"
       ></v-text-field>
       <v-text-field
         v-model="password"
@@ -34,7 +35,7 @@
 <script>
 export default {
   name: "Delete",
-  props: ["object", "type", "rules", "firstname"],
+  props: ["object", "type", "rules"],
   computed: {
     passwordConfirmationRule() {
       return () => (this.password === this.rePassword) || 'Password must match'
@@ -44,7 +45,8 @@ export default {
     return {
       dialogEdit: false,
       password: undefined,
-      rePassword: undefined
+      rePassword: undefined,
+      username: undefined
     };
   },
 };

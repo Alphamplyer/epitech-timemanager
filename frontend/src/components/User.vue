@@ -4,7 +4,7 @@
       style="justify-content: center"
       class="cursor-pointer"
       v-on:click="goToUserProfile(object.id)"
-      >{{ object.firstname }} {{ object.lastname }}</v-card-title
+      >{{ object.username }}</v-card-title
     >
     <v-row style="justify-content: center">
       <v-card-actions>
