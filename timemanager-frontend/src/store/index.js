@@ -28,11 +28,19 @@ export default new Vuex.Store({
   },
   mutations: {
     setTokens(state, access_token, refresh_token) {
-      state.access_token = access_token;
-      state.refresh_token = refresh_token;
+      state.access_token = "Bearer " + access_token;
+      state.refresh_token = "Bearer " + refresh_token;
     },
     setUser(state, user) {
-      state.user = user;
+      state.user = {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      };
+    },
+    setUserTeams(state, teams) {
+      state.user.teams = teams;
     },
     clearUser(state) {
       state.user = {
@@ -41,7 +49,15 @@ export default new Vuex.Store({
         email: '',
         role: '',
         teams: {}
-      }
+      };
+      state.access_token = '';
+      state.refresh_token = '';
+    },
+    setClock(state, clock) {
+      state.clock = clock;
+    },
+    updateClockTime(state, time) {
+      state.clock.time = time;
     }
   },
   actions: {
