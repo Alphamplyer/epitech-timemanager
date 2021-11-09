@@ -2,33 +2,35 @@
     <div>
         <Navbar/>
         <div id="profile">
-            <div id="titleRow" class="customRow rounded-lg">
+            <v-container id="titleRow" class="customRow rounded-lg">
                 <h1 class="userName">{{ account.username }}’s Profile</h1>
-            </div>
-            <v-container id="secondRow" class="customRow">
-                <div class="secondRowLeft">
-                    <v-icon class="userIcon">mdi-account-circle</v-icon>
-                    <div class="changeUser">
-                        <h3 style="display: flex"><v-icon>mdi-pencil-outline</v-icon><span><Edit :object="account"/></span></h3>
-                        <h3 style="display: flex"><v-icon>mdi-account</v-icon><span><Promote :object="account"/></span></h3>
-                        <h3 style="display: flex"><v-icon>mdi-delete</v-icon><span><Delete :object="account" :type="'userType'"/></span></h3>
-                    </div>
-                </div>
-                <div class="secondRowRight">
-                    <div class="userInfo text-capitalize">
-                        <p><span>Username:</span> {{ account.username }}</p>
-                        <p><span>Password:</span> ########</p>
-                        <p><span>Email:</span> {{ account.email }}</p>
-                        <p><span>Role:</span> {{ account.role }} </p>
-                        <p><span>ID:</span> {{ account.id }} </p>
-                    </div>
-                    <div class="workingTimes">
-                        <h3>--- Daily Working Time ---</h3>
-                        <p>3Hours 32Mins 23Secs</p>
-                        <h3>--- Weekly Working Time ---</h3>
-                        <p>28Hours 54Mins 09Secs</p>
-                    </div>
-                </div>
+            </v-container>
+            <v-container id="secondRow" class="rounded-lg customRow">
+                <v-row wrap>
+                    <v-col class="secondRowLeft align-md-center align-sm-center">
+                        <v-icon class="userIcon d-none d-md-flex">mdi-account-circle</v-icon>
+                        <div class="changeUser">
+                            <h3 style="display: flex"><v-icon>mdi-pencil-outline</v-icon><span><Edit :object="account"/></span></h3>
+                            <h3 style="display: flex"><v-icon>mdi-account</v-icon><span><Promote :object="account"/></span></h3>
+                            <h3 style="display: flex"><v-icon>mdi-delete</v-icon><span><Delete :object="account" :type="'userType'"/></span></h3>
+                        </div>
+                    </v-col>
+                    <v-row wrap class="secondRowRight">
+                        <div class="userInfo text-capitalize">
+                            <p><span>Username:</span> {{ account.username }}</p>
+                            <p><span>Password:</span> ########</p>
+                            <p><span>Email:</span> {{ account.email }}</p>
+                            <p><span>Role:</span> {{ account.role }} </p>
+                            <p><span>ID:</span> {{ account.id }} </p>
+                        </div>
+                        <div class="workingTimes">
+                            <h3>--- Daily Working Time ---</h3>
+                            <p>3Hours 32Mins 23Secs</p>
+                            <h3>--- Weekly Working Time ---</h3>
+                            <p>28Hours 54Mins 09Secs</p>
+                        </div>
+                    </v-row>
+                </v-row>
             </v-container>
         </div>
     </div>
@@ -57,9 +59,9 @@ export default {
 
 <style scoped>
 #profile {
-    display: grid;
-    column-gap: 10px;
-    row-gap: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     height: 100%;
     background-color: #dddde6;
 }
@@ -72,11 +74,13 @@ export default {
     background-color: #ffffff;
     display: flex;
     align-items: center;
+    width: 95%;
+    height: 15%;
 }
 #secondRow {
     background: #ffffff;
-    border-radius: 20px;
-    display: flex;
+    width: 95%;
+    height: 85%;
 }
 .secondRowLeft {
     display: flex;
