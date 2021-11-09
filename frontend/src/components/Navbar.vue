@@ -68,7 +68,7 @@
         <v-container
           class="cursor-pointer"
           v-on:click="toUsers()"
-          v-if="this.account.role !== 'EMPLOYEE'"
+          v-if="this.account.role === 'GLOBAL_MANAGER'"
         >
           <v-icon>mdi-account-group</v-icon> All Users
         </v-container>
