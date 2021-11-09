@@ -2,7 +2,7 @@
   <v-card elevation="2" outlined style="width: 200px; height: 33%">
     <v-card-title style="justify-content: center">
       {{
-        object.title
+        object.name
       }}
     </v-card-title>
     <v-row style="justify-content: center">
