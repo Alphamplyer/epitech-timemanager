@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -23,6 +24,8 @@ import java.util.*;
 public class GenerateFakeDataCommand implements ApplicationListener<ApplicationReadyEvent> {
 
     private final Faker faker = new Faker(new Locale(Locale.FRANCE.getLanguage()));
+
+    private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
     private final WorkingTimeRepository workingTimeRepository;
@@ -80,12 +83,12 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
         log.info("Generating fake data done.");
     }
 
-    private User generateFakeEmployee() {
+    private User generateFakeUser(Role role) {
         User user = new User();
         user.setUsername(faker.name().username());
         user.setEmail(user.getUsername().toLowerCase() + "@timemanager.com");
-        user.setHashedPassword("password");
-        user.setRole(Role.EMPLOYEE);
+        user.setHashedPassword(passwordEncoder.encode("password"));
+        user.setRole(role);
         user.setClock(generateFakeClock(user));
 
         try {
@@ -98,21 +101,12 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
         return user;
     }
 
+    private User generateFakeEmployee() {
+        return generateFakeUser(Role.EMPLOYEE);
+    }
+
     private User generateFakeManager() {
-        User user = new User();
-        user.setUsername(faker.name().username());
-        user.setEmail(user.getUsername().toLowerCase() + "@timemanager.com");
-        user.setHashedPassword("password");
-        user.setRole(Role.MANAGER);
-
-        try {
-            user = userRepository.save(user);
-        } catch (Exception e) {
-            log.error("Error while saving user {}", user.getUsername(), e);
-            return null;
-        }
-
-        return user;
+        return generateFakeUser(Role.MANAGER);
     }
 
     private void generateWorkingTimes(User user) {
