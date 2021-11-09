@@ -22,78 +22,61 @@ export default {
       return [
         {
           id: 1,
-          firstname: "Théo",
-          lastname: "Ackermann",
+          username: "Théo",
         },
         {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
-                {
+        {
           id: 2,
-          firstname: "user2",
-          lastname: "user2",
+          username: "user2",
         },
       ];
-    },
-    goToUserProfile(id) {
-      this.$router.push(`/user/${id}`);
     },
   },
   data() {
