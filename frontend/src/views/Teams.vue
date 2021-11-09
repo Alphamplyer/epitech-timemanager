@@ -14,25 +14,23 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import Grid from "../components/Grid.vue";
+import { apiCall } from "../../lib/api";
+
 export default {
   name: "Teams",
+  beforeMount() {
+    this.getTeams();
+  },
   methods: {
-    getTeams() {
-      return [
-        {
-          id: 1,
-          title: "Team 1",
-        },
-        {
-          id: 2,
-          title: "Team 2",
-        },
-      ];
+    async getTeams() {
+      const response = await apiCall("/api/teams");
+      this.teams = await response.json();
+      console.log(this.teams);
     },
   },
   data() {
     return {
-      teams: this.getTeams(),
+      teams: null,
       type: "teamType",
     };
   },

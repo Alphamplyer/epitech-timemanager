@@ -14,74 +14,22 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import Grid from "../components/Grid.vue";
+import { apiCall } from "../../lib/api";
 
 export default {
   name: "Users",
+  beforeMount() {
+    this.getUsers();
+  },
   methods: {
-    getUsers() {
-      return [
-        {
-          id: 1,
-          username: "Théo",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-        {
-          id: 2,
-          username: "user2",
-        },
-      ];
+    async getUsers() {
+      const response = await apiCall("/api/users");
+      this.users = await response.json();
     },
   },
   data() {
     return {
-      users: this.getUsers(),
+      users: null,
       type: "userType",
     };
   },
