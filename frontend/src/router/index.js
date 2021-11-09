@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+const account = JSON.parse(localStorage.getItem('vuex'))
+
 const routes = [
   {
     path: '/',
@@ -15,35 +17,39 @@ const routes = [
     component: () => import('../views/Register.vue')
   },
   {
-    path: '/user/dashboard',
+    path: `/user/:id/dashboard`,
+    id: account?.user.id,
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
     meta: {
-      hasToken: localStorage.getItem('token') !== undefined
+      hasToken: account !== undefined
     }
   },
   {
-    path: '/user/teams',
+    path: `/user/:id/teams`,
+    id: account?.user.id,
     name: 'Teams',
     component: () => import('../views/Teams.vue'),
     meta: {
-      hasToken: localStorage.getItem('token') !== undefined
+      hasToken: account !== undefined
     }
   },
   {
-    path: '/user/users',
+    path: `/user/:id/users`,
+    id: account?.user.id,
     name: 'Users',
     component: () => import('../views/Users.vue'),
     meta: {
-      hasToken: localStorage.getItem('token') !== undefined
+      hasToken: account !== undefined
     }
   },
   {
-    path: '/user/profile',
+    path: `/user/:id/profile`,
+    id: account?.user.id,
     name: 'Profile',
     component: () => import('../views/Profile.vue'),
     meta: {
-      hasToken: localStorage.getItem('token') !== undefined
+      hasToken: account !== undefined
     }
   },
   {
@@ -51,9 +57,6 @@ const routes = [
     path: '*',
     name: '404',
     component: () => import('../views/404.vue'),
-    meta: {
-      hasToken: localStorage.getItem('token') !== undefined
-    }
   }
 ]
 
@@ -65,7 +68,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta?.hasToken) {
-    if (localStorage.token !== undefined) { //TODO: Verifier que le token est pas expiré
+    if (account) { //TODO: Verifier que le token est pas expiré
     //TODO: Vérifier si l'user navigue sur la route '/' ou '/register'. Dans ce cas là, le redirect sur son dashboard
     next()
     } else {

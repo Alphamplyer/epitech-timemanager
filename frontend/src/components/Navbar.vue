@@ -12,7 +12,7 @@
           </v-container>
 
           <v-list-item-subtitle class="text-capitalize black--text">
-            <v-icon color="black">mdi-account</v-icon>{{ this.username }}
+            <v-icon color="black">mdi-account</v-icon>{{ this.account.username }}
           </v-list-item-subtitle>
 
           <v-container>
@@ -90,24 +90,25 @@ import { secToDuration } from '../../lib/date'
 export default {
     methods: {
       toDashboard() {
-          this.$router.push('/user/dashboard').catch(()=>{})
+          this.$router.push(`/user/${this.account.id}/dashboard`).catch(()=>{})
       },
       toProfile() {
-          this.$router.push('/user/profile').catch(()=>{})
+          this.$router.push(`/user/${this.account.id}/profile`).catch(()=>{})
       },
       toTeams() {
-          this.$router.push('/user/teams').catch(()=>{})
+          this.$router.push(`/user/${this.account.id}/teams`).catch(()=>{})
       },
       toUsers() {
-          this.$router.push('/user/users').catch(()=>{})
+          this.$router.push(`/user/${this.account.id}/users`).catch(()=>{})
       },
       logOut() {
-          localStorage.removeItem('token')
+          localStorage.removeItem('vuex')
           this.$router.push('/')
       },
       secToDuration,
     },
     created() {
+        // console.log('store enabled:', this.$store.state.clock.enabled)
         setInterval(() => {
             this.now = moment().format('HH:mm:ss')
         }, 1000)
@@ -123,7 +124,7 @@ export default {
     data: function() {
       return {
         now: moment().format('HH:mm:ss'),
-        username: localStorage.getItem('username')
+        account: this.$store.state.user
       }
   },
 }

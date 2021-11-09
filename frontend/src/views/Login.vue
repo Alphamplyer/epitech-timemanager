@@ -106,7 +106,7 @@ export default {
             if (!res.ok) {
                 switch (res.status) {
                     case 403:
-                        this.error = "L'utilisateur n'existe pas."
+                        this.error = "Identifiants incorrects."
                         break;
 
                     default:
@@ -114,12 +114,19 @@ export default {
                         break;
                 }
             } else {
-                const result = await res.json()
+              const result = await res.json()
 
-                localStorage.username = this.identifier
-                localStorage.token = JSON.stringify(result)
+              console.log('result:', result.access_token)
 
-                this.$router.push('/user/dashboard')
+              this.$store.commit('setTokens', {
+                access_token: result.access_token, 
+                refresh_token: result.refresh_token
+              })
+              this.$store.commit('setUser', {
+                user: result.user
+              })
+
+              this.$router.push(`/user/${result.user.id}/dashboard`)
             }
         },
         register() {

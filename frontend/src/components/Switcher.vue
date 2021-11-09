@@ -1,6 +1,6 @@
 <template>
     <v-container 
-        style="height: 45vh; width: 300px; background-color: white"
+        style="height: 46vh; width: 300px; background-color: white"
         class="d-flex flex-column shadow py-8 rounded-lg text-center justify-space-between align-center"
     >
         <p 

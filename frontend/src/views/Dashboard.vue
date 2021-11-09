@@ -1,24 +1,26 @@
 <template>
-    <div class="d-flex flex-row" style="background-color: #DDDDE6">
+    <div class="d-flex flex-row overflow-auto" style="background-color: #DDDDE6">
         <NavbarVue :isWorking="this.isWorking" :workingTime="this.workingTime" />
 
-        <v-container class="d-flex flex-column">
-            <v-container class="d-flex flex-row p-4">
+        <v-container class="d-flex flex-column justify-space-between">
+            <v-container class="d-flex flex-row">
                 <Switcher @isWorking="updateIsWorking" @workingTime="updateWorkingTime" :isWorking="this.isWorking" />
 
                 <v-container
-                    style="height: 45vh; width: 61%; background-color: white"
-                    class="d-flex justify-center shadow rounded-lg"
+                    style="height: 46vh; background-color: white"
+                    class="d-flex justify-center shadow rounded-lg overflow-y-auto"
                 >
-                    <WTMonthChart />
+                    <v-container>
+                        <WTMonthChart />
+                    </v-container>
                 </v-container>
             </v-container>
 
-            <v-container class="d-flex flex-row">
-                <v-container
-                    style="height: 45vh; background-color: white"
-                    class="d-flex justify-center shadow rounded-lg"
-                >
+            <v-container 
+                style="height: 46vh; background-color: white;"
+                class="d-flex shadow rounded-lg overflow-y-auto"
+            >
+                <v-container>
                     <WTWeekChart />
                 </v-container>
             </v-container>
@@ -41,7 +43,7 @@ import WTMonthChart from "../components/WTMonthChart.vue"
         WTWeekChart,
         WTMonthChart,
     },
-    // async mounted() {
+    async mounted() {
     //     const res = await apiCall(`/api/users?username=${localStorage.getItem('username')}`)
 
     //     if (!res.ok) {
@@ -51,7 +53,7 @@ import WTMonthChart from "../components/WTMonthChart.vue"
 
     //         console.log(result)
     //     }
-    // },
+    },
     methods: {
         updateIsWorking(working) {
             this.isWorking = working
@@ -68,37 +70,3 @@ import WTMonthChart from "../components/WTMonthChart.vue"
     },
 }
 </script>
-
-<style scoped>
-
-#dashboard {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
-    height: 100%;
-}
-
-#workingTime {
-    grid-column: 1 / 2;
-    grid-row: 1;
-    background-color: red;
-    border-radius: 12px;
-}
-
-#dailyWorkingTime {
-    grid-column: 2 / 4;
-    grid-row: 1;
-    background-color: blue;
-    border-radius: 12px;
-}
-
-#weeklyWorkingTime {
-    grid-column: 1 / 4;
-    grid-row: 2;
-    background-color: green;
-    border-radius: 12px;
-}
-
-</style>

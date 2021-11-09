@@ -26,7 +26,7 @@ export default {
         responsive: true,
         maintainAspectRatio: false,
         title: {
-          display: true,
+          display: false,
           text: "Working Time Over Month"
         }
       }

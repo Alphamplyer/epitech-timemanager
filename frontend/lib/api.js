@@ -3,7 +3,7 @@ export async function apiCall(
     method = 'GET', 
     headers = { 
         Accept: 'application/json',
-        Authorization: `Bearer ${JSON.parse(localStorage.token).access_token}`,
+        Authorization: this.$store.state.access_token,
         'Content-Type': 'application/json'
     },
     body)
