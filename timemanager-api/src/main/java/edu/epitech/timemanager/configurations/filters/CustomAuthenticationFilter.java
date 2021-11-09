@@ -2,8 +2,11 @@ package edu.epitech.timemanager.configurations.filters;
 
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.epitech.timemanager.domains.mappers.UserMappers;
 import edu.epitech.timemanager.domains.models.User;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mapstruct.factory.Mappers;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,12 +25,10 @@ import java.util.stream.Collectors;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
+@RequiredArgsConstructor
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
-
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-    }
+    private final UserMappers userMappers = Mappers.getMapper(UserMappers.class);
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -57,9 +58,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
             .withClaim("id", user.getId())
             .sign(algorithm);
-//        response.setHeader("token", token);
-//        response.setHeader("refreshToken", refreshToken);
-        Map<String, String> tokens = Map.of("access_token", token, "refresh_token", refreshToken);
+        Map<String, Object> tokens = Map.of("access_token", token, "refresh_token", refreshToken, "user", userMappers.userToUserDto(user));
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
     }

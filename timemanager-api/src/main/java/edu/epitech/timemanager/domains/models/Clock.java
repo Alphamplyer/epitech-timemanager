@@ -30,7 +30,7 @@ public class Clock implements Serializable {
     @Column(name = "is_enable", nullable = false)
     private boolean enable = false;
 
-    @OneToOne(mappedBy = "clock", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "clock", orphanRemoval = true, cascade = CascadeType.ALL)
     private User user;
 
 
