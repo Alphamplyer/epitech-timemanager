@@ -10,8 +10,10 @@
       <v-card-actions>
         <Promote v-bind:object="object"/>
       </v-card-actions>
-      <v-card-actions>
-        <Delete v-bind:object="object" v-bind:type="type"/>
+      <v-card-actions >
+        <v-btn elevation="2" x-small color="error">
+          <Delete v-bind:object="object" v-bind:type="type"/>
+        </v-btn>
       </v-card-actions>
     </v-row>
   </v-card>

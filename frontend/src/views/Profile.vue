@@ -11,7 +11,7 @@
                     <div class="changeUser">
                         <h3><span><Edit :object="token.user"/></span></h3>
                         <h3><v-icon>mdi-account</v-icon><span><Promote :object="token.user"/></span></h3>
-                        <h3><v-icon>mdi-delete</v-icon><span><Delete :object="token.user" :type="'userType'"/></span></h3>
+                        <h3 style="display: inline-flex"><v-icon>mdi-delete</v-icon><Delete :object="token.user" :type="'userType'"/></h3>
                     </div>
                 </div>
                 <div class="secondRowRight">
