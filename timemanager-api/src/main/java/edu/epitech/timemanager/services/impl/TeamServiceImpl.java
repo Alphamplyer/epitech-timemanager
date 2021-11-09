@@ -2,6 +2,7 @@ package edu.epitech.timemanager.services.impl;
 
 import edu.epitech.timemanager.domains.models.Team;
 import edu.epitech.timemanager.domains.models.User;
+import edu.epitech.timemanager.domains.models.WorkingTime;
 import edu.epitech.timemanager.persistence.TeamRepository;
 import edu.epitech.timemanager.persistence.UserRepository;
 import edu.epitech.timemanager.services.TeamService;
@@ -44,6 +45,16 @@ public class TeamServiceImpl implements TeamService {
             return null;
 
         return teamRepository.getTeamMembers(teamId);
+    }
+
+    @Override
+    public List<WorkingTime> getTeamWorkingTimes(int teamId) {
+        boolean isTeamExist = userRepository.existsById(teamId);
+
+        if (!isTeamExist)
+            return null;
+
+        return teamRepository.getTeamWorkingTimes(teamId);
     }
 
     @Override
