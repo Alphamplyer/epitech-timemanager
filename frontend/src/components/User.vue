@@ -8,7 +8,9 @@
     >
     <v-row style="justify-content: center">
       <v-card-actions>
-        <Promote v-bind:object="object"/>
+        <v-btn elevation="2" x-small color="primary">
+          <Promote v-bind:object="object"/>
+        </v-btn>
       </v-card-actions>
       <v-card-actions >
         <v-btn elevation="2" x-small color="error">

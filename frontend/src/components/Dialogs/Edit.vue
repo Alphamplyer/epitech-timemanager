@@ -1,9 +1,7 @@
 <template>
   <v-dialog v-model="dialogEdit" width="30%">
     <template v-slot:activator="{ on, attrs }">
-      <div v-bind="attrs" v-on="on">
-        <v-icon>mdi-pencil-outline</v-icon> Edit user
-      </div>
+      <div v-bind="attrs" v-on="on">Edit user</div>
     </template>
     <v-card>
       <v-text-field
@@ -12,11 +10,7 @@
         required
         :placeholder="object.username"
       ></v-text-field>
-      <v-text-field
-        v-model="password"
-        label="Password"
-        required
-      ></v-text-field>
+      <v-text-field v-model="password" label="Password" required></v-text-field>
       <v-text-field
         v-model="rePassword"
         :rules="[passwordConfirmationRule]"
@@ -38,15 +32,15 @@ export default {
   props: ["object", "type", "rules"],
   computed: {
     passwordConfirmationRule() {
-      return () => (this.password === this.rePassword) || 'Password must match'
-    }
-},
+      return () => this.password === this.rePassword || "Password must match";
+    },
+  },
   data() {
     return {
       dialogEdit: false,
       password: undefined,
       rePassword: undefined,
-      username: undefined
+      username: undefined,
     };
   },
 };
