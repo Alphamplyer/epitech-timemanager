@@ -28,13 +28,19 @@ export default {
   data() {
     return {
       dialogDelete: false,
+      snackbarDelete: false,
       account: this.$store.state.user
     };
   },
   methods: {
     async deleteData() {
       this.dialogDelete = false;
-      apiCall(`/api/users/${this.object.id}`, 'DELETE')
+      if(this.type == 'userType') {
+        await apiCall(`/api/users/${this.object.id}`, 'DELETE')
+      }
+      else if(this.type == 'teamType'){
+        await apiCall(`/api/teams/${this.object.id}`, 'DELETE')
+      }
     },
   },
 };
