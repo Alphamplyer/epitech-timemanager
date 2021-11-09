@@ -34,7 +34,7 @@ export default {
   methods: {
     async deleteData() {
       this.dialogDelete = false;
-      apiCall(`/api/users/${this.account.id}`, 'DELETE')
+      apiCall(`/api/users/${this.object.id}`, 'DELETE')
     },
   },
 };
