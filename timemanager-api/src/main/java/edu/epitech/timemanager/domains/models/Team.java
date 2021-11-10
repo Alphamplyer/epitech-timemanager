@@ -7,10 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -31,7 +28,7 @@ public class Team implements Serializable {
     private String description = "";
 
     @ManyToMany
-    private Set<User> members = new HashSet<>();
+    private List<User> members = new ArrayList<>();
 
 
     @CreationTimestamp
@@ -54,7 +51,7 @@ public class Team implements Serializable {
         this.description = description;
     }
 
-    public Team(Integer id, String name, String description, Set<User> members) {
+    public Team(Integer id, String name, String description, List<User> members) {
         this.id = id;
         this.name = name;
         this.description = description;
