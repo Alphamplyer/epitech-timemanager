@@ -29,7 +29,7 @@ public class WorkingTimeController {
     private final WorkingTimeService workingTimeService;
     private final TeamService teamService;
 
-    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+    @PreAuthorize("hasAnyRole('ROLE_EMPLOYEE', 'ROLE_MANAGER', 'ROLE_GLOBAL_MANAGER')")
     @GetMapping("/users/{userId}")
     public ResponseEntity<?> getWorkingTimes(
         @AuthenticationPrincipal User user,
@@ -41,10 +41,10 @@ public class WorkingTimeController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
         if (start == null && end == null) {
-            return ResponseEntity.ok(workingTimeService.getWorkingTimes(userId));
+            return ResponseEntity.ok(workingTimeMappers.workingTimesToWorkingTimesDtos(workingTimeService.getWorkingTimes(userId)));
         }
         else if (start != null && end != null) {
-            return ResponseEntity.ok(workingTimeService.getWorkingTimes(userId, start, end));
+            return ResponseEntity.ok(workingTimeMappers.workingTimesToWorkingTimesDtos(workingTimeService.getWorkingTimes(userId, start, end)));
         }
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

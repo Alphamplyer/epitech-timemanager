@@ -51,16 +51,17 @@ public class User implements UserDetails, Serializable {
 
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "clock_id", referencedColumnName = "id")
     private Clock clock;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     @ToString.Exclude
-    private Set<WorkingTime> workingTimes;
+    private List<WorkingTime> workingTimes;
 
     @ManyToMany(mappedBy = "members")
-    private Set<Team> joinedTeams = new HashSet<>();
+    @ToString.Exclude
+    private List<Team> joinedTeams = new ArrayList<>();
 
 
     public User(Integer id) {
