@@ -64,20 +64,20 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
             }
 
             log.info("Generating working times for manager {}", manager.getUsername());
-            generateWorkingTimes(manager);
+            generateFakeWorkingTimes(manager);
         }
 
         for (User employee : employees) {
             int teamIndex = faker.number().numberBetween(0, teams.size());
             Team team = teams.get(teamIndex);
             log.info("Set employee {} in team {}", employee.getUsername(), team.getName());
-            team.addUser(employee);
+            team.getMembers().add(employee);
 
             log.info("Generating working times for employee {}", employee.getUsername());
-            generateWorkingTimes(employee);
+            generateFakeWorkingTimes(employee);
         }
 
-        log.info("Saving teams...");
+        log.info("Generate all teams");
         teamRepository.saveAll(teams);
 
         log.info("Generating fake data done.");
@@ -109,7 +109,7 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
         return generateFakeUser(Role.MANAGER);
     }
 
-    private void generateWorkingTimes(User user) {
+    private void generateFakeWorkingTimes(User user) {
         List<WorkingTime> workingTimes = new ArrayList<>();
 
         for (int i = 0; i < faker.number().numberBetween(1, 25); i++) {
@@ -164,9 +164,9 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
 
     private Team generateFakeTeam(User manager) {
         Team team = new Team();
-        team.setName(faker.name().bloodGroup());
+        team.setName(faker.name().name());
         team.setDescription(faker.lorem().sentence(16));
-        team.addUser(manager);
+        team.getMembers().add(manager);
         return team;
     }
 }

@@ -30,10 +30,8 @@ public class Team implements Serializable {
 
     private String description = "";
 
-    @ManyToMany(mappedBy = "joinedTeams")
-    @ToString.Exclude
+    @ManyToMany
     private Set<User> members = new HashSet<>();
-
 
 
     @CreationTimestamp
@@ -61,15 +59,6 @@ public class Team implements Serializable {
         this.name = name;
         this.description = description;
         this.members = members;
-    }
-
-    public void addUser(User user) {
-        if (members.stream().noneMatch(user1 -> user1.getId().equals(user.getId())))
-            members.add(user);
-    }
-
-    public void removeUser(User user) {
-        members.removeIf(user1 -> user1.getId().equals(user.getId()));
     }
 
     @Override
