@@ -44,35 +44,40 @@ export default {
         setWorking() {
             if (!this.$store.state.clock.enabled) {
                 this.$store.state.clock.enabled = true
-                this.$store.state.clock.started_at = moment().format('DD-MM-YYYY HH:mm:ss')
+                this.$store.state.clock.started_at = moment().format('YYYY-MM-DDTHH:mm:ss')
             } else {
                 this.$store.state.clock.enabled = false
                 this.$store.commit('updateClockTime', addSecondsToDuration(this.$store.state.clock.time, this.difference))
-                this.endDate = moment().format('DD-MM-YYYY HH:mm:ss')
-                this.difference = 0
                 this.addWorkingTimeToDB(addDurationToDate(this.$store.state.clock.started_at, this.difference))
-
-
+                this.difference = 0
             }
         },
         async addWorkingTimeToDB(endDate) {
-            const res = await apiCall({
-                route:'/api/workingtimes',
-                method: 'POST',
-                body: JSON.stringify({
-                    startDate: this.$store.state.clock.started_at,
-                    endDate,
+            try {
+                const res = await apiCall({
+                    route:'/api/workingtimes',
+                    method: 'POST',
+                    body: JSON.stringify({
+                        start: this.$store.state.clock.started_at,
+                        end: endDate,
+                    })
                 })
-            })
 
-            console.log('res:', res)
+                if (!res.ok) {
+                    throw new Error({
+                        message: "Error when adding the working time.", status: res.status
+                    })
+                }
+            } catch (error) {
+                console.log(error)
+            }
         },
         secToDuration,
     },
     created() {
         setInterval(() => {
             if (this.$store.state.clock.enabled) {
-                this.difference = moment(this.$store.state.clock.started_at).diff(moment().format('DD-MM-YYYY HH:mm:ss')) / - 1000 // ms to s
+                this.difference = moment(this.$store.state.clock.started_at).diff(moment().format('YYYY-MM-DDTHH:mm:ss')) / - 1000 // ms to s
             }
         }, 1000)
     },
@@ -85,8 +90,7 @@ export default {
     },
     data() {
         return {
-            difference: this.$store.state.clock.enabled ? moment(this.$store.state.clock.started_at).diff(moment().format('DD-MM-YYYY HH:mm:ss')) / - 1000 : '00:00:00',
-            endDate: this.$store.state.clock.started_at
+            difference: this.$store.state.clock.enabled ? moment(this.$store.state.clock.started_at).diff(moment().format('YYYY-MM-DDTHH:mm:ss')) / - 1000 : '00:00:00'
         }
     }
 }

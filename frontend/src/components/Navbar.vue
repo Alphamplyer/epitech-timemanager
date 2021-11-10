@@ -87,7 +87,7 @@
 <script>
 import ref from 'vue'
 import moment from 'moment'
-import { secToDuration, addSecondsToDuration } from '../../lib/date'
+import { addSecondsToDuration } from '../../lib/date'
 
 export default {
     methods: {
@@ -107,7 +107,6 @@ export default {
           localStorage.removeItem('vuex')
           this.$router.push('/')
       },
-      secToDuration,
     },
     created() {
         setInterval(() => {

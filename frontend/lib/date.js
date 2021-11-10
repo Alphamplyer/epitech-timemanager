@@ -2,11 +2,11 @@ import moment from "moment"
 import 'moment-duration-format'
 
 export function secToDuration(seconds) {
-    return moment.duration(seconds, 'seconds').format('hh:mm:ss', { trim: false })
+    return moment.duration(seconds, 'seconds').format('HH:mm:ss', { trim: false })
 }
 
 export function addDurationToDate(date, duration) {
-    const newDate = moment(date).add(duration, 'seconds').format('MM-DD-YYYY HH:mm:ss')
+    const newDate = moment(date).add(duration, 'seconds').format('YYYY-DD-MMTHH:mm:ss')
 
     console.log('newDate:', newDate)
 
