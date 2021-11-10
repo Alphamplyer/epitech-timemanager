@@ -95,7 +95,7 @@ public class UserController {
         @AuthenticationPrincipal User authenticateUser,
         @PathVariable("id") int id
     ) {
-        if (authenticateUser.getId() != id || authenticateUser.getRole() != Role.GLOBAL_MANAGER) {
+        if (authenticateUser.getId() != id && authenticateUser.getRole() != Role.GLOBAL_MANAGER) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
