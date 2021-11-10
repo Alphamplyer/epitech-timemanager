@@ -35,10 +35,16 @@ export default {
     async deleteData() {
       this.dialogDelete = false;
       if(this.type == 'userType') {
-        await apiCall(`/api/users/${this.object.id}`, 'DELETE')
+        await apiCall({
+          route: `/api/users/${this.object.id}`, 
+          method: 'DELETE'
+        })
       }
       else if(this.type == 'teamType'){
-        await apiCall(`/api/teams/${this.object.id}`, 'DELETE')
+        await apiCall({
+          route: `/api/teams/${this.object.id}`, 
+          method: 'DELETE'
+        })
       }
     },
   },

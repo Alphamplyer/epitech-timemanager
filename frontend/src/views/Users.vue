@@ -23,7 +23,9 @@ export default {
   },
   methods: {
     async getUsers() {
-      const response = await apiCall("/api/users");
+      const response = await apiCall({
+        route: "/api/users"
+      })
       this.users = await response.json();
     },
   },

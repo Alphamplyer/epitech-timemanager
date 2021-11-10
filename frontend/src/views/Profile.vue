@@ -16,7 +16,7 @@
                         </div>
                     </v-col>
                     <v-row wrap class="secondRowRight">
-                        <div class="userInfo text-capitalize">
+                        <div class="userInfo">
                             <p><span>Username:</span> {{ account.username }}</p>
                             <p><span>Password:</span> ########</p>
                             <p><span>Email:</span> {{ account.email }}</p>
