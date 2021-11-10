@@ -1,9 +1,7 @@
 <template>
   <v-card elevation="2" outlined style="width: 200px; height: 33%">
     <v-card-title style="justify-content: center">
-      {{
-        object.name
-      }}
+      {{ object.name }}
     </v-card-title>
     <v-row style="justify-content: center">
       <v-card-actions>
@@ -11,7 +9,7 @@
       </v-card-actions>
       <v-card-actions>
         <v-btn elevation="2" x-small color="error">
-          <Delete v-bind:object="object" v-bind:type="type"/>
+          <Delete v-bind:object="object" v-bind:type="type" />
         </v-btn>
       </v-card-actions>
     </v-row>
@@ -21,16 +19,17 @@
 <script>
 import Delete from "./Dialogs/Delete.vue";
 import Users from "./Dialogs/Users.vue";
+
 export default {
-    name: "Team",
-    props: ["object", "type"],
-    data() {
-        return {
-            dialogUsers: false,
-            dialogDelete: false
-        };
-    },
-    components: { Delete, Users }
+  name: "Team",
+  props: ["object", "type"],
+  data() {
+    return {
+      dialogUsers: false,
+      dialogDelete: false,
+    };
+  },
+  components: { Delete, Users },
 };
 </script>
 
