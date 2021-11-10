@@ -116,8 +116,6 @@ export default {
             } else {
               const result = await res.json()
 
-              console.log('result:', result.access_token)
-
               this.$store.commit('setTokens', {
                 access_token: result.access_token, 
                 refresh_token: result.refresh_token

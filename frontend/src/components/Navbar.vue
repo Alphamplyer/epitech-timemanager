@@ -27,15 +27,15 @@
           <v-container class="text-center">
             <v-container style="font-size: 22px;">
               {{
-                `Working Time ${this.secToDuration(this.workingTime)}`
+                `Working Time ${this.workingTime}`
               }}
             </v-container>
 
             <v-container
               style="font-size: 24px"
-              :class="isWorking ? 'green--text' : 'red--text'"
+              :class="this.$store.state.clock.enabled ? 'green--text' : 'red--text'"
             >
-              {{ isWorking ? 'Working' : 'Not Working' }}
+              {{ this.$store.state.clock.enabled ? 'Working' : 'Not Working' }}
             </v-container>
           </v-container>
       </v-list-item>
@@ -85,7 +85,7 @@
 <script>
 import ref from 'vue'
 import moment from 'moment'
-import { secToDuration } from '../../lib/date'
+import { secToDuration, addSecondsToDuration } from '../../lib/date'
 
 export default {
     methods: {
@@ -108,9 +108,11 @@ export default {
       secToDuration,
     },
     created() {
-        // console.log('store enabled:', this.$store.state.clock.enabled)
         setInterval(() => {
             this.now = moment().format('HH:mm:ss')
+            if (this.$store.state.clock.enabled) {
+                this.workingTime = addSecondsToDuration(this.workingTime, 1)
+            }
         }, 1000)
     },
     setup() {
@@ -119,12 +121,14 @@ export default {
         return {
             now,
         }
-    },
-    props: ['isWorking', 'workingTime'],
-    data: function() {
+    },    
+    data() {
       return {
+        account: this.$store.state.user,
         now: moment().format('HH:mm:ss'),
-        account: this.$store.state.user
+        workingTime: this.$store.state.clock.enabled ?
+         addSecondsToDuration(this.$store.state.clock.time, moment(this.$store.state.clock.started_at).diff(moment().format('DD-MM-YYYY HH:mm:ss')) / - 1000)
+         : this.$store.state.clock.time
       }
   },
 }

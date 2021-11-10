@@ -24,7 +24,7 @@ export default new Vuex.Store({
     clock: {
       enabled: false,
       started_at: '',
-      time: ''
+      time: '00:00:00'
     }
   },
   mutations: {

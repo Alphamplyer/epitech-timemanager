@@ -1,4 +1,4 @@
-export async function apiCall(
+export async function apiCall({
     route,
     method = 'GET', 
     headers = { 
@@ -6,7 +6,7 @@ export async function apiCall(
         Authorization: this.$store.state.access_token,
         'Content-Type': 'application/json'
     },
-    body)
+    body})
 {
     try {
         const res = body ? await fetch(`http://localhost:4000${route}`, {

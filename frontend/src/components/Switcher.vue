@@ -21,10 +21,10 @@
             large
             style="font-size: 32px"
             class="shadow white--text text-capitalize font-weight-bold"
-            :style="{'background-color': this.isWorking ? '#FF4500' : '#4CAF50'}"
+            :style="{'background-color': this.$store.state.clock.enabled ? '#FF4500' : '#4CAF50'}"
             v-on:click="setWorking()"
         >
-            {{ this.isWorking ? 'Stop' : 'Start' }}
+            {{ this.$store.state.clock.enabled ? 'Stop' : 'Start' }}
         </v-btn>
     </v-container>
 </template>
@@ -32,27 +32,47 @@
 <script>
 import moment from 'moment'
 import ref from 'vue'
-import { secToDuration } from '../../lib/date'
+import { apiCall } from '../../lib/api'
+import { 
+    secToDuration, 
+    addSecondsToDuration, 
+    addDurationToDate
+} from '../../lib/date'
 
 export default {
     methods: {
         setWorking() {
-            if (!this.isWorking) {
-                this.startDate = moment().format('DD-MM-YYYY HH:mm:ss')
+            if (!this.$store.state.clock.enabled) {
+                this.$store.state.clock.enabled = true
+                this.$store.state.clock.started_at = moment().format('DD-MM-YYYY HH:mm:ss')
             } else {
+                this.$store.state.clock.enabled = false
+                this.$store.commit('updateClockTime', addSecondsToDuration(this.$store.state.clock.time, this.difference))
                 this.endDate = moment().format('DD-MM-YYYY HH:mm:ss')
                 this.difference = 0
+                this.addWorkingTimeToDB(addDurationToDate(this.$store.state.clock.started_at, this.difference))
+
+
             }
-            this.$emit('isWorking', !this.isWorking)
+        },
+        async addWorkingTimeToDB(endDate) {
+            const res = await apiCall({
+                route:'/api/workingtimes',
+                method: 'POST',
+                body: JSON.stringify({
+                    startDate: this.$store.state.clock.started_at,
+                    endDate,
+                })
+            })
+
+            console.log('res:', res)
         },
         secToDuration,
     },
-    props: ['isWorking'],
     created() {
         setInterval(() => {
-            if (this.isWorking) {
-                this.difference = moment(this.startDate).diff(moment().format('DD-MM-YYYY HH:mm:ss')) / - 1000 // ms to s
-                this.$emit('workingTime', 1)
+            if (this.$store.state.clock.enabled) {
+                this.difference = moment(this.$store.state.clock.started_at).diff(moment().format('DD-MM-YYYY HH:mm:ss')) / - 1000 // ms to s
             }
         }, 1000)
     },
@@ -65,9 +85,8 @@ export default {
     },
     data() {
         return {
-            startDate: moment(),
-            endDate: this.startDate,
-            difference: 0
+            difference: this.$store.state.clock.enabled ? moment(this.$store.state.clock.started_at).diff(moment().format('DD-MM-YYYY HH:mm:ss')) / - 1000 : '00:00:00',
+            endDate: this.$store.state.clock.started_at
         }
     }
 }
