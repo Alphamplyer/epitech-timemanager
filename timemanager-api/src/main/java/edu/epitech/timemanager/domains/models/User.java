@@ -23,7 +23,7 @@ import java.util.*;
 public class User implements UserDetails, Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(unique = true, nullable = false)
@@ -59,9 +59,9 @@ public class User implements UserDetails, Serializable {
     @ToString.Exclude
     private List<WorkingTime> workingTimes;
 
-    @ManyToMany(mappedBy = "members")
+    @ManyToMany(targetEntity = Team.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "members")
     @ToString.Exclude
-    private List<Team> joinedTeams = new ArrayList<>();
+    private List<Team> teams = new ArrayList<>();
 
 
     public User(Integer id) {

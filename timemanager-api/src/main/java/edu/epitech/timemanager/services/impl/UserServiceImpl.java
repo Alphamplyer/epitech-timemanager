@@ -1,6 +1,7 @@
 package edu.epitech.timemanager.services.impl;
 
 import edu.epitech.timemanager.domains.models.User;
+import edu.epitech.timemanager.persistence.TeamRepository;
 import edu.epitech.timemanager.persistence.UserRepository;
 import edu.epitech.timemanager.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.List;
 @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
+    private final TeamRepository teamRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -67,6 +69,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void deleteUser(int id) {
+        User user = userRepository.findById(id).orElseThrow();
+        teamRepository.deleteUserFromTeams(user.getId());
         userRepository.deleteById(id);
     }
 
