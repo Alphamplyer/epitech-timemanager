@@ -59,13 +59,7 @@ public class User implements UserDetails, Serializable {
     @ToString.Exclude
     private Set<WorkingTime> workingTimes;
 
-    @ManyToMany
-    @JoinTable(
-        name = "teams_members",
-        joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "team_id", referencedColumnName = "id")
-    )
-    @ToString.Exclude
+    @ManyToMany(mappedBy = "members")
     private Set<Team> joinedTeams = new HashSet<>();
 
 
