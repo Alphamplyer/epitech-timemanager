@@ -27,13 +27,15 @@
             <tbody>
               <tr v-for="member in members" :key="member.id">
                 <td>{{ member.username }} {{ member.id }}</td>
-                <v-btn
-                  elevation="2"
-                  x-small
-                  color="error"
-                  v-on:click="removeTeamMember(member.id)"
-                  >Remove</v-btn
-                >
+                <td>
+                  <v-btn
+                    elevation="2"
+                    x-small
+                    color="error"
+                    v-on:click="removeTeamMember(member.id)"
+                    >Remove</v-btn
+                  >
+                </td>
               </tr>
             </tbody>
           </template>
@@ -42,7 +44,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="primary" text @click="dialogUsers = false"
-            >I accept</v-btn
+            >OK</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -68,7 +70,7 @@ export default {
     async removeTeamMember(userID) {
       const response = await apiCall({
         route: `/api/teams/${this.object.id}/remove/${userID}`,
-        method: 'POST'
+        method: "POST",
       });
       console.log(response);
       this.members = await response.json();
