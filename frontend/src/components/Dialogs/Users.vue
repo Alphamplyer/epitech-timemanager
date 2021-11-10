@@ -16,8 +16,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>dab</td>
+                            <tr v-for="member in object.members" :key="member.id">
+                                <td>{{member}}</td>
                                 <v-btn elevation="2" x-small color="error">Delete</v-btn>
                             </tr>
                         </tbody>

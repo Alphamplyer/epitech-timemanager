@@ -60,6 +60,7 @@
         <v-container
           class="cursor-pointer"
           v-on:click="toTeams()"
+          v-if="this.account.role !== 'EMPLOYEE'"
         >
           <v-icon>mdi-tie</v-icon> All Teams
         </v-container>
@@ -67,6 +68,7 @@
         <v-container
           class="cursor-pointer"
           v-on:click="toUsers()"
+          v-if="this.account.role === 'GLOBAL_MANAGER'"
         >
           <v-icon>mdi-account-group</v-icon> All Users
         </v-container>

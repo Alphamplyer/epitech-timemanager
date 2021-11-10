@@ -3,7 +3,7 @@ export async function apiCall({
     method = 'GET', 
     headers = { 
         Accept: 'application/json',
-        Authorization: this.$store.state.access_token,
+        Authorization: JSON.parse(localStorage.vuex).access_token,
         'Content-Type': 'application/json'
     },
     body})

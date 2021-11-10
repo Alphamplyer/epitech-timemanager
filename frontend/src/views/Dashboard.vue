@@ -31,8 +31,9 @@
 <script>
 import NavbarVue from "../components/Navbar.vue"
 import Switcher from "../components/Switcher.vue"
-import WTWeekChart from "../components/WTWeekChart.vue"
-import WTMonthChart from "../components/WTMonthChart.vue"
+import WTWeekChart from "../components/Charts/WTWeekChart.vue"
+import WTMonthChart from "../components/Charts/WTMonthChart.vue"
+// import { apiCall } from '../../lib/api.js'
 
     export default {
     name: "Dashboard",
