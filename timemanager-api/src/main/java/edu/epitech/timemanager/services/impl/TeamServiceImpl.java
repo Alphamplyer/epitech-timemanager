@@ -59,25 +59,26 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public boolean addUserToTeam(int userId, int teamId) {
-        boolean isUserExist = userRepository.existsById(userId);
-        boolean isTeamExist = userRepository.existsById(userId);
+        User user = userRepository.findById(userId).orElse(null);
+        Team team = teamRepository.findById(teamId).orElse(null);
 
-        if (!isUserExist || !isTeamExist)
+        if (user == null || team == null)
             return false;
 
-        teamRepository.addTeamMember(userId, teamId);
+
+        team.getMembers().add(user);
         return true;
     }
 
     @Override
     public boolean removeUserFromTeam(int userId, int teamId) {
-        boolean isUserExist = userRepository.existsById(userId);
-        boolean isTeamExist = userRepository.existsById(userId);
+        User user = userRepository.findById(userId).orElse(null);
+        Team team = teamRepository.findById(teamId).orElse(null);
 
-        if (!isUserExist || !isTeamExist)
+        if (user == null || team == null)
             return false;
 
-        teamRepository.deleteTeamMember(userId, teamId);
+        team.getMembers().remove(user);
         return true;
     }
 
@@ -96,14 +97,13 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team createTeam(int userId, Team team) {
-        boolean isUserExist = userRepository.existsById(userId);
+        User user = userRepository.findById(userId).orElse(null);
 
-        if (!isUserExist)
+        if (user == null)
             return null;
 
-        Team persistedTeam = teamRepository.save(team);
-        teamRepository.addTeamMember(userId, persistedTeam.getId());
-        return persistedTeam;
+        team.getMembers().add(user);
+        return teamRepository.save(team);
     }
 
     @Override

@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -23,6 +24,8 @@ import java.util.*;
 public class GenerateFakeDataCommand implements ApplicationListener<ApplicationReadyEvent> {
 
     private final Faker faker = new Faker(new Locale(Locale.FRANCE.getLanguage()));
+
+    private final PasswordEncoder passwordEncoder;
 
     private final UserRepository userRepository;
     private final WorkingTimeRepository workingTimeRepository;
@@ -61,31 +64,31 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
             }
 
             log.info("Generating working times for manager {}", manager.getUsername());
-            generateWorkingTimes(manager);
+            generateFakeWorkingTimes(manager);
         }
 
         for (User employee : employees) {
             int teamIndex = faker.number().numberBetween(0, teams.size());
             Team team = teams.get(teamIndex);
             log.info("Set employee {} in team {}", employee.getUsername(), team.getName());
-            team.addUser(employee);
+            team.getMembers().add(employee);
 
             log.info("Generating working times for employee {}", employee.getUsername());
-            generateWorkingTimes(employee);
+            generateFakeWorkingTimes(employee);
         }
 
-        log.info("Saving teams...");
+        log.info("Generate all teams");
         teamRepository.saveAll(teams);
 
         log.info("Generating fake data done.");
     }
 
-    private User generateFakeEmployee() {
+    private User generateFakeUser(Role role) {
         User user = new User();
         user.setUsername(faker.name().username());
         user.setEmail(user.getUsername().toLowerCase() + "@timemanager.com");
-        user.setHashedPassword("password");
-        user.setRole(Role.EMPLOYEE);
+        user.setHashedPassword(passwordEncoder.encode("password"));
+        user.setRole(role);
         user.setClock(generateFakeClock(user));
 
         try {
@@ -98,24 +101,15 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
         return user;
     }
 
-    private User generateFakeManager() {
-        User user = new User();
-        user.setUsername(faker.name().username());
-        user.setEmail(user.getUsername().toLowerCase() + "@timemanager.com");
-        user.setHashedPassword("password");
-        user.setRole(Role.MANAGER);
-
-        try {
-            user = userRepository.save(user);
-        } catch (Exception e) {
-            log.error("Error while saving user {}", user.getUsername(), e);
-            return null;
-        }
-
-        return user;
+    private User generateFakeEmployee() {
+        return generateFakeUser(Role.EMPLOYEE);
     }
 
-    private void generateWorkingTimes(User user) {
+    private User generateFakeManager() {
+        return generateFakeUser(Role.MANAGER);
+    }
+
+    private void generateFakeWorkingTimes(User user) {
         List<WorkingTime> workingTimes = new ArrayList<>();
 
         for (int i = 0; i < faker.number().numberBetween(1, 25); i++) {
@@ -170,9 +164,9 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
 
     private Team generateFakeTeam(User manager) {
         Team team = new Team();
-        team.setName(faker.name().bloodGroup());
+        team.setName(faker.name().name());
         team.setDescription(faker.lorem().sentence(16));
-        team.addUser(manager);
+        team.getMembers().add(manager);
         return team;
     }
 }
