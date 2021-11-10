@@ -12,7 +12,9 @@
         >
       </template>
       <v-card>
-        <v-card-title class="text-h5 lighten-2">Users in {{ object.name }}</v-card-title>
+        <v-card-title class="text-h5 lighten-2"
+          >Users in {{ object.name }}</v-card-title
+        >
 
         <v-simple-table>
           <template v-slot:default>
@@ -24,8 +26,14 @@
             </thead>
             <tbody>
               <tr v-for="member in members" :key="member.id">
-                <td>{{ member.username }}</td>
-                <v-btn elevation="2" x-small color="error">Delete</v-btn>
+                <td>{{ member.username }} {{ member.id }}</td>
+                <v-btn
+                  elevation="2"
+                  x-small
+                  color="error"
+                  v-on:click="removeTeamMember(member.id)"
+                  >Remove</v-btn
+                >
               </tr>
             </tbody>
           </template>
@@ -52,6 +60,15 @@ export default {
     async getTeamMember() {
       const response = await apiCall({
         route: `/api/teams/${this.object.id}/members`,
+      });
+      console.log(response);
+      this.members = await response.json();
+      console.log(this.members);
+    },
+    async removeTeamMember(userID) {
+      const response = await apiCall({
+        route: `/api/teams/${this.object.id}/remove/${userID}`,
+        method: 'POST'
       });
       console.log(response);
       this.members = await response.json();
