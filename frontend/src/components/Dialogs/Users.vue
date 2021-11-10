@@ -12,19 +12,19 @@
         >
       </template>
       <v-card>
-        <v-card-title class="text-h5 lighten-2">Users</v-card-title>
+        <v-card-title class="text-h5 lighten-2">Users in {{ object.name }}</v-card-title>
 
         <v-simple-table>
           <template v-slot:default>
             <thead>
               <tr>
-                <th class="text-left">Name</th>
+                <th class="text-left">Username</th>
                 <th class="text-left"></th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="member in object.members" :key="member.id">
-                <td>{{ member }}</td>
+              <tr v-for="member in members" :key="member.id">
+                <td>{{ member.username }}</td>
                 <v-btn elevation="2" x-small color="error">Delete</v-btn>
               </tr>
             </tbody>
@@ -54,8 +54,8 @@ export default {
         route: `/api/teams/${this.object.id}/members`,
       });
       console.log(response);
-    //   this.members = await response.json();
-    //   console.log(this.members);
+      this.members = await response.json();
+      console.log(this.members);
     },
   },
   data() {
