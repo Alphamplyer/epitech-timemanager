@@ -49,10 +49,14 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
         }
 
         for (int i = 0; i < 100; i++) {
-            log.info("Generating employee {}", i);
             User employee = generateFakeEmployee();
-            if (employee != null)
-                employees.add(employee);
+
+            if (employee == null) {
+                continue;
+            }
+
+            employees.add(employee);
+            log.info("Employee generated with id = {}", employee.getId());
         }
 
         for (User manager : managers) {
@@ -70,10 +74,10 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
         for (User employee : employees) {
             int teamIndex = faker.number().numberBetween(0, teams.size());
             Team team = teams.get(teamIndex);
-            log.info("Set employee {} in team {}", employee.getUsername(), team.getName());
+            log.info("Set employee ({}) {} in team {}", employee.getId(), employee.getUsername(), team.getName());
             team.getMembers().add(employee);
 
-            log.info("Generating working times for employee {}", employee.getUsername());
+            log.info("Generating working times for employee ({}) {}", employee.getId(), employee.getUsername());
             generateFakeWorkingTimes(employee);
         }
 
@@ -112,7 +116,7 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
     private void generateFakeWorkingTimes(User user) {
         List<WorkingTime> workingTimes = new ArrayList<>();
 
-        for (int i = 0; i < faker.number().numberBetween(1, 25); i++) {
+        for (int i = 0; i < faker.number().numberBetween(2, 25); i++) {
             workingTimes.add(generateFakeWorkingTime(user));
         }
 
