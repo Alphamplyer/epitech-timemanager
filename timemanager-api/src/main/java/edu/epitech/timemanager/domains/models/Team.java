@@ -19,7 +19,7 @@ import java.util.*;
 public class Team implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
@@ -27,7 +27,7 @@ public class Team implements Serializable {
 
     private String description = "";
 
-    @ManyToMany
+    @ManyToMany(targetEntity = User.class)
     private List<User> members = new ArrayList<>();
 
 
@@ -56,6 +56,16 @@ public class Team implements Serializable {
         this.name = name;
         this.description = description;
         this.members = members;
+    }
+
+    public void addMember(User user) {
+        this.members.add(user);
+        user.getTeams().add(this);
+    }
+
+    public void removeMember(User user) {
+        this.members.remove(user);
+        user.getTeams().remove(this);
     }
 
     @Override

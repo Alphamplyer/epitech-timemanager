@@ -63,8 +63,8 @@ public class TeamServiceImpl implements TeamService {
         if (user == null || team == null)
             return false;
 
-
-        team.getMembers().add(user);
+        team.addMember(user);
+        teamRepository.save(team);
         return true;
     }
 
@@ -76,7 +76,8 @@ public class TeamServiceImpl implements TeamService {
         if (user == null || team == null)
             return false;
 
-        team.getMembers().remove(user);
+        team.removeMember(user);
+        teamRepository.save(team);
         return true;
     }
 
