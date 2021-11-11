@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialogEdit" width="30%">
     <template v-slot:activator="{ on, attrs }">
-      <div v-bind="attrs" v-on="on">Edit user</div>
+      <div v-bind="attrs" v-on="on">Edit</div>
     </template>
     <v-card>
       <v-text-field
