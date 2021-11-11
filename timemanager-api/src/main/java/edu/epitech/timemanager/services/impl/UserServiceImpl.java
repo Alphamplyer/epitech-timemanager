@@ -1,6 +1,7 @@
 package edu.epitech.timemanager.services.impl;
 
 import edu.epitech.timemanager.domains.models.User;
+import edu.epitech.timemanager.domains.models.enumerations.Role;
 import edu.epitech.timemanager.persistence.TeamRepository;
 import edu.epitech.timemanager.persistence.UserRepository;
 import edu.epitech.timemanager.services.UserService;
@@ -45,6 +46,28 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return userRepository.findByUsernameOrEmail(username, email).orElse(null);
         }
         return null;
+    }
+
+    @Override
+    public User promoteUserToManager(int userId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user == null)
+            return null;
+
+        user.setRole(Role.MANAGER);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User demoteUserToEmployee(int userId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user == null)
+            return null;
+
+        user.setRole(Role.EMPLOYEE);
+        return userRepository.save(user);
     }
 
     @Override
