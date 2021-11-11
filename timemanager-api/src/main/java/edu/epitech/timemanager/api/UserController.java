@@ -56,7 +56,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_GLOBAL_MANAGER')")
     @PostMapping("/promote/{id}")
-    public ResponseEntity<?> promoteUserToManager(@AuthenticationPrincipal User user, @PathVariable("id") int id) {
+    public ResponseEntity<?> promoteUserToManager(@PathVariable("id") int id) {
         User user = userService.promoteUserToManager(id);
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
