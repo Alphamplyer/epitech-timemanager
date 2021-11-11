@@ -1,10 +1,10 @@
 <template>
-  <v-card elevation="2" outlined style="width: 200px">
+  <v-card elevation="2" outlined style="width: 200px" v-if="object.role !== 'GLOBAL_MANAGER'">
     <v-card-title style="justify-content: center">{{
       object.username
     }}</v-card-title>
     <v-row style="justify-content: center">
-      <v-card-actions>
+      <v-card-actions v-if="object.role == 'EMPLOYEE'">
         <v-btn elevation="2" x-small color="primary">
           <Promote v-bind:object="object" />
         </v-btn>
