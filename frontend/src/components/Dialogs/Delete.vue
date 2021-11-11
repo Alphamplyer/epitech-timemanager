@@ -39,6 +39,10 @@ export default {
           route: `/api/users/${this.object.id}`, 
           method: 'DELETE'
         })
+        if(this.object.id == this.account.id) {
+          localStorage.removeItem('vuex')
+          this.$router.push('/')
+        }
       }
       else if(this.type == 'teamType'){
         await apiCall({
