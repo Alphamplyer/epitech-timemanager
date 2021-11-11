@@ -10,37 +10,61 @@
         required
         :placeholder="object.username"
       ></v-text-field>
-      <v-text-field v-model="password" label="Password" required></v-text-field>
+      <v-text-field
+        v-model="email"
+        label="Email"
+        required
+        :placeholder="object.email"
+      ></v-text-field>
+      <!-- <v-text-field v-model="password" label="Password" required></v-text-field>
       <v-text-field
         v-model="rePassword"
         :rules="[passwordConfirmationRule]"
         label="re-enter password"
         required
-      ></v-text-field>
+      ></v-text-field> -->
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="dialogEdit = false">YES</v-btn>
-        <v-btn color="error" text @click="dialogEdit = false">NO</v-btn>
+        <v-btn color="primary" text @click="editUserInfo">CONFIRM</v-btn>
+        <v-btn color="error" text @click="dialogEdit = false">CANCEL</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { apiCall } from "../../../lib/api";
+
 export default {
   name: "Delete",
   props: ["object", "type", "rules"],
-  computed: {
-    passwordConfirmationRule() {
-      return () => this.password === this.rePassword || "Password must match";
+  methods: {
+    async editUserInfo() {
+      this.dialogEdit = false;
+      const response = await apiCall({
+        route: `/api/users/${this.object.id}`,
+        method: 'PUT',
+        body: JSON.stringify({
+          username: this.username,
+          email: this.email,
+        })
+      });
+      console.log(response);
+      // TODO: Modifier le localStorage avec les nouvelles informations
     },
   },
+  // computed: {
+  //   passwordConfirmationRule() {
+  //     return () => this.password === this.rePassword || "Password must match";
+  //   },
+  // },
   data() {
     return {
       dialogEdit: false,
-      password: undefined,
-      rePassword: undefined,
-      username: undefined,
+      // password: null,
+      // rePassword: null,
+      username: null,
+      email: null
     };
   },
 };
