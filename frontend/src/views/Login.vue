@@ -105,6 +105,9 @@ export default {
 
             if (!res.ok) {
                 switch (res.status) {
+                    case 403:
+                        this.error = "Identifiants incorrects."
+                        break;
                     case 404:
                         this.error = "L'utilisateur n'existe pas."
                         break;
