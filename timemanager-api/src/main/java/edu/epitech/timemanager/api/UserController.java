@@ -66,7 +66,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_GLOBAL_MANAGER')")
     @PostMapping("/demote/{id}")
-    public ResponseEntity<?> demoteUserToManager(@AuthenticationPrincipal User user, @PathVariable("id") int id) {
+    public ResponseEntity<?> demoteUserToManager(@PathVariable("id") int id) {
         User user = userService.demoteUserToEmployee(id);
         if (user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
