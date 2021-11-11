@@ -75,7 +75,7 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
             int teamIndex = faker.number().numberBetween(0, teams.size());
             Team team = teams.get(teamIndex);
             log.info("Set employee ({}) {} in team {}", employee.getId(), employee.getUsername(), team.getName());
-            team.getMembers().add(employee);
+            team.addMember(employee);
 
             log.info("Generating working times for employee ({}) {}", employee.getId(), employee.getUsername());
             generateFakeWorkingTimes(employee);
@@ -170,7 +170,7 @@ public class GenerateFakeDataCommand implements ApplicationListener<ApplicationR
         Team team = new Team();
         team.setName(faker.name().name());
         team.setDescription(faker.lorem().sentence(16));
-        team.getMembers().add(manager);
+        team.addMember(manager);
         return team;
     }
 }

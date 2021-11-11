@@ -1,6 +1,8 @@
 package edu.epitech.timemanager.services.impl;
 
 import edu.epitech.timemanager.domains.models.User;
+import edu.epitech.timemanager.domains.models.enumerations.Role;
+import edu.epitech.timemanager.persistence.TeamRepository;
 import edu.epitech.timemanager.persistence.UserRepository;
 import edu.epitech.timemanager.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.List;
 @Slf4j
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
+    private final TeamRepository teamRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -46,6 +49,28 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public User promoteUserToManager(int userId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user == null)
+            return null;
+
+        user.setRole(Role.MANAGER);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User demoteUserToEmployee(int userId) {
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user == null)
+            return null;
+
+        user.setRole(Role.EMPLOYEE);
+        return userRepository.save(user);
+    }
+
+    @Override
     public User createUser(User user) {
         user.setHashedPassword(passwordEncoder.encode(user.getHashedPassword()));
         return userRepository.save(user);
@@ -67,6 +92,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void deleteUser(int id) {
+        User user = userRepository.findById(id).orElseThrow();
+        teamRepository.deleteUserFromTeams(user.getId());
         userRepository.deleteById(id);
     }
 

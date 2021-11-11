@@ -54,6 +54,26 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    @PreAuthorize("hasRole('ROLE_GLOBAL_MANAGER')")
+    @PostMapping("/promote/{id}")
+    public ResponseEntity<?> promoteUserToManager(@AuthenticationPrincipal User user, @PathVariable("id") int id) {
+        User user = userService.promoteUserToManager(id);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_GLOBAL_MANAGER')")
+    @PostMapping("/demote/{id}")
+    public ResponseEntity<?> demoteUserToManager(@AuthenticationPrincipal User user, @PathVariable("id") int id) {
+        User user = userService.demoteUserToEmployee(id);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PostMapping("")
     public ResponseEntity<?> createUser(@RequestBody CreateUserDto userDto) {
         return new ResponseEntity<>(
