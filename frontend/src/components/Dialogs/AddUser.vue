@@ -18,14 +18,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="user in users" :key="user.id">
+              <tr v-for="(user, index) in users" :key="user.id">
                 <td>{{ user.username }} {{ user.id }}</td>
                 <td>
                   <v-btn
                     elevation="2"
                     x-small
                     color="success"
-                    v-on:click="addUserToTeam(user.id)"
+                    v-on:click="addUserToTeam(user.id, index)"
                     >Add</v-btn
                   >
                 </td>
@@ -60,14 +60,14 @@ export default {
       this.users = await response.json();
       console.log(this.users);
     },
-    async addUserToTeam(userID) {
-      console.log(this.team);
-      console.log(userID);
+    async addUserToTeam(userID, index) {
       const response = await apiCall({
         route: `/api/teams/${this.team}/add/${userID}`,
         method: "POST",
       });
-      console.log(await response);
+      if (response.status == 200) {
+        this.$delete(this.users, index);
+      }
     },
   },
   data() {
