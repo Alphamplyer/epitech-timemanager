@@ -27,6 +27,7 @@ export default {
         route: "/api/users"
       })
       this.users = await response.json();
+      console.log(this.users);
     },
   },
   data() {
@@ -35,7 +36,6 @@ export default {
       type: "userType",
     };
   },
-  props: ["object"],
   components: { Navbar, Grid },
 };
 </script>
