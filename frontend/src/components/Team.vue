@@ -1,8 +1,8 @@
 <template>
-  <v-card elevation="2" outlined style="width: 200px; height: 33%">
-    <v-card-title style="justify-content: center">
+  <v-card elevation="2" outlined style="width: 189px; height: 33%">
+    <v-card-title class="text-truncate" style="justify-content: center">
       {{ object.name }}
-    </v-card-title>
+    </v-card-title >
     <v-row style="justify-content: center">
       <v-card-actions>
         <Users v-bind:object="object" />
