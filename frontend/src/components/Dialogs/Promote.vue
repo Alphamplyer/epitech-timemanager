@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialogPromote" width="30%">
+  <v-dialog v-model="dialogPromote" width="40%">
     <template v-slot:activator="{ on, attrs }">
       <div v-bind="attrs" v-on="on">Promote</div>
     </template>

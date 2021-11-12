@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialogDelete" width="30%">
+  <v-dialog v-model="dialogDelete" width="40%">
     <template v-slot:activator="{ on, attrs }">
       <div v-bind="attrs" v-on="on">Delete</div>
     </template>
