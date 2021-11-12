@@ -84,6 +84,8 @@
 </template>
 
 <script>
+import { computeDurationDiff } from '../../lib/date'
+import { apiCall } from '../../lib/api'
 import ref from 'vue'
 
 export default {
@@ -126,6 +128,23 @@ export default {
               this.$store.commit('setUser', {
                 user: result.user
               })
+
+              const wtCall = await apiCall({
+                  route: `/api/workingtimes/users/${this.$store.state.user.id}`,
+              })
+
+              if (!wtCall.ok) {
+                  console.log(`Error ${wtCall.status} when receiving the user's working time.`)
+              } else {
+                  const result = await wtCall.json()
+                  const diff = computeDurationDiff(result)
+
+                  this.$store.commit('setClock', {
+                      enabled: false,
+                      started_at: '',
+                      time: diff
+                  })
+              }
 
               this.$router.push(`/user/${result.user.id}/dashboard`)
             }

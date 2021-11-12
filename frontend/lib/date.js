@@ -6,9 +6,7 @@ export function secToDuration(seconds) {
 }
 
 export function addDurationToDate(date, duration) {
-    const newDate = moment(date).add(duration, 'seconds').format('YYYY-DD-MMTHH:mm:ss')
-
-    console.log('newDate:', newDate)
+    const newDate = moment(date).add(duration, 'seconds').format('YYYY-MM-DDTHH:mm:ss')
 
     return newDate
 }
@@ -24,4 +22,26 @@ export function addSecondsToDuration(savedDuration, seconds) {
     return time.format('HH:mm:ss')
 }
 
-export default { secToDuration, addDurationToDate, addSecondsToDuration }
+export function dateDiff(startDate, endDate) {
+    return moment(startDate).diff(endDate) / - 1000
+}
+
+export function computeDurationDiff(allDates) {
+    let duration = '00:00:00'
+
+    for (let i = 0; i < allDates.length; i++) {
+        if (moment().isSame(allDates[i].start, 'day')) {
+            duration = addSecondsToDuration(duration, dateDiff(allDates[i].start, allDates[i].end))
+        }
+    }
+
+    return duration
+}
+
+export default { 
+    secToDuration, 
+    addDurationToDate, 
+    addSecondsToDuration, 
+    computeDurationDiff,
+    dateDiff
+}

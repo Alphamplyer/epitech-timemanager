@@ -87,7 +87,7 @@
 <script>
 import ref from 'vue'
 import moment from 'moment'
-import { addSecondsToDuration } from '../../lib/date'
+import { addSecondsToDuration, dateDiff } from '../../lib/date'
 
 export default {
     methods: {
@@ -128,7 +128,7 @@ export default {
         account: this.$store.state.user,
         now: moment().format('HH:mm:ss'),
         workingTime: this.$store.state.clock.enabled ?
-         addSecondsToDuration(this.$store.state.clock.time, moment(this.$store.state.clock.started_at).diff(moment().format('DD-MM-YYYY HH:mm:ss')) / - 1000)
+         addSecondsToDuration(this.$store.state.clock.time, dateDiff(this.$store.state.clock.started_at, moment().format('DD-MM-YYYY HH:mm:ss')))
          : this.$store.state.clock.time
       }
   },
