@@ -14,11 +14,14 @@ public interface TeamRepository extends JpaRepository<Team, Integer> {
     Optional<Team> findFirstTeamByMembers_Id(int userId);
     List<Team> findTeamsByMembers_Id(int userId);
 
+    @Query(nativeQuery = true, value = "SELECT count(tm.*) FROM teams_members tm WHERE tm.members_id = ?1")
+    int countNumberOfTimesTheUserIsInATeam(int userId);
+
     @Query(nativeQuery = true, value = "SELECT u.* FROM users u, teams_members tm WHERE u.id = tm.members_id AND tm.members_id = ?1 AND tm.teams_id = ?2")
     Optional<User> findUserInTeam(int userId, int teamId);
 
     @Query(nativeQuery = true, value = "SELECT count(tm.*) FROM teams_members tm WHERE tm.members_id = ?1 AND tm.teams_id IN (SELECT teams_id FROM teams_members WHERE tm.members_id = ?2)")
-    int isInTheSameTeam(int targetUserId, int currentUserId);
+    int countTheNumberOfTimesUsersAreOnTheSameTeam (int targetUserId, int currentUserId);
 
     @Query(nativeQuery = true, value = "SELECT u.* FROM users u, teams_members tm WHERE tm.members_id = ?1 AND tm.members_id = u.id")
     List<User> getTeamMembers(int teamId);
