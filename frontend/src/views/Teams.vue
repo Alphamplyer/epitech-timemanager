@@ -12,33 +12,33 @@
 </template>
 
 <script>
-import Navbar from "../components/Navbar.vue"
-import Grid from "../components/Grid.vue"
-import { apiCall } from "../../lib/api"
+import Navbar from "../components/Navbar.vue";
+import Grid from "../components/Grid.vue";
+import { apiCall } from "../../lib/api";
 
 export default {
   name: "Teams",
   beforeMount() {
-    this.getTeams()
+    this.getTeams();
   },
   methods: {
     async getTeams() {
       const response = await apiCall({
-        route: "/api/teams"
-      })
-      this.teams = await response.json()
-      console.log(this.teams)
+        route: "/api/teams",
+      });
+      this.teams = await response.json();
+      console.log(this.teams);
     },
   },
   data() {
     return {
       teams: null,
       type: "teamType",
-    }
+    };
   },
   props: ["object"],
   components: { Navbar, Grid },
-}
+};
 </script>
 
 <style scoped>

@@ -11,6 +11,9 @@ public interface UserService {
     User getUser(String username);
     User getUserByUsernameOrEmail(String username, String email);
 
+    User promoteUserToManager(int userId);
+    User demoteUserToEmployee(int userId);
+
     User createUser(User user);
     User updateUser(int id, User user);
     void deleteUser(int id);

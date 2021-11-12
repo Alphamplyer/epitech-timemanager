@@ -108,6 +108,9 @@ export default {
                     case 403:
                         this.error = "Identifiants incorrects."
                         break;
+                    case 404:
+                        this.error = "L'utilisateur n'existe pas."
+                        break;
 
                     default:
                         this.error = "Erreur lors de l'identification."
