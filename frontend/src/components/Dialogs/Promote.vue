@@ -27,9 +27,9 @@ export default {
       this.dialogPromote = false;
       await apiCall({
         route: `/api/users/promote/${this.object.id}`,
-        method: 'POST'
-      })
-    }
+        method: "POST",
+      });
+    },
   },
   data() {
     return {

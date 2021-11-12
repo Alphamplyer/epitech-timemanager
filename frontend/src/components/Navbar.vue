@@ -1,18 +1,23 @@
 <template>
-  <v-card
-    height="100vh"
-    width="256"
-    style="float: left;"
-  >
+  <v-card height="100vh" width="256" style="float: left">
     <v-container class="font-weight-bold" permanent>
       <v-list-item class="d-flex justify-center align-center text-center">
         <v-list-item-content>
-          <v-container style="color: #2196F3; font-size: 32px; overflow-wrap: break-word; word-wrap: break-word; hyphens: auto;">
+          <v-container
+            style="
+              color: #2196f3;
+              font-size: 32px;
+              overflow-wrap: break-word;
+              word-wrap: break-word;
+              hyphens: auto;
+            "
+          >
             TIME MANAGER
           </v-container>
 
           <v-list-item-subtitle class="text-capitalize black--text">
-            <v-icon color="black">mdi-account</v-icon>{{ this.account.username }}
+            <v-icon color="black">mdi-account</v-icon
+            >{{ this.account.username }}
           </v-list-item-subtitle>
 
           <v-container>
@@ -21,39 +26,33 @@
         </v-list-item-content>
       </v-list-item>
 
-      <v-divider class="black"/>
+      <v-divider class="black" />
 
       <v-list-item>
-          <v-container class="text-center">
-            <v-container style="font-size: 22px;">
-              {{
-                `Working Time ${this.workingTime}`
-              }}
-            </v-container>
-
-            <v-container
-              style="font-size: 24px"
-              :class="this.$store.state.clock.enabled ? 'green--text' : 'red--text'"
-            >
-              {{ this.$store.state.clock.enabled ? 'Working' : 'Not Working' }}
-            </v-container>
+        <v-container class="text-center">
+          <v-container style="font-size: 22px">
+            {{ `Working Time ${this.workingTime}` }}
           </v-container>
+
+          <v-container
+            style="font-size: 24px"
+            :class="
+              this.$store.state.clock.enabled ? 'green--text' : 'red--text'
+            "
+          >
+            {{ this.$store.state.clock.enabled ? "Working" : "Not Working" }}
+          </v-container>
+        </v-container>
       </v-list-item>
 
-      <v-divider class="black"/>
+      <v-divider class="black" />
 
-      <v-container class="d-flex flex-column" style="font-size: 24px;">
-        <v-container
-          class="cursor-pointer"
-          v-on:click="toDashboard()"
-        >
+      <v-container class="d-flex flex-column" style="font-size: 24px">
+        <v-container class="cursor-pointer" v-on:click="toDashboard()">
           <v-icon>mdi-view-dashboard</v-icon> Dashboard
         </v-container>
 
-        <v-container
-          class="cursor-pointer"
-          v-on:click="toProfile()"
-        >
+        <v-container class="cursor-pointer" v-on:click="toProfile()">
           <v-icon>mdi-account</v-icon> Profile
         </v-container>
 
@@ -85,58 +84,63 @@
 </template>
 
 <script>
-import ref from 'vue'
-import moment from 'moment'
-import { addSecondsToDuration, dateDiff } from '../../lib/date'
+import ref from "vue";
+import moment from "moment";
+import { addSecondsToDuration, dateDiff } from "../../lib/date";
 
 export default {
-    methods: {
-      toDashboard() {
-          this.$router.push(`/user/${this.account.id}/dashboard`).catch(()=>{})
-      },
-      toProfile() {
-          this.$router.push(`/user/${this.account.id}/profile`).catch(()=>{})
-      },
-      toTeams() {
-          this.$router.push(`/user/${this.account.id}/teams`).catch(()=>{})
-      },
-      toUsers() {
-          this.$router.push(`/user/${this.account.id}/users`).catch(()=>{})
-      },
-      logOut() {
-          localStorage.removeItem('vuex')
-          this.$router.push('/')
-      },
+  methods: {
+    toDashboard() {
+      this.$router.push(`/user/${this.account.id}/dashboard`).catch(() => {});
     },
-    created() {
-        setInterval(() => {
-            this.now = moment().format('HH:mm:ss')
-            if (this.$store.state.clock.enabled) {
-                this.workingTime = addSecondsToDuration(this.workingTime, 1)
-            }
-        }, 1000)
+    toProfile() {
+      this.$router.push(`/user/${this.account.id}/profile`).catch(() => {});
     },
-    setup() {
-        const now = ref(moment().format('HH:mm:ss'))
-
-        return {
-            now,
-        }
-    },    
-    data() {
-      return {
-        account: this.$store.state.user,
-        now: moment().format('HH:mm:ss'),
-        workingTime: this.$store.state.clock.enabled ?
-         addSecondsToDuration(this.$store.state.clock.time, dateDiff(this.$store.state.clock.started_at, moment().format('DD-MM-YYYY HH:mm:ss')))
-         : this.$store.state.clock.time
-      }
+    toTeams() {
+      this.$router.push(`/user/${this.account.id}/teams`).catch(() => {});
+    },
+    toUsers() {
+      this.$router.push(`/user/${this.account.id}/users`).catch(() => {});
+    },
+    logOut() {
+      localStorage.removeItem("vuex");
+      this.$router.push("/");
+    },
   },
-}
+  created() {
+    setInterval(() => {
+      this.now = moment().format("HH:mm:ss");
+      if (this.$store.state.clock.enabled) {
+        this.workingTime = addSecondsToDuration(this.workingTime, 1);
+      }
+    }, 1000);
+  },
+  setup() {
+    const now = ref(moment().format("HH:mm:ss"));
+
+    return {
+      now,
+    };
+  },
+  data() {
+    return {
+      account: this.$store.state.user,
+      now: moment().format("HH:mm:ss"),
+      workingTime: this.$store.state.clock.enabled
+        ? addSecondsToDuration(
+            this.$store.state.clock.time,
+            dateDiff(
+              this.$store.state.clock.started_at,
+              moment().format("DD-MM-YYYY HH:mm:ss")
+            )
+          )
+        : this.$store.state.clock.time,
+    };
+  },
+};
 </script>
 
 <style>
-
 .v-list-item {
   justify-content: center;
 }
@@ -144,5 +148,4 @@ export default {
 .cursor-pointer {
   cursor: pointer;
 }
-
 </style>

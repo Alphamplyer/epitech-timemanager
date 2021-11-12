@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="2" outlined style="width: 200px; height: 33%">
     <v-card-title style="justify-content: center">
-      {{ object.name }} {{ object.id }}
+      {{ object.name }}
     </v-card-title>
     <v-row style="justify-content: center">
       <v-card-actions>

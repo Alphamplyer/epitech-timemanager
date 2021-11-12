@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { apiCall } from '../../../lib/api'
+import { apiCall } from "../../../lib/api";
 
 export default {
   name: "Delete",
@@ -28,28 +28,27 @@ export default {
   data() {
     return {
       dialogDelete: false,
-      account: this.$store.state.user
+      account: this.$store.state.user,
     };
   },
   methods: {
     async deleteData() {
       this.dialogDelete = false;
-      if(this.type == 'userType') {
+      if (this.type == "userType") {
         await apiCall({
-          route: `/api/users/${this.object.id}`, 
-          method: 'DELETE'
-        })
+          route: `/api/users/${this.object.id}`,
+          method: "DELETE",
+        });
         // If user delete his own account
-        if(this.object.id == this.account.id) {
-          localStorage.removeItem('vuex')
-          this.$router.push('/')
+        if (this.object.id == this.account.id) {
+          localStorage.removeItem("vuex");
+          this.$router.push("/");
         }
-      }
-      else if(this.type == 'teamType'){
+      } else if (this.type == "teamType") {
         await apiCall({
-          route: `/api/teams/${this.object.id}`, 
-          method: 'DELETE'
-        })
+          route: `/api/teams/${this.object.id}`,
+          method: "DELETE",
+        });
       }
     },
   },

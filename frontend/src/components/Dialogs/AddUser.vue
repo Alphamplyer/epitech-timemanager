@@ -5,9 +5,7 @@
         <div v-bind="attrs" v-on="on">Add user(s)</div>
       </template>
       <v-card>
-        <v-card-title class="text-h5 lighten-2"
-          >Users a{{ this.team.id }}</v-card-title
-        >
+        <v-card-title class="text-h5 lighten-2">Users</v-card-title>
 
         <v-simple-table>
           <template v-slot:default>
@@ -19,7 +17,7 @@
             </thead>
             <tbody>
               <tr v-for="(user, index) in users" :key="user.id">
-                <td>{{ user.username }} {{ user.id }}</td>
+                <td>{{ user.username }}</td>
                 <td>
                   <v-btn
                     elevation="2"

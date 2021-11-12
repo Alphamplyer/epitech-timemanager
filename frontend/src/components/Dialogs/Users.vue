@@ -25,8 +25,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(member, index ) in members" :key="member.id">
-                <td>{{ member.username }} {{ member.id }}</td>
+              <tr v-for="(member, index) in members" :key="member.id">
+                <td>{{ member.username }}</td>
                 <td>
                   <v-btn
                     elevation="2"
@@ -65,7 +65,6 @@ export default {
       const response = await apiCall({
         route: `/api/teams/${this.object.id}/members`,
       });
-      console.log(response);
       this.members = await response.json();
       console.log(this.members);
     },

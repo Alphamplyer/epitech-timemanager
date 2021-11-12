@@ -41,15 +41,14 @@ export default {
   methods: {
     async editUserInfo() {
       this.dialogEdit = false;
-      const response = await apiCall({
+      await apiCall({
         route: `/api/users/${this.object.id}`,
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify({
           username: this.username,
           email: this.email,
-        })
+        }),
       });
-      console.log(response);
       // TODO: Modifier le localStorage avec les nouvelles informations
     },
   },
@@ -64,7 +63,7 @@ export default {
       // password: null,
       // rePassword: null,
       username: null,
-      email: null
+      email: null,
     };
   },
 };
