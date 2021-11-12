@@ -33,7 +33,7 @@
 
             <v-container
               style="font-size: 24px"
-              :class="this.$store.state.clock.enabled ? 'green--text' : 'red--text'"
+              :class="this.$store.state.clock.enabled ? 'blue--text' : 'red--text'"
             >
               {{ this.$store.state.clock.enabled ? 'Working' : 'Not Working' }}
             </v-container>

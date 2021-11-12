@@ -68,12 +68,18 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.meta?.hasToken) {
-    if (JSON.parse(localStorage.getItem('vuex'))) { //TODO: Verifier que le token est pas expiré
-    //TODO: Vérifier si l'user navigue sur la route '/' ou '/register'. Dans ce cas là, le redirect sur son dashboard
-    next()
+    if (JSON.parse(localStorage.getItem('vuex'))) {
+
+      //TODO: Verifier que le token est pas expiré
+      next()
     } else {
       router.push('/')
     }
+  } else if (localStorage.getItem('vuex')?.length > 0) {
+    const user = JSON.parse(localStorage.getItem('vuex')).user
+
+    //TODO: Vérifier que le token n'est pas expiré
+    router.push(`/user/${user.id}/dashboard`)
   }
 
   next()

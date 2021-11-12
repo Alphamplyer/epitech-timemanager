@@ -62,6 +62,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    editUser(context, user) {
+      context.commit('setUser', {user})
+    }
   },
   modules: {
   }

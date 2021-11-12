@@ -2,28 +2,24 @@
     <div class="d-flex flex-row overflow-auto" style="background-color: #DDDDE6">
         <NavbarVue />
 
-        <v-container class="d-flex flex-column justify-space-between">
-            <v-container class="d-flex flex-row">
+        <v-container class="d-flex flex-column justify-space-between m-4">
+            <div class="d-flex flex-row pb-4">
                 <Switcher />
 
-                <v-container
+                <v-responsive
                     style="height: 46vh; background-color: white"
                     class="d-flex justify-center shadow rounded-lg overflow-y-auto"
                 >
-                    <v-container>
-                        <WTMonthChart />
-                    </v-container>
-                </v-container>
-            </v-container>
+                        <WTDayChart />
+                </v-responsive>
+            </div>
 
-            <v-container 
-                style="height: 46vh; background-color: white;"
+            <v-responsive 
+                style="height: 46vh; width: 100%; background-color: white;"
                 class="d-flex shadow rounded-lg overflow-y-auto"
             >
-                <v-container>
                     <WTWeekChart />
-                </v-container>
-            </v-container>
+            </v-responsive>
         </v-container>
     </div>
 </template>
@@ -32,15 +28,31 @@
 import NavbarVue from "../components/Navbar.vue"
 import Switcher from "../components/Switcher.vue"
 import WTWeekChart from "../components/Charts/WTWeekChart.vue"
-import WTMonthChart from "../components/Charts/WTMonthChart.vue"
+import WTDayChart from "../components/Charts/WTDayChart.vue"
+import { dateOfWeek } from '../../lib/date'
+import { apiCall } from '../../lib/api'
 
     export default {
     name: "Dashboard",
+    async mounted() {
+        const wtCall = await apiCall({
+            route: `/api/workingtimes/users/${this.$store.state.user.id}`,
+        })
+
+        if (!wtCall.ok) {
+            console.log("Could not get the user's working time.")
+        } else {
+            const result = await wtCall.json()
+            const wtOfTheWeek = dateOfWeek(result)
+
+            console.log('wtOfWeek', wtOfTheWeek)
+        }
+    },
     components: {
         NavbarVue,
         Switcher,
         WTWeekChart,
-        WTMonthChart,
+        WTDayChart,
     },
 }
 </script>

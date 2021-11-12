@@ -29,13 +29,17 @@ export function dateDiff(startDate, endDate) {
 export function computeDurationDiff(allDates) {
     let duration = '00:00:00'
 
-    for (let i = 0; i < allDates.length; i++) {
-        if (moment().isSame(allDates[i].start, 'day')) {
-            duration = addSecondsToDuration(duration, dateDiff(allDates[i].start, allDates[i].end))
+    allDates.map(date => {
+        if (moment().isSame(date.start, 'day')) {
+            duration = addSecondsToDuration(duration, dateDiff(date.start, date.end))
         }
-    }
+    })
 
     return duration
+}
+
+export function dateOfWeek(dates, now = moment()) {
+    return dates.filter(date => now.isSame(date, 'week'))
 }
 
 export default { 
@@ -43,5 +47,6 @@ export default {
     addDurationToDate, 
     addSecondsToDuration, 
     computeDurationDiff,
-    dateDiff
+    dateDiff,
+    dateOfWeek
 }

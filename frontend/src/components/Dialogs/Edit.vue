@@ -41,16 +41,23 @@ export default {
   methods: {
     async editUserInfo() {
       this.dialogEdit = false;
-      const response = await apiCall({
+
+      await apiCall({
         route: `/api/users/${this.object.id}`,
         method: 'PUT',
         body: JSON.stringify({
           username: this.username,
           email: this.email,
         })
-      });
-      console.log(response);
-      // TODO: Modifier le localStorage avec les nouvelles informations
+      })
+
+      this.$store.dispatch('editUser', {
+        ...this.object,
+        email: this.email,
+        username: this.username
+      })
+
+      this.$router.go()
     },
   },
   // computed: {

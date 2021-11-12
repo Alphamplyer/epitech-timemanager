@@ -1,7 +1,7 @@
 <template>
-    <v-container 
-        style="height: 46vh; width: 300px; background-color: white"
-        class="d-flex flex-column shadow py-8 rounded-lg text-center justify-space-between align-center"
+    <div 
+        style="height: 46vh; background-color: white"
+        class="d-flex flex-column shadow py-8 px-4 mr-4 rounded-lg text-center justify-space-between align-center"
     >
         <p 
             class="font-weight-bold"
@@ -11,7 +11,7 @@
         </p>
 
         <v-container 
-            class="font-weight-bold font-italic"
+            class="font-weight-bold font-italic text-center"
             style="font-size: 48px"
         >
             {{ `${this.secToDuration(this.difference)}` }}
@@ -21,12 +21,12 @@
             large
             style="font-size: 32px"
             class="shadow white--text text-capitalize font-weight-bold"
-            :style="{'background-color': this.$store.state.clock.enabled ? '#FF4500' : '#4CAF50'}"
+            :style="{'background-color': this.$store.state.clock.enabled ? '#FF4500' : 'rgb(2, 195, 154)'}"
             v-on:click="setWorking()"
         >
             {{ this.$store.state.clock.enabled ? 'Stop' : 'Start' }}
         </v-btn>
-    </v-container>
+    </div>
 </template>
 
 <script>
