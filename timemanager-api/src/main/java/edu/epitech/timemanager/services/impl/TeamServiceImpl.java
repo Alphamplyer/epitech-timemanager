@@ -3,6 +3,9 @@ package edu.epitech.timemanager.services.impl;
 import edu.epitech.timemanager.domains.models.Team;
 import edu.epitech.timemanager.domains.models.User;
 import edu.epitech.timemanager.domains.models.WorkingTime;
+import edu.epitech.timemanager.domains.models.enumerations.Role;
+import edu.epitech.timemanager.domains.utils.exceptions.ForbiddenException;
+import edu.epitech.timemanager.domains.utils.exceptions.NotFoundException;
 import edu.epitech.timemanager.persistence.TeamRepository;
 import edu.epitech.timemanager.persistence.UserRepository;
 import edu.epitech.timemanager.services.TeamService;
@@ -60,8 +63,14 @@ public class TeamServiceImpl implements TeamService {
         User user = userRepository.findById(userId).orElse(null);
         Team team = teamRepository.findById(teamId).orElse(null);
 
-        if (user == null || team == null)
-            return false;
+        if (user == null)
+            throw new NotFoundException("User not found!");
+
+        if (team == null)
+            throw new NotFoundException("Team not found!");
+
+        if (teamRepository.countNumberOfTimesTheUserIsInATeam(userId) > 0 && user.getRole() == Role.EMPLOYEE)
+            throw new ForbiddenException("Employee cannot have more than one team!");
 
         team.addMember(user);
         teamRepository.save(team);
@@ -73,12 +82,20 @@ public class TeamServiceImpl implements TeamService {
         User user = userRepository.findById(userId).orElse(null);
         Team team = teamRepository.findById(teamId).orElse(null);
 
-        if (user == null || team == null)
-            return false;
+        if (user == null)
+            throw new NotFoundException("User not found!");
+
+        if (team == null)
+            throw new NotFoundException("Team not found!");
 
         team.removeMember(user);
         teamRepository.save(team);
         return true;
+    }
+
+    @Override
+    public boolean isInATeam(int userId) {
+        return teamRepository.countNumberOfTimesTheUserIsInATeam(userId) > 0;
     }
 
     @Override
@@ -91,7 +108,7 @@ public class TeamServiceImpl implements TeamService {
         if (targetUserId == currentUserId)
             return true;
 
-        return teamRepository.isInTheSameTeam(targetUserId, currentUserId) > 0;
+        return teamRepository.countTheNumberOfTimesUsersAreOnTheSameTeam(targetUserId, currentUserId) > 0;
     }
 
     @Override

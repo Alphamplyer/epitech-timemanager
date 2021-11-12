@@ -100,7 +100,7 @@ public class TeamController {
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/{teamId}/add/{userId}")
     public ResponseEntity<?> addUserToTeam(@PathVariable("teamId") int teamId, @PathVariable("userId") int userId) {
-        boolean success = teamService.addUserToTeam(teamId, userId);
+        boolean success = teamService.addUserToTeam(userId, teamId);
 
         if (!success)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -111,7 +111,7 @@ public class TeamController {
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/{teamId}/remove/{userId}")
     public ResponseEntity<?> removeUserFromTeam(@PathVariable("teamId") int teamId, @PathVariable("userId") int userId) {
-        boolean success = teamService.removeUserFromTeam(teamId, userId);
+        boolean success = teamService.removeUserFromTeam(userId, teamId);
 
         if (!success)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
