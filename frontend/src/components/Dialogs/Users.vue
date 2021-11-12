@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-dialog v-model="dialogUsers" width="30%">
+    <v-dialog v-model="dialogUsers" width="40%">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           elevation="2"
@@ -43,9 +43,8 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialogUsers = false"
-            >OK</v-btn
-          >
+          <v-btn color="primary" text><addUser v-bind:team="object.id"/></v-btn>
+          <v-btn color="primary" text @click="dialogUsers = false">OK</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -54,6 +53,7 @@
 
 <script>
 import { apiCall } from "../../../lib/api";
+import addUser from "./AddUser.vue"
 
 export default {
   name: "Users",
@@ -83,5 +83,6 @@ export default {
       dialogUsers: false,
     };
   },
+  components: { addUser }
 };
 </script>
