@@ -1,12 +1,13 @@
 export async function apiCall({
-    route,
-    method = 'GET', 
-    headers = { 
-        Accept: 'application/json',
-        Authorization: JSON.parse(localStorage.vuex).access_token,
-        'Content-Type': 'application/json'
-    },
-    body})
+        route,
+        method = 'GET', 
+        headers = { 
+            Accept: 'application/json',
+            Authorization: JSON.parse(localStorage.vuex).access_token,
+            'Content-Type': 'application/json'
+        },
+        body
+    })
 {
     try {
         const res = body ? await fetch(`http://localhost:4000${route}`, {
@@ -15,7 +16,8 @@ export async function apiCall({
             body: body
         }) : await fetch(`http://localhost:4000${route}`, {
             method: method,
-            headers: headers })
+            headers: headers 
+        })
 
         if (!res.ok)
             throw new Error(res.status)
