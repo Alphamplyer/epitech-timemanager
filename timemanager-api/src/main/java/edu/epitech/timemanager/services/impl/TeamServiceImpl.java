@@ -91,7 +91,7 @@ public class TeamServiceImpl implements TeamService {
         if (targetUserId == currentUserId)
             return true;
 
-        return teamRepository.isInTheSameTeam(targetUserId, currentUserId).isPresent();
+        return teamRepository.isInTheSameTeam(targetUserId, currentUserId) > 0;
     }
 
     @Override
