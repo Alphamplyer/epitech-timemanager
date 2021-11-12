@@ -39,7 +39,7 @@ public class TeamController {
     @PreAuthorize("hasRole('ROLE_GLOBAL_MANAGER')")
     @GetMapping("")
     public ResponseEntity<?> getTeams() {
-        return ResponseEntity.ok(teamService.getTeams());
+        return ResponseEntity.ok(teamMappers.teamsToTeamDTOs(teamService.getTeams()));
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")

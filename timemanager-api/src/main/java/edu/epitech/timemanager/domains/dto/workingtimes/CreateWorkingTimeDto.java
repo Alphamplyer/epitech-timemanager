@@ -1,5 +1,6 @@
 package edu.epitech.timemanager.domains.dto.workingtimes;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

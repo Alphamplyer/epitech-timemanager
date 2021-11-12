@@ -39,12 +39,10 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public List<User> getTeamMembers(int teamId) {
-        boolean isTeamExist = userRepository.existsById(teamId);
-
-        if (!isTeamExist)
+        Team team = teamRepository.findById(teamId).orElse(null);
+        if (team == null)
             return null;
-
-        return teamRepository.getTeamMembers(teamId);
+        return team.getMembers();
     }
 
     @Override
@@ -65,8 +63,8 @@ public class TeamServiceImpl implements TeamService {
         if (user == null || team == null)
             return false;
 
-
-        team.getMembers().add(user);
+        team.addMember(user);
+        teamRepository.save(team);
         return true;
     }
 
@@ -78,7 +76,8 @@ public class TeamServiceImpl implements TeamService {
         if (user == null || team == null)
             return false;
 
-        team.getMembers().remove(user);
+        team.removeMember(user);
+        teamRepository.save(team);
         return true;
     }
 

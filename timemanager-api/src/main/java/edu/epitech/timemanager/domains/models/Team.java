@@ -7,10 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -22,7 +19,7 @@ import java.util.Set;
 public class Team implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false)
@@ -30,8 +27,8 @@ public class Team implements Serializable {
 
     private String description = "";
 
-    @ManyToMany
-    private Set<User> members = new HashSet<>();
+    @ManyToMany(targetEntity = User.class)
+    private List<User> members = new ArrayList<>();
 
 
     @CreationTimestamp
@@ -54,11 +51,21 @@ public class Team implements Serializable {
         this.description = description;
     }
 
-    public Team(Integer id, String name, String description, Set<User> members) {
+    public Team(Integer id, String name, String description, List<User> members) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.members = members;
+    }
+
+    public void addMember(User user) {
+        this.members.add(user);
+        user.getTeams().add(this);
+    }
+
+    public void removeMember(User user) {
+        this.members.remove(user);
+        user.getTeams().remove(this);
     }
 
     @Override

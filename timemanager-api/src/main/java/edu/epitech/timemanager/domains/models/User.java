@@ -23,7 +23,7 @@ import java.util.*;
 public class User implements UserDetails, Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(unique = true, nullable = false)
@@ -51,16 +51,17 @@ public class User implements UserDetails, Serializable {
 
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "clock_id", referencedColumnName = "id")
     private Clock clock;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     @ToString.Exclude
-    private Set<WorkingTime> workingTimes;
+    private List<WorkingTime> workingTimes;
 
-    @ManyToMany(mappedBy = "members")
-    private Set<Team> joinedTeams = new HashSet<>();
+    @ManyToMany(targetEntity = Team.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "members")
+    @ToString.Exclude
+    private List<Team> teams = new ArrayList<>();
 
 
     public User(Integer id) {

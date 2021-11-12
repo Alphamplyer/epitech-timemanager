@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,6 +52,26 @@ public class UserController {
         }
 
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PreAuthorize("hasRole('ROLE_GLOBAL_MANAGER')")
+    @PostMapping("/promote/{id}")
+    public ResponseEntity<?> promoteUserToManager(@PathVariable("id") int id) {
+        User user = userService.promoteUserToManager(id);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_GLOBAL_MANAGER')")
+    @PostMapping("/demote/{id}")
+    public ResponseEntity<?> demoteUserToManager(@PathVariable("id") int id) {
+        User user = userService.demoteUserToEmployee(id);
+        if (user == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("")
@@ -95,7 +116,7 @@ public class UserController {
         @AuthenticationPrincipal User authenticateUser,
         @PathVariable("id") int id
     ) {
-        if (authenticateUser.getId() != id || authenticateUser.getRole() != Role.GLOBAL_MANAGER) {
+        if (authenticateUser.getId() != id && authenticateUser.getRole() != Role.GLOBAL_MANAGER) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
