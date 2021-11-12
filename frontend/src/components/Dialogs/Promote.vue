@@ -9,7 +9,7 @@
       >
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="dialogPromote = false">YES</v-btn>
+        <v-btn color="primary" text @click="promoteUser()">YES</v-btn>
         <v-btn color="error" text @click="dialogPromote = false">NO</v-btn>
       </v-card-actions>
     </v-card>
@@ -17,9 +17,20 @@
 </template>
 
 <script>
+import { apiCall } from "../../../lib/api";
+
 export default {
   name: "Promote",
   props: ["object"],
+  methods: {
+    async promoteUser() {
+      this.dialogPromote = false;
+      await apiCall({
+        route: `/api/users/promote/${this.object.id}`,
+        method: 'POST'
+      })
+    }
+  },
   data() {
     return {
       dialogPromote: false,
