@@ -2,10 +2,10 @@
   <v-card
     elevation="2"
     outlined
-    style="width: 200px"
+    style="width: 189px"
     v-if="object.role !== 'GLOBAL_MANAGER'"
   >
-    <v-card-title style="justify-content: center">{{
+    <v-card-title class="text-truncate" style="justify-content: center;">{{
       object.username
     }}</v-card-title>
     <v-row style="justify-content: center">
