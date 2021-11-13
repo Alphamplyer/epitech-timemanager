@@ -2,10 +2,10 @@
   <div id="secondrow" class="customRow rounded-lg">
     <div class="item" v-for="object in objects" :key="object.id">
       <div v-if="type == 'teamType'">
-        <Team v-bind:object="object" v-bind:type="type"/>
+        <Team v-bind:object="object" v-bind:type="type" />
       </div>
       <div v-if="type == 'userType'">
-        <User v-bind:object="object" v-bind:type="type"/>
+        <User v-bind:object="object" v-bind:type="type" />
       </div>
     </div>
   </div>

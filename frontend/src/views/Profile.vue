@@ -11,7 +11,7 @@
                         <v-icon class="userIcon d-none d-md-flex">mdi-account-circle</v-icon>
                         <div class="changeUser">
                             <h3 style="display: flex"><v-icon>mdi-pencil-outline</v-icon><span><Edit :object="account"/></span></h3>
-                            <h3 style="display: flex"><v-icon>mdi-delete</v-icon><span><Delete :object="account" :type="'userType'"/></span></h3>
+                            <h3 v-if="this.account.role !== 'GLOBAL_MANAGER'" style="display: flex"><v-icon>mdi-delete</v-icon><span><Delete :object="account" :type="'userType'"/></span></h3>
                         </div>
                     </v-col>
                     <v-row wrap class="secondRowRight">

@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-dialog v-model="dialogUsers" width="30%">
+    <v-dialog v-model="dialogUsers" width="40%">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           elevation="2"
@@ -25,14 +25,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="member in members" :key="member.id">
-                <td>{{ member.username }} {{ member.id }}</td>
+              <tr v-for="(member, index) in members" :key="member.id">
+                <td>{{ member.username }}</td>
                 <td>
                   <v-btn
                     elevation="2"
                     x-small
                     color="error"
-                    v-on:click="removeTeamMember(member.id)"
+                    v-on:click="removeTeamMember(member.id, index)"
                     >Remove</v-btn
                   >
                 </td>
@@ -43,9 +43,10 @@
         <v-divider></v-divider>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="dialogUsers = false"
-            >OK</v-btn
-          >
+          <v-btn color="primary" text
+            ><addUser v-bind:team="object.id"
+          /></v-btn>
+          <v-btn color="primary" text @click="dialogUsers = false">OK</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -54,6 +55,7 @@
 
 <script>
 import { apiCall } from "../../../lib/api";
+import addUser from "./AddUser.vue";
 
 export default {
   name: "Users",
@@ -63,18 +65,17 @@ export default {
       const response = await apiCall({
         route: `/api/teams/${this.object.id}/members`,
       });
-      console.log(response);
       this.members = await response.json();
       console.log(this.members);
     },
-    async removeTeamMember(userID) {
+    async removeTeamMember(userID, index) {
       const response = await apiCall({
         route: `/api/teams/${this.object.id}/remove/${userID}`,
         method: "POST",
       });
-      console.log(response);
-      this.members = await response.json();
-      console.log(this.members);
+      if (response.status == 200) {
+        this.$delete(this.members, index);
+      }
     },
   },
   data() {
@@ -83,5 +84,6 @@ export default {
       dialogUsers: false,
     };
   },
+  components: { addUser },
 };
 </script>

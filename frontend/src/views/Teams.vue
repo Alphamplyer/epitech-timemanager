@@ -23,20 +23,29 @@ export default {
   },
   methods: {
     async getTeams() {
-      const response = await apiCall({
-        route: "/api/teams",
-      });
-      this.teams = await response.json();
-      console.log(this.teams);
+      console.log(this.account.role);
+      if (this.account.role == "GLOBAL_MANAGER") {
+        const response = await apiCall({
+          route: "/api/teams",
+        });
+        this.teams = await response.json();
+        console.log(this.teams);
+      } else {
+        const response = await apiCall({
+          route: `/api/teams/${this.account.id}`,
+        });
+        this.teams = await response.json();
+        console.log(this.teams);
+      }
     },
   },
   data() {
     return {
       teams: null,
       type: "teamType",
+      account: this.$store.state.user, 
     };
   },
-  props: ["object"],
   components: { Navbar, Grid },
 };
 </script>
@@ -45,7 +54,7 @@ export default {
 #teams {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 0.2fr 1fr 1fr;
+  grid-template-rows: 110px 1fr;
   column-gap: 10px;
   row-gap: 10px;
   height: 100%;

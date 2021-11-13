@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialogEdit" width="30%">
+  <v-dialog v-model="dialogEdit" width="40%">
     <template v-slot:activator="{ on, attrs }">
       <div v-bind="attrs" v-on="on">Edit</div>
     </template>
@@ -41,10 +41,9 @@ export default {
   methods: {
     async editUserInfo() {
       this.dialogEdit = false;
-
       await apiCall({
         route: `/api/users/${this.object.id}`,
-        method: 'PUT',
+        method: "PUT",
         body: JSON.stringify({
           username: this.username,
           email: this.email,
@@ -71,7 +70,7 @@ export default {
       // password: null,
       // rePassword: null,
       username: null,
-      email: null
+      email: null,
     };
   },
 };

@@ -27,6 +27,7 @@ export default {
         route: "/api/users"
       })
       this.users = await response.json();
+      console.log(this.users);
     },
   },
   data() {
@@ -35,7 +36,6 @@ export default {
       type: "userType",
     };
   },
-  props: ["object"],
   components: { Navbar, Grid },
 };
 </script>
@@ -44,7 +44,7 @@ export default {
 #users {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 0.2fr 1fr 1fr;
+  grid-template-rows: 110px 1fr;
   column-gap: 10px;
   row-gap: 10px;
   height: 100%;
