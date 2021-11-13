@@ -3,6 +3,7 @@ import { Doughnut } from "vue-chartjs";
 
 export default {
     extends: Doughnut,
+    props: ['data'],
     mounted() {
     this.renderChart(
       {
@@ -13,14 +14,14 @@ export default {
         datasets: [
           {
             label: "Working Time",
-            data: [5, 2],
+            data: this.data,
             backgroundColor: [
-              'rgb(240, 243, 189, 0.6)',
-              'rgb(5, 102, 141, 0.6)',
+              'rgb(2, 195, 154, 0.4)',
+              'rgb(5, 102, 141, 0.4)',
             ],
             borderColor: [
-              'rgb(240, 243, 189)',
-              'rgb(5, 102, 141, 0.6)'
+              'rgb(2, 195, 154)',
+              'rgb(5, 102, 141, 1)'
             ],
             borderWidth: 1,
             hoverBorderColor: [

@@ -38,8 +38,36 @@ export function computeDurationDiff(allDates) {
     return duration
 }
 
-export function dateOfWeek(dates, now = moment()) {
-    return dates.filter(date => now.isSame(date, 'week'))
+export function dateOfSameMoment(dates, time, now = moment()) {
+    return dates.filter(date => now.isSame(date, time))
+}
+
+export function dayOfWT(dates) {
+    console.log('dates:', dates)
+    let save = [0, 0]
+
+    dates.map(date => {
+        save[0] += (dateDiff(date.start, date.end) / 3600)
+    })
+
+    if (save[0] < 8)
+        save[1] = 8 - save[0]
+
+    save.map((number, index) => {
+        save[index] = number.toFixed(2)
+    })
+
+    return save
+}
+
+export function weekOfWT(dates) {
+    let save = [0, 0, 0, 0, 0, 0, 0]
+
+    dates.map(date => {
+        save[moment(date.start).day() - 1] += (dateDiff(date.start, date.end) / 3600)
+    })
+
+    return save
 }
 
 export default { 
@@ -48,5 +76,6 @@ export default {
     addSecondsToDuration, 
     computeDurationDiff,
     dateDiff,
-    dateOfWeek
+    dateOfSameMoment,
+    dayOfWT
 }
