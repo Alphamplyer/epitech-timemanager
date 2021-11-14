@@ -26,9 +26,9 @@ module.exports = {
       }
     ]
   },
-  devServer: {
-    proxy: 'http://localhost:4000',
-  },
+  // devServer: {
+  //   proxy: 'http://localhost:4000',
+  // },
   plugins: [
     // make sure to include the plugin for the magic
     new VueLoaderPlugin()

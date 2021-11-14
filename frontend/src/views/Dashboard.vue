@@ -1,27 +1,27 @@
 <template>
-    <div class="d-flex flex-row" style="background-color: #DDDDE6">
-        <NavbarVue :isWorking="this.isWorking" :workingTime="this.workingTime" />
+    <div class="d-flex flex-row overflow-auto" style="background-color: #DDDDE6">
+        <NavbarVue />
 
-        <v-container class="d-flex flex-column justify-start">
-            <v-container class="d-flex flex-row">
-                <Switcher @isWorking="updateIsWorking" @workingTime="updateWorkingTime" :isWorking="this.isWorking" />
+        <v-container class="d-flex flex-column justify-space-between m-4">
+            <div class="d-flex flex-row pb-4">
+                <Switcher />
 
-                <v-container
-                    style="height: 45vh; width: 61%; background-color: white"
-                    class="shadow rounded-lg"
+                <v-responsive
+                    v-if="this.wtOfTheDay"
+                    style="height: 46vh; background-color: white"
+                    class="d-flex justify-center shadow rounded-lg overflow-y-auto"
                 >
+                    <WTDayChart :data="this.wtOfTheDay" />
+                </v-responsive>
+            </div>
 
-                </v-container>
-            </v-container>
-
-            <v-container class="d-flex flex-row">
-                <v-container
-                    style="height: 45vh; width: 100%; background-color: white"
-                    class="shadow rounded-lg"
-                >
-
-                </v-container>
-            </v-container>
+            <v-responsive 
+                v-if="this.wtOfTheWeek"
+                style="height: 46vh; width: 100%; background-color: white;"
+                class="d-flex shadow rounded-lg overflow-y-auto"
+            >
+                <WTWeekChart :data="this.wtOfTheWeek" />
+            </v-responsive>
         </v-container>
     </div>
 </template>
@@ -29,60 +29,39 @@
 <script>
 import NavbarVue from "../components/Navbar.vue"
 import Switcher from "../components/Switcher.vue"
+import WTWeekChart from "../components/Charts/WTWeekChart.vue"
+import WTDayChart from "../components/Charts/WTDayChart.vue"
+import { dateOfSameMoment, dayOfWT, weekOfWT } from '../../lib/date'
+import { apiCall } from '../../lib/api'
 
-    export default {
+export default {
     name: "Dashboard",
     components: {
         NavbarVue,
         Switcher,
+        WTWeekChart,
+        WTDayChart,
     },
-    methods: {
-        updateIsWorking(working) {
-            this.isWorking = working
-        },
-        updateWorkingTime(workTime) {
-            this.workingTime += workTime
+    async beforeCreate() {
+        const wtCall = await apiCall({
+            route: `/api/workingtimes/users/${this.$store.state.user.id}`,
+        })
+
+        if (!wtCall.ok) {
+            console.log("Could not get the user's working time.")
+        } else {
+            const result = await wtCall.json()
+
+            this.wtOfTheDay = dayOfWT(dateOfSameMoment(result, 'day'))
+            this.wtOfTheWeek = weekOfWT(dateOfSameMoment(result, 'week'))            
+            console.log('on set le wtOftheWeek:', this.wtOfTheWeek);
         }
     },
     data() {
         return {
-            workingTime: 0,
-            isWorking: false,
+            wtOfTheWeek: undefined,
+            wtOfTheDay: undefined
         }
-    },
+    }
 }
 </script>
-
-<style scoped>
-
-#dashboard {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
-    height: 100%;
-}
-
-#workingTime {
-    grid-column: 1 / 2;
-    grid-row: 1;
-    background-color: red;
-    border-radius: 12px;
-}
-
-#dailyWorkingTime {
-    grid-column: 2 / 4;
-    grid-row: 1;
-    background-color: blue;
-    border-radius: 12px;
-}
-
-#weeklyWorkingTime {
-    grid-column: 1 / 4;
-    grid-row: 2;
-    background-color: green;
-    border-radius: 12px;
-}
-
-</style>

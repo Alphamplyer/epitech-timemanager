@@ -2,11 +2,11 @@
   <div>
     <Navbar />
     <div id="users">
-      <div id="titleRow" class="customRow">
+      <div id="titleRow" class="customRow rounded-lg">
         <h1 class="usersTitle">All Users</h1>
       </div>
       <Grid v-bind:objects="users" v-bind:type="type" />
-      <div id="thirdrow" class="customRow"></div>
+      <!-- <div id="thirdrow" class="customRow"></div> -->
     </div>
   </div>
 </template>
@@ -14,95 +14,28 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import Grid from "../components/Grid.vue";
+import { apiCall } from "../../lib/api";
 
 export default {
   name: "Users",
+  beforeMount() {
+    this.getUsers();
+  },
   methods: {
-    getUsers() {
-      return [
-        {
-          id: 1,
-          firstname: "Théo",
-          lastname: "Ackermann",
-        },
-        {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-                {
-          id: 2,
-          firstname: "user2",
-          lastname: "user2",
-        },
-      ];
-    },
-    goToUserProfile(id) {
-      this.$router.push(`/user/${id}`);
+    async getUsers() {
+      const response = await apiCall({
+        route: "/api/users"
+      })
+      this.users = await response.json();
+      console.log(this.users);
     },
   },
   data() {
     return {
-      users: this.getUsers(),
+      users: null,
       type: "userType",
     };
   },
-  props: ["object"],
   components: { Navbar, Grid },
 };
 </script>
@@ -111,7 +44,7 @@ export default {
 #users {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 0.2fr 1fr 1fr;
+  grid-template-rows: 110px 1fr;
   column-gap: 10px;
   row-gap: 10px;
   height: 100%;
