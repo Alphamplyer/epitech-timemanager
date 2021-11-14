@@ -15,6 +15,7 @@
         label="Email"
         required
         :placeholder="object.email"
+        :rules="[emailRules]"
       ></v-text-field>
       <!-- <v-text-field v-model="password" label="Password" required></v-text-field>
       <v-text-field
@@ -59,11 +60,18 @@ export default {
       this.$router.go()
     },
   },
-  // computed: {
-  //   passwordConfirmationRule() {
-  //     return () => this.password === this.rePassword || "Password must match";
-  //   },
-  // },
+  computed: {
+    emailRules() {
+      return (
+        () => (v) => !!v || "Email is required",
+        (v) => (v && !!v.trim()) || "Value cannot be blank",
+        (v) =>
+          !v ||
+          /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          "E-mail must be valid"
+      );
+    },
+  },
   data() {
     return {
       dialogEdit: false,
