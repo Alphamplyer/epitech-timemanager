@@ -2,6 +2,7 @@ package edu.epitech.timemanager.services.impl;
 
 import edu.epitech.timemanager.domains.models.User;
 import edu.epitech.timemanager.domains.models.enumerations.Role;
+import edu.epitech.timemanager.domains.utils.exceptions.NotFoundException;
 import edu.epitech.timemanager.persistence.TeamRepository;
 import edu.epitech.timemanager.persistence.UserRepository;
 import edu.epitech.timemanager.services.UserService;
@@ -32,7 +33,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public User getUser(int id) {
-        return userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null)
+            throw new NotFoundException("User not found!");
+        return user;
     }
 
     @Override

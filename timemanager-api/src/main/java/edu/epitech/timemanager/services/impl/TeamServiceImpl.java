@@ -32,7 +32,10 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public Team getUserTeam(int userId) {
-        return teamRepository.findFirstTeamByMembers_Id(userId).orElse(null);
+        Team team = teamRepository.findFirstTeamByMembers_Id(userId).orElse(null);
+        if (team == null)
+            throw new NotFoundException("Team not found!");
+        return team;
     }
 
     @Override
@@ -44,17 +47,15 @@ public class TeamServiceImpl implements TeamService {
     public List<User> getTeamMembers(int teamId) {
         Team team = teamRepository.findById(teamId).orElse(null);
         if (team == null)
-            return null;
+            throw new NotFoundException("Team not found!");
         return team.getMembers();
     }
 
     @Override
     public List<WorkingTime> getTeamWorkingTimes(int teamId) {
         boolean isTeamExist = userRepository.existsById(teamId);
-
         if (!isTeamExist)
-            return null;
-
+            throw new NotFoundException("Team not found!");
         return teamRepository.getTeamWorkingTimes(teamId);
     }
 

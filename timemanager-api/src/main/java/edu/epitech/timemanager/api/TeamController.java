@@ -9,6 +9,8 @@ import edu.epitech.timemanager.domains.models.Team;
 import edu.epitech.timemanager.domains.models.User;
 import edu.epitech.timemanager.domains.models.WorkingTime;
 import edu.epitech.timemanager.domains.models.enumerations.Role;
+import edu.epitech.timemanager.domains.utils.exceptions.NotFoundException;
+import edu.epitech.timemanager.domains.utils.exceptions.UnauthorizedException;
 import edu.epitech.timemanager.services.TeamService;
 import edu.epitech.timemanager.services.UserService;
 import edu.epitech.timemanager.services.WorkingTimeService;
@@ -44,11 +46,9 @@ public class TeamController {
 
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getUserTeams(@PathVariable("userId") int userId) {
-        User user = userService.getUser(userId);
-
-        if (user == null)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> getUserTeams(@AuthenticationPrincipal User user, @PathVariable("userId") int userId) {
+        if (user.getId() == userId)
+            throw new UnauthorizedException("The given ID must be your ID");
 
         switch (user.getRole()) {
             case MANAGER:
@@ -56,12 +56,7 @@ public class TeamController {
             case GLOBAL_MANAGER:
                 return ResponseEntity.ok(teamMappers.teamsToTeamDTOs(teamService.getTeams()));
             case EMPLOYEE:
-                Team team = teamService.getUserTeam(userId);
-
-                if (team == null)
-                    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-                return ResponseEntity.ok(teamMappers.teamToTeamDTO(team));
+                return ResponseEntity.ok(teamMappers.teamToTeamDTO(teamService.getUserTeam(userId)));
             default:
                 return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
@@ -70,58 +65,67 @@ public class TeamController {
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @GetMapping("/{teamId}/workingtimes")
     public ResponseEntity<?> getTeamWorkingTime(@AuthenticationPrincipal User user, @PathVariable("teamId") int teamId) {
-        if (user.getRole() == Role.MANAGER || teamService.isInTeam(user.getId(), teamId)) {
-            List<WorkingTime> workingTimes = teamService.getTeamWorkingTimes(teamId);
-
-            if (workingTimes == null)
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-            return ResponseEntity.ok(workingTimeMappers.workingTimesToWorkingTimesDtos(workingTimes));
+        if (user.getRole() != Role.MANAGER && !teamService.isInTeam(user.getId(), teamId)) {
+            throw new UnauthorizedException("User must be in a team and have a the 'Manager' role");
         }
 
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.ok(
+            workingTimeMappers.workingTimesToWorkingTimesDtos(
+                teamService.getTeamWorkingTimes(teamId)
+            )
+        );
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @GetMapping("/{teamId}/members")
     public ResponseEntity<?> getTeamMembers(@AuthenticationPrincipal User user, @PathVariable("teamId") int teamId) {
-        if (user.getRole() == Role.GLOBAL_MANAGER || teamService.isInTeam(user.getId(), teamId)) {
-            List<User> teamMembers = teamService.getTeamMembers(teamId);
-
-            if (teamMembers == null)
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-            return ResponseEntity.ok(userMappers.usersToUserDtos(teamMembers));
+        if (user.getRole() != Role.MANAGER && !teamService.isInTeam(user.getId(), teamId)) {
+            throw new UnauthorizedException("User must be in a team and have a the 'Manager' role");
         }
 
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.ok(
+            userMappers.usersToUserDtos(
+                teamService.getTeamMembers(teamId)
+            )
+        );
     }
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/{teamId}/add/{userId}")
-    public ResponseEntity<?> addUserToTeam(@PathVariable("teamId") int teamId, @PathVariable("userId") int userId) {
-        boolean success = teamService.addUserToTeam(userId, teamId);
+    public ResponseEntity<?> addUserToTeam(
+        @AuthenticationPrincipal User user,
+        @PathVariable("teamId") int teamId,
+        @PathVariable("userId") int userId
+    ) {
+        if (user.getRole() != Role.MANAGER && !teamService.isInTeam(user.getId(), teamId)) {
+            throw new UnauthorizedException("User must be in a team and have a the 'Manager' role");
+        }
 
-        if (!success)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+        teamService.addUserToTeam(userId, teamId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("/{teamId}/remove/{userId}")
-    public ResponseEntity<?> removeUserFromTeam(@PathVariable("teamId") int teamId, @PathVariable("userId") int userId) {
-        boolean success = teamService.removeUserFromTeam(userId, teamId);
+    public ResponseEntity<?> removeUserFromTeam(
+        @AuthenticationPrincipal User user,
+        @PathVariable("teamId") int teamId,
+        @PathVariable("userId") int userId
+    ) {
+        if (user.getRole() != Role.MANAGER && !teamService.isInTeam(user.getId(), teamId)) {
+            throw new UnauthorizedException("User must be in a team and have a the 'Manager' role");
+        }
 
-        if (!success)
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+        teamService.removeUserFromTeam(userId, teamId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PostMapping("")
-    public ResponseEntity<?> createTeam(@AuthenticationPrincipal User user, @RequestBody CreateTeamDto team) {
+    public ResponseEntity<?> createTeam(
+        @AuthenticationPrincipal User user,
+        @RequestBody CreateTeamDto team
+    ) {
         int authenticateUserId = user.getId();
 
         return ResponseEntity.ok(teamMappers.teamToTeamDTO(
@@ -134,12 +138,20 @@ public class TeamController {
 
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     @PutMapping("/{teamId}")
-    public ResponseEntity<?> updateTeam(@PathVariable("teamId") int teamId, @RequestBody UpdateTeamDto team) {
+    public ResponseEntity<?> updateTeam(
+        @AuthenticationPrincipal User user,
+        @PathVariable("teamId") int teamId,
+        @RequestBody UpdateTeamDto team
+    ) {
+        if (user.getRole() != Role.MANAGER && !teamService.isInTeam(user.getId(), teamId)) {
+            throw new UnauthorizedException("User must be in a team and have a the 'Manager' role");
+        }
+
         return ResponseEntity.ok(teamMappers.teamToTeamDTO(
-                teamService.updateTeam(teamId, new Team(
-                    team.getName(),
-                    team.getDescription()
-                ))
+            teamService.updateTeam(teamId, new Team(
+                team.getName(),
+                team.getDescription()
+            ))
         ));
     }
 
