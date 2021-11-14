@@ -17,6 +17,7 @@ public interface TeamService {
     boolean addUserToTeam(int userId, int teamId);
     boolean removeUserFromTeam(int userId, int teamId);
 
+    boolean isInATeam(int userId);
     boolean isInTeam(int userId, int teamId);
     boolean isInTheSameTeam(int targetUser, int currentUser);
 

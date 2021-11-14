@@ -2,11 +2,11 @@
   <div>
     <Navbar />
     <div id="teams">
-      <div id="titleRow" class="customRow">
-        <h1 class="teamsTitle">All Teams</h1>
+      <div id="titleRow" class="customRow rounded-lg">
+        <h1 class="teamsTitle rounded-lg">All Teams</h1>
       </div>
       <Grid v-bind:objects="teams" v-bind:type="type" />
-      <div id="thirdrow" class="customRow"></div>
+      <div id="thirdrow" class="customRow rounded-lg"></div>
     </div>
   </div>
 </template>
@@ -14,29 +14,38 @@
 <script>
 import Navbar from "../components/Navbar.vue";
 import Grid from "../components/Grid.vue";
+import { apiCall } from "../../lib/api";
+
 export default {
   name: "Teams",
+  beforeMount() {
+    this.getTeams();
+  },
   methods: {
-    getTeams() {
-      return [
-        {
-          id: 1,
-          title: "Team 1",
-        },
-        {
-          id: 2,
-          title: "Team 2",
-        },
-      ];
+    async getTeams() {
+      console.log(this.account.role);
+      if (this.account.role == "GLOBAL_MANAGER") {
+        const response = await apiCall({
+          route: "/api/teams",
+        });
+        this.teams = await response.json();
+        console.log(this.teams);
+      } else {
+        const response = await apiCall({
+          route: `/api/teams/${this.account.id}`,
+        });
+        this.teams = await response.json();
+        console.log(this.teams);
+      }
     },
   },
   data() {
     return {
-      teams: this.getTeams(),
+      teams: null,
       type: "teamType",
+      account: this.$store.state.user, 
     };
   },
-  props: ["object"],
   components: { Navbar, Grid },
 };
 </script>
@@ -45,7 +54,7 @@ export default {
 #teams {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 0.2fr 1fr 1fr;
+  grid-template-rows: 110px 1fr;
   column-gap: 10px;
   row-gap: 10px;
   height: 100%;

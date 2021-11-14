@@ -1,88 +1,188 @@
 <template>
-    <v-container fill-height class="d-flex flex-row mr-12 align-center justify-center">
-        <v-responsive 
-            style="border: 1px solid; border-color: #A7A7A7; background-color: white; font-size: 42px"
-            class="rounded-lg pa-8 blue--text text-center"
-            max-width="350px" 
-            min-width="250px"
+  <v-container
+    fill-height
+    class="d-flex flex-row mr-12 align-center justify-center"
+  >
+    <v-responsive
+      style="
+        border: 1px solid;
+        border-color: #a7a7a7;
+        background-color: white;
+        font-size: 42px;
+      "
+      class="rounded-lg pa-8 blue--text text-center"
+      max-width="350px"
+      min-width="250px"
+    >
+      <h3 style="line-height: 1" class="mb-8">Time Manager</h3>
+
+      <v-divider style="background-color: #becdda" />
+
+      <v-form class="py-4" v-model="isFormValid">
+        <v-text-field
+          required
+          outlined
+          autofocus
+          min="8"
+          label="Username"
+          placeholder="Username"
+          v-model="identifier"
+          :rules="[usernameRules]"
+        />
+
+        <v-text-field
+          required
+          outlined
+          min="8"
+          type="password"
+          label="Password"
+          placeholder="Password"
+          v-model="password"
+          :rules="[passwordRules]"
+        />
+
+        <p style="font-size: 16px" class="red--text font-weight-bold">
+          {{ this.error }}
+        </p>
+      </v-form>
+
+      <v-divider style="background-color: #becdda" />
+
+      <v-form class="d-flex flex-column justify-space-between">
+        <v-btn
+          block
+          color="primary"
+          style="font-size: 18px; border: 2px solid black !important"
+          class="font-weight-bold rounded-0 text-capitalize"
+          v-on:click="logIn()"
+          :disabled="!isFormValid"
         >
-            <h3 
-                style="line-height: 1"
-                class="mb-8"
-            >
-                Time Manager
-            </h3>
+          Log In
+        </v-btn>
 
-            <v-divider style="background-color: #becdda" />
+        <h5 style="font-size: 14px" class="my-8 grey--text">Or</h5>
 
-            <v-container class="py-4">
-                <v-text-field 
-                    solo
-                    autofocus
-                    label="Username"
-                    class="text-center"
-                />
+        <v-btn
+          style="font-size: 18px; border: 2px solid black"
+          class="rounded-0 text-capitalize font-weight-bold"
+          v-on:click="register()"
+        >
+          Register
+        </v-btn>
+      </v-form>
+    </v-responsive>
 
-                <v-text-field 
-                    solo 
-                    label="Password" 
-                />
-            </v-container>
-
-            <v-divider style="background-color: #becdda" />
-
-            <v-container class="d-flex flex-column justify-space-between">
-                <v-btn 
-                    block
-                    color="primary"
-                    style="font-size: 18px; border: 2px solid black !important"
-                    class="font-weight-bold rounded-0 text-capitalize"
-                    v-on:click="logIn()"
-                >
-                    Log In
-                </v-btn>
-
-                <h5 
-                    style="font-size: 14px"
-                    class="my-8 grey--text"
-                >
-                    Or
-                </h5>
-
-                <v-btn 
-                    style="font-size: 18px; border: 2px solid black"
-                    class="rounded-0 text-capitalize font-weight-bold"
-                    v-on:click="register()"
-                >
-                    Register
-                </v-btn>
-            </v-container>
-        </v-responsive>
-
-        <v-responsive>
-            <v-img
-                src="@/assets/welcome.svg"
-                max-height="700px"
-                lazy
-            />
-        </v-responsive>
-    </v-container>
+    <v-responsive class="d-flex justify-center">
+      <v-img
+        src="@/assets/welcome.svg"
+        max-height="700px"
+        max-width="800px"
+        lazy
+      />
+    </v-responsive>
+  </v-container>
 </template>
 
 <script>
+import { computeDurationDiff } from '../../lib/date'
+import { apiCall } from '../../lib/api'
+import ref from 'vue'
 
 export default {
     methods: {
+        async logIn() {
+            const contentType = 'application/x-www-form-urlencoded'
+
+            var urlencoded = new URLSearchParams()
+            urlencoded.append("identifier", this.identifier)
+            urlencoded.append("password", this.password)
+
+            const res = await fetch('http://localhost:4000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': contentType
+                },
+                body: urlencoded
+            })
+
+            if (!res.ok) {
+                switch (res.status) {
+                    case 403:
+                        this.error = "Identifiants incorrects."
+                        break;
+                    case 404:
+                        this.error = "L'utilisateur n'existe pas."
+                        break;
+
+                    default:
+                        this.error = "Erreur lors de l'identification."
+                        break;
+                }
+            } else {
+              const result = await res.json()
+
+              this.$store.commit('setTokens', {
+                access_token: result.access_token, 
+                refresh_token: result.refresh_token
+              })
+              this.$store.commit('setUser', {
+                user: result.user
+              })
+
+              const wtCall = await apiCall({
+                  route: `/api/workingtimes/users/${this.$store.state.user.id}`,
+              })
+
+              if (!wtCall.ok) {
+                  console.log(`Error ${wtCall.status} when receiving the user's working time.`)
+              } else {
+                  const result = await wtCall.json()
+                  const diff = computeDurationDiff(result)
+
+                  this.$store.commit('setClock', {
+                      enabled: false,
+                      started_at: '',
+                      time: diff
+                  })
+              }
+
+              this.$router.push(`/user/${result.user.id}/dashboard`)
+            }
+        },
         register() {
             this.$router.push('/register')
-        },
-        logIn() {
-            this.$router.push('/user/dashboard')
         }
     },
     setup() {
-        
+        const { email, identifier } = ref('')
+
+        return {
+            email,
+            identifier
+        }
     },
+    data() {
+        return {
+            error: '',
+            identifier: this.identifier,
+            password: this.password,
+            isFormValid: false,
+        }
+    },
+    computed: {
+        passwordRules() {
+            return (
+                () => (v) => !!v || "Password is required",
+                (v) =>
+                (v && v.length >= 8) || "Password must have at least 8 characters"
+            );
+        },
+        usernameRules() {
+            return (
+                () => (v) => !!v || "Username is required",
+                (v) => (v && !!v.trim()) || "Value cannot be blank"
+            );
+        },
+    }
 }
 </script>
-
