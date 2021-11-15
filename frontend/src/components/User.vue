@@ -5,9 +5,12 @@
     style="width: 189px"
     v-if="object.role !== 'GLOBAL_MANAGER'"
   >
-    <v-card-title class="text-truncate" style="justify-content: center;">{{
+    <v-card-title class="text-truncate" style="justify-content: center">{{
       object.username
     }}</v-card-title>
+    <v-card-subtitle class="text-center">
+      {{ object.role }}
+    </v-card-subtitle>
     <v-row style="justify-content: center">
       <v-card-actions v-if="object.role == 'EMPLOYEE'">
         <v-btn elevation="2" x-small color="primary">
