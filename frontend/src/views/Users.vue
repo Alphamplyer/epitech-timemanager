@@ -6,7 +6,6 @@
         <h1 class="usersTitle">All Users</h1>
       </div>
       <Grid v-bind:objects="users" v-bind:type="type" />
-      <!-- <div id="thirdrow" class="customRow"></div> -->
     </div>
   </div>
 </template>
